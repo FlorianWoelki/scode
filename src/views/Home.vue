@@ -68,7 +68,21 @@
       </div>
     </div>
 
-    <div class="col-span-3 bg-gray-800">test</div>
+    <div class="col-span-3 bg-gray-800 p-7">
+      <div class="flex items-start space-x-2">
+        <CodeIcon class="w-5 h-5 mt-2 text-gray-600" />
+        <h1 class="flex flex-col text-2xl text-gray-400">
+          <span>Code a For Loop</span>
+          <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
+        </h1>
+      </div>
+
+      <div class="mt-8">
+        <p class="text-base text-gray-500">Some small markdown text to describe the instruction for this code snippet.</p>
+      </div>
+      <div class="mt-4 bg-gray-900 rounded-lg">
+      </div>
+    </div>
   </div>
 </template>
 
