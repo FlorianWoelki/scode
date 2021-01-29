@@ -14,8 +14,8 @@
 
       <!-- DIRECTORIES AND SPACES -->
       <div class="mt-10 space-y-6">
-        <div class="space-y-2">
-          <div class="flex items-center space-x-2 text-gray-100">
+        <div class="space-y-1">
+          <div class="flex items-center mb-3 space-x-2 text-gray-100">
             <FolderOpenIcon class="w-5 h-5" />
             <p class="text-base">JavaScript</p>
           </div>
@@ -51,20 +51,8 @@
       </div>
 
       <div class="mt-10 space-y-4">
-        <div class="px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg">
-          <div class="flex items-center space-x-2 text-gray-100">
-            <CodeIcon class="w-5 h-5" />
-            <p class="text-xl">Code a For Loop</p>
-          </div>
-          <p class="text-sm text-gray-600">def for_loop(): for i in range(0, 10): print(i)</p>
-        </div>
-        <div class="px-4 py-3">
-          <div class="flex items-center space-x-2 text-gray-500">
-            <CodeIcon class="w-5 h-5" />
-            <p class="text-xl">Code a For Loop</p>
-          </div>
-          <p class="text-sm text-gray-600">def for_loop(): for i in range(0, 10): print(i)</p>
-        </div>
+        <SnippetFile isSelected />
+        <SnippetFile />
       </div>
     </div>
 
@@ -94,6 +82,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
+import SnippetFile from '../components/SnippetFile.vue';
 
 export default defineComponent({
   components: {
@@ -102,6 +91,7 @@ export default defineComponent({
     FolderOpenIcon,
     FolderIcon,
     CodeIcon,
+    SnippetFile,
   },
   setup() {
     const monacoElement = ref<HTMLElement | null>(null);
