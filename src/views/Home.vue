@@ -68,22 +68,20 @@
       <div class="mt-8">
         <p class="text-base text-gray-500">Some small markdown text to describe the instruction for this code snippet.</p>
       </div>
-      <div class="w-full h-auto mt-4 rounded-lg" ref="monacoElement"></div>
+      <MonacoEditor />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
-import * as monaco from 'monaco-editor';
-import DraculaTheme from '../monaco/DraculaTheme';
+import { defineComponent } from 'vue';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
 import SnippetFile from '../components/SnippetFile.vue';
-import loader from '@monaco-editor/loader';
+import MonacoEditor from '../components/MonacoEditor.vue';
 
 export default defineComponent({
   components: {
@@ -93,48 +91,7 @@ export default defineComponent({
     FolderIcon,
     CodeIcon,
     SnippetFile,
-  },
-  setup() {
-    const monacoElement = ref<HTMLElement | null>(null);
-
-    onMounted(() => {
-      loader.init().then((monaco) => {
-        if (monacoElement.value) {
-          const editor = monaco.editor.create(monacoElement.value, {
-            value: 'console.log("Hello World");',
-            language: 'typescript',
-            automaticLayout: true,
-            selectOnLineNumbers: true,
-            theme: 'vs-dark',
-            fontSize: 14,
-            minimap: {
-              enabled: false,
-            },
-            scrollBeyondLastLine: false,
-            wordWrap: 'on',
-            wrappingStrategy: 'advanced',
-            overviewRulerLanes: 0,
-          });
-
-          monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
-          monaco.editor.setTheme('Dracula');
-
-          const updateHeight = () => {
-            const contentHeight = Math.min(1000, editor.getContentHeight());
-            monacoElement.value!.style.width = '100%';
-            monacoElement.value!.style.height = `${contentHeight}px`;
-            editor.layout({ width: 1000, height: contentHeight });
-          };
-
-          editor.onDidContentSizeChange(updateHeight);
-          updateHeight();
-        }
-      });
-    });
-
-    return {
-      monacoElement,
-    };
+    MonacoEditor,
   },
 });
 </script>
