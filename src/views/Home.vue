@@ -83,6 +83,7 @@ import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
 import SnippetFile from '../components/SnippetFile.vue';
+import loader from '@monaco-editor/loader';
 
 export default defineComponent({
   components: {
@@ -98,20 +99,22 @@ export default defineComponent({
 
     onMounted(() => {
       if (monacoElement.value) {
-        monaco.editor.create(monacoElement.value, {
-          value: 'console.log("Hello World");',
-          language: 'javascript',
-          automaticLayout: true,
-          selectOnLineNumbers: true,
-          theme: 'vs-dark',
-          fontSize: 14,
-          minimap: {
-            enabled: false,
-          },
-        });
+        loader.init().then((monaco) => {
+          monaco.editor.create(monacoElement.value!, {
+            value: 'console.log("Hello World");',
+            language: 'javascript',
+            automaticLayout: true,
+            selectOnLineNumbers: true,
+            theme: 'vs-dark',
+            fontSize: 14,
+            minimap: {
+              enabled: false,
+            },
+          });
 
-        monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
-        monaco.editor.setTheme('Dracula');
+          monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
+          monaco.editor.setTheme('Dracula');
+        });
       }
     });
 
