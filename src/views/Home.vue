@@ -80,19 +80,19 @@
       <div class="mt-8">
         <p class="text-base text-gray-500">Some small markdown text to describe the instruction for this code snippet.</p>
       </div>
-      <div class="mt-4 bg-gray-900 rounded-lg">
-      </div>
+      <div class="mt-4" ref="monacoElement" style="width: 500px; height: 500px;"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
+import * as monaco from 'monaco-editor';
 
 export default defineComponent({
   components: {
@@ -101,6 +101,22 @@ export default defineComponent({
     FolderOpenIcon,
     FolderIcon,
     CodeIcon,
+  },
+  setup() {
+    const monacoElement = ref<HTMLElement | null>(null);
+
+    onMounted(() => {
+      if (monacoElement.value) {
+        monaco.editor.create(monacoElement.value, {
+          value: 'console.log("Hello World");',
+          language: 'javascript',
+        });
+      }
+    });
+
+    return {
+      monacoElement,
+    };
   },
 });
 </script>

@@ -2129,6 +2129,11 @@ modern-normalize@^1.0.0:
   resolved "https://registry.yarnpkg.com/modern-normalize/-/modern-normalize-1.0.0.tgz#539d84a1e141338b01b346f3e27396d0ed17601e"
   integrity sha512-1lM+BMLGuDfsdwf3rsgBSrxJwAZHFIrQ8YR61xIqdHo0uNKI9M52wNpHSrliZATJp51On6JD0AfRxd4YGSU0lw==
 
+monaco-editor@0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.22.0.tgz#8a2038bc5b7e36ae40b51e0bf85df21a24ebbc2d"
+  integrity sha512-hr0TB1ykyfvtSpr+5+r13910k1daWx7hrV+Bicc5gC4HDtr1K0lEcN9h5X+aFL96OiWx68dsRaaQbKGjTz1B+A==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
