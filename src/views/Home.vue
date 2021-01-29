@@ -19,7 +19,7 @@
             <FolderOpenIcon class="w-5 h-5" />
             <p class="text-base">JavaScript</p>
           </div>
-          <div class="flex items-center py-1 pl-8 space-x-2 bg-gray-600 rounded-lg">
+          <div class="flex items-center py-1 pl-8 space-x-2 bg-gray-800 border border-gray-600 rounded-lg">
             <div class="w-2 h-2 bg-green-400 rounded-full"></div>
             <p class="text-base text-gray-100">Basics</p>
           </div>
@@ -68,7 +68,7 @@
       <div class="mt-8">
         <p class="text-base text-gray-500">Some small markdown text to describe the instruction for this code snippet.</p>
       </div>
-      <div class="mt-4" ref="monacoElement" style="width: 500px; height: 500px;"></div>
+      <div class="w-full h-auto mt-4 rounded-lg" ref="monacoElement"></div>
     </div>
   </div>
 </template>
@@ -98,11 +98,11 @@ export default defineComponent({
     const monacoElement = ref<HTMLElement | null>(null);
 
     onMounted(() => {
-      if (monacoElement.value) {
-        loader.init().then((monaco) => {
-          monaco.editor.create(monacoElement.value!, {
+      loader.init().then((monaco) => {
+        if (monacoElement.value) {
+          const editor = monaco.editor.create(monacoElement.value, {
             value: 'console.log("Hello World");',
-            language: 'javascript',
+            language: 'typescript',
             automaticLayout: true,
             selectOnLineNumbers: true,
             theme: 'vs-dark',
@@ -110,12 +110,26 @@ export default defineComponent({
             minimap: {
               enabled: false,
             },
+            scrollBeyondLastLine: false,
+            wordWrap: 'on',
+            wrappingStrategy: 'advanced',
+            overviewRulerLanes: 0,
           });
 
           monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
           monaco.editor.setTheme('Dracula');
-        });
-      }
+
+          const updateHeight = () => {
+            const contentHeight = Math.min(1000, editor.getContentHeight());
+            monacoElement.value!.style.width = '100%';
+            monacoElement.value!.style.height = `${contentHeight}px`;
+            editor.layout({ width: 1000, height: contentHeight });
+          };
+
+          editor.onDidContentSizeChange(updateHeight);
+          updateHeight();
+        }
+      });
     });
 
     return {
