@@ -34,7 +34,7 @@
             <p class="text-base">C++</p>
           </div>
         </div>
-        <div class="space-y-2">
+        <div class="ml-1 space-y-2">
           <div class="flex items-center py-1 space-x-2">
             <div class="w-2 h-2 bg-red-400 rounded-full"></div>
             <p class="text-base text-gray-500">AWS</p>
@@ -87,12 +87,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
+import * as monaco from 'monaco-editor';
+import DraculaTheme from '../monaco/DraculaTheme';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
-import * as monaco from 'monaco-editor';
 
 export default defineComponent({
   components: {
@@ -110,7 +111,17 @@ export default defineComponent({
         monaco.editor.create(monacoElement.value, {
           value: 'console.log("Hello World");',
           language: 'javascript',
+          automaticLayout: true,
+          selectOnLineNumbers: true,
+          theme: 'vs-dark',
+          fontSize: 14,
+          minimap: {
+            enabled: false,
+          },
         });
+
+        monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
+        monaco.editor.setTheme('Dracula');
       }
     });
 
