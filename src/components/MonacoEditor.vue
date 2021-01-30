@@ -11,7 +11,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import * as monaco from 'monaco-editor';
-import loader from '@monaco-editor/loader';
 import DraculaTheme from '../monaco/DraculaTheme';
 
 export default defineComponent({
@@ -20,39 +19,37 @@ export default defineComponent({
     const isLoading = ref(true);
 
     onMounted(() => {
-      loader.init().then((monaco) => {
-        isLoading.value = false;
-        if (monacoElement.value) {
-          const editor = monaco.editor.create(monacoElement.value, {
-            value: 'console.log("Hello World");',
-            language: 'typescript',
-            automaticLayout: true,
-            selectOnLineNumbers: true,
-            theme: 'vs-dark',
-            fontSize: 14,
-            minimap: {
-              enabled: false,
-            },
-            scrollBeyondLastLine: false,
-            wordWrap: 'on',
-            wrappingStrategy: 'advanced',
-            overviewRulerLanes: 0,
-          });
+      isLoading.value = false;
+      if (monacoElement.value) {
+        const editor = monaco.editor.create(monacoElement.value, {
+          value: 'console.log("Hello World");',
+          language: 'typescript',
+          automaticLayout: true,
+          selectOnLineNumbers: true,
+          theme: 'vs-dark',
+          fontSize: 14,
+          minimap: {
+            enabled: false,
+          },
+          scrollBeyondLastLine: false,
+          wordWrap: 'on',
+          wrappingStrategy: 'advanced',
+          overviewRulerLanes: 0,
+        });
 
-          monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
-          monaco.editor.setTheme('Dracula');
+        monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
+        monaco.editor.setTheme('Dracula');
 
-          const updateHeight = () => {
-            const contentHeight = Math.min(1000, editor.getContentHeight());
-            monacoElement.value!.style.width = '100%';
-            monacoElement.value!.style.height = `${contentHeight}px`;
-            editor.layout({ width: 1000, height: contentHeight });
-          };
+        const updateHeight = () => {
+          const contentHeight = Math.min(1000, editor.getContentHeight());
+          monacoElement.value!.style.width = '100%';
+          monacoElement.value!.style.height = `${contentHeight}px`;
+          editor.layout({ width: 1000, height: contentHeight });
+        };
 
-          editor.onDidContentSizeChange(updateHeight);
-          updateHeight();
-        }
-      });
+        editor.onDidContentSizeChange(updateHeight);
+        updateHeight();
+      }
     });
 
     return {
