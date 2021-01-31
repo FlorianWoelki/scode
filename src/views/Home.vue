@@ -45,9 +45,12 @@
 
     <div class="z-10 col-span-1 bg-gray-800 shadow-2xl p-7">
       <!-- SNIPPETS HEADER -->
-      <div class="flex items-center space-x-2">
-        <FolderOpenIcon class="w-5 h-5 text-gray-600" />
-        <p class="text-base text-gray-400">JavaScript/Basics</p>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <FolderOpenIcon class="w-5 h-5 text-gray-600" />
+          <p class="text-base text-gray-400">JavaScript/Basics</p>
+        </div>
+        <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" />
       </div>
 
       <div class="mt-10 space-y-4">
