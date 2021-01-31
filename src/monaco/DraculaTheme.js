@@ -356,10 +356,10 @@ export default {
     'editor.foreground': '#f8f8f2',
     'editor.background': '#1A202C',
     'editor.selectionBackground': '#44475a',
-    'editor.lineHighlightBackground': '#44475a',
+    // 'editor.lineHighlightBackground': '#44475a',
     'editorCursor.foreground': '#f8f8f0',
     'editorWhitespace.foreground': '#3B3A32',
     'editorIndentGuide.activeBackground': '#9D550FB0',
-    'editor.selectionHighlightBorder': '#222218',
+    // 'editor.selectionHighlightBorder': '#222218',
   },
 };
