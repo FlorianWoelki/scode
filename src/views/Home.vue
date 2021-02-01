@@ -69,15 +69,24 @@
       </div>
 
       <div class="mt-8">
-        <VueMarkdownIt class="markdown" :source="source" />
+        <textarea
+          v-show=isMarkdownInputOpen
+          ref="markdownTextarea"
+          v-model="markdownInput"
+          class="w-full px-2 py-1 text-gray-300 bg-gray-900 max-h-96 focus:outline-none"
+          style="min-height: 5rem"
+          @input="autoAdjustTextArea($event.target)"
+          @blur="toggleMarkdownInput"
+        ></textarea>
+        <VueMarkdownIt v-show="!isMarkdownInputOpen" class="markdown" :source="markdownInput" @click="toggleMarkdownInput" />
+        <MonacoEditor />
       </div>
-      <MonacoEditor />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, nextTick, ref } from 'vue';
 import VueMarkdownIt from 'vue3-markdown-it';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
@@ -98,19 +107,42 @@ export default defineComponent({
     SnippetFile,
     MonacoEditor,
   },
-  data() {
+  setup() {
+    const isMarkdownInputOpen = ref(false);
+    const markdownInput = '# Hello Markdown';
+    const markdownTextarea = ref<HTMLElement | null>(null);
+
+    const toggleMarkdownInput = () => {
+      isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
+
+      nextTick(() => {
+        if (isMarkdownInputOpen.value && markdownTextarea.value) {
+          autoAdjustTextArea(markdownTextarea.value);
+          markdownTextarea.value.focus();
+        }
+      });
+    };
+
+    const autoAdjustTextArea = (element: HTMLElement) => {
+      element.style.height = 'inherit';
+
+      const computed = window.getComputedStyle(element);
+
+      const height = parseInt(computed.getPropertyValue('border-top-width'), 10) +
+              parseInt(computed.getPropertyValue('padding-top'), 10) +
+              element.scrollHeight +
+              parseInt(computed.getPropertyValue('padding-bottom'), 10) +
+              parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
+      element.style.height = `${height}px`;
+    };
+
     return {
-      source: `# Hello h1
-## Hello World
-Hello World again
-
----
-
-Some testing [link](https://google.com).....
-
-> Hello world, this is a test
-
-Some testing \`codeElement\``,
+      isMarkdownInputOpen,
+      markdownInput,
+      toggleMarkdownInput,
+      autoAdjustTextArea,
+      markdownTextarea,
     };
   },
 });
