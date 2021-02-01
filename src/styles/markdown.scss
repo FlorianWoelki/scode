@@ -1,5 +1,30 @@
 .markdown {
-  h2 {
-    @apply tracking-wide text-2xl leading-5 mb-4 mt-8 font-bold text-gray-400;
+  @apply text-gray-500 leading-normal;
+
+  > *:first-child {
+    @apply mt-0;
+  }
+
+  > * + * {
+    @apply mt-5;
+  }
+
+  > h1 {
+    @apply mb-1 leading-none text-gray-400 font-medium text-3xl;
+  }
+  > h2 {
+    @apply mt-16 mb-4 text-gray-400 leading-none font-normal text-2xl;
+  }
+  > h2 + h3 {
+    @apply mt-6;
+  }
+  > h3 {
+    @apply mt-12 -mb-3 text-gray-400 leading-tight font-medium text-xl;
+  }
+  > h4 {
+    @apply mt-12 mb-0 text-gray-400 leading-snug font-medium text-lg;
+  }
+  > h1 + p {
+    @apply mt-0 mb-4;
   }
 }

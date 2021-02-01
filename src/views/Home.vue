@@ -100,7 +100,11 @@ export default defineComponent({
   },
   data() {
     return {
-      source: '## Hello World',
+      source: `# Hello h1
+## Hello World
+Hello World again
+
+Some testing`,
     };
   },
 });
