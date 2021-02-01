@@ -69,7 +69,7 @@
       </div>
 
       <div class="mt-8">
-        <p class="text-base text-gray-500">Some small markdown text to describe the instruction for this code snippet.</p>
+        <VueMarkdownIt class="markdown" :source="source" />
       </div>
       <MonacoEditor />
     </div>
@@ -78,6 +78,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import VueMarkdownIt from 'vue3-markdown-it';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
@@ -88,6 +89,7 @@ import MonacoEditor from '../components/MonacoEditor.vue';
 
 export default defineComponent({
   components: {
+    VueMarkdownIt,
     CollectionIcon,
     PlusIcon,
     FolderOpenIcon,
@@ -96,5 +98,14 @@ export default defineComponent({
     SnippetFile,
     MonacoEditor,
   },
+  data() {
+    return {
+      source: '## Hello World',
+    };
+  },
 });
 </script>
+
+<style lang="scss">
+@import '../styles/markdown.scss';
+</style>
