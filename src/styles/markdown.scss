@@ -28,6 +28,10 @@
     @apply font-semibold;
   }
 
+  > p code, > ul li *:not(pre) code, > ul li > code, > ol li *:not(pre) code, > ol li > code {
+    @apply inline-block rounded-sm bg-gray-900 text-sm py-1 px-1 leading-none whitespace-nowrap text-gray-400 font-mono align-baseline font-normal;
+  }
+
   > blockquote {
     @apply italic text-gray-600 text-sm;
   }
