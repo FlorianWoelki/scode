@@ -9,6 +9,29 @@
     @apply mt-5;
   }
 
+  > ul > * + *, > ol > * + * {
+    @apply mt-4;
+  }
+
+  > hr {
+    @apply border-t-0 border-r-0 border-l-0 border-b-2 border-gray-600 my-8;
+  }
+
+  > a, > p a, > ul li a, > ol li a {
+    @apply underline font-medium cursor-pointer;
+    &:hover {
+      @apply text-gray-600;
+    }
+  }
+
+  > p strong, > ul strong {
+    @apply font-semibold;
+  }
+
+  > blockquote {
+    @apply italic text-gray-600 text-sm;
+  }
+
   > h1 {
     @apply mb-1 leading-none text-gray-400 font-medium text-3xl;
   }
@@ -26,5 +49,9 @@
   }
   > h1 + p {
     @apply mt-0 mb-4;
+  }
+
+  > p, > blockquote > p {
+    @apply text-base mt-6;
   }
 }
