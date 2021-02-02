@@ -78,7 +78,7 @@
           @input="autoAdjustTextArea($event.target)"
           @blur="toggleMarkdownInput"
         ></textarea>
-        <VueMarkdownIt v-show="!isMarkdownInputOpen" class="markdown" :source="markdownInput" @click="toggleMarkdownInput" />
+        <VueMarkdownIt v-show="!isMarkdownInputOpen" class="markdown" :source="markdownInput" @dblclick="toggleMarkdownInput" />
         <MonacoEditor />
       </div>
     </div>
