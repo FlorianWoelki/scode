@@ -54,11 +54,12 @@
       </div>
 
       <div class="mt-10 space-y-4">
-        <div v-if="isAddingFile" class="flex items-center text-gray-400 bg-gray-900 border border-gray-700 rounded-lg">
+        <div v-show="isAddingFile" class="flex items-center text-gray-400 bg-gray-900 border border-gray-700 rounded-lg focus-within:border-gray-500">
           <input
+            ref="addFileInputField"
             placeholder="Filename"
             type="text"
-            class="w-full px-3 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none focus:border-gray-500"
+            class="w-full px-3 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none"
           >
           <div class="flex items-center pr-3 space-x-1">
             <PlusIcon class="w-5 h-5 cursor-pointer hover:text-gray-300" />
@@ -124,7 +125,9 @@ export default defineComponent({
     const isMarkdownInputOpen = ref(false);
     const markdownInput = '# Hello Markdown';
     const markdownTextarea = ref<HTMLElement | null>(null);
+
     const isAddingFile = ref(false);
+    const addFileInputField = ref<HTMLElement | null>(null);
 
     const toggleMarkdownInput = (): void => {
       isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
@@ -153,6 +156,11 @@ export default defineComponent({
 
     const openAddFileInputField = (): void => {
       isAddingFile.value = true;
+      nextTick(() => {
+        if (addFileInputField.value) {
+          addFileInputField.value.focus();
+        }
+      });
     };
 
     const closeAddFileInputField = (): void => {
@@ -168,6 +176,7 @@ export default defineComponent({
       openAddFileInputField,
       closeAddFileInputField,
       isAddingFile,
+      addFileInputField,
     };
   },
 });
