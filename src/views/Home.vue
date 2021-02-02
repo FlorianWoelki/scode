@@ -66,8 +66,14 @@
             <XIcon class="w-4 h-4 cursor-pointer hover:text-gray-300" @click="closeAddFileInputField" />
           </div>
         </div>
-        <SnippetFile isSelected />
-        <SnippetFile />
+        <p v-if="files.length === 0" class="flex items-center justify-center text-sm italic text-gray-600">No files created</p>
+        <SnippetFile
+          v-else
+          v-for="file in files"
+          :key="file.id"
+          :name="file.name"
+          :content="file.content"
+        />
       </div>
     </div>
 
@@ -98,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 import VueMarkdownIt from 'vue3-markdown-it';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
@@ -108,6 +114,7 @@ import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
 import SnippetFile from '../components/SnippetFile.vue';
 import MonacoEditor from '../components/MonacoEditor.vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   components: {
@@ -122,6 +129,8 @@ export default defineComponent({
     MonacoEditor,
   },
   setup() {
+    const store = useStore();
+
     const isMarkdownInputOpen = ref(false);
     const markdownInput = '# Hello Markdown';
     const markdownTextarea = ref<HTMLElement | null>(null);
@@ -177,6 +186,7 @@ export default defineComponent({
       closeAddFileInputField,
       isAddingFile,
       addFileInputField,
+      files: computed(() => store.state.fileStore.files),
     };
   },
 });
