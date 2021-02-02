@@ -50,10 +50,21 @@
           <FolderOpenIcon class="w-5 h-5 text-gray-600" />
           <p class="text-base text-gray-400">JavaScript/Basics</p>
         </div>
-        <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" />
+        <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="openAddFileInputField" />
       </div>
 
       <div class="mt-10 space-y-4">
+        <div v-if="isAddingFile" class="flex items-center text-gray-400 bg-gray-900 border border-gray-700 rounded-lg">
+          <input
+            placeholder="Filename"
+            type="text"
+            class="w-full px-3 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none focus:border-gray-500"
+          >
+          <div class="flex items-center pr-3 space-x-1">
+            <PlusIcon class="w-5 h-5 cursor-pointer hover:text-gray-300" />
+            <XIcon class="w-4 h-4 cursor-pointer hover:text-gray-300" @click="closeAddFileInputField" />
+          </div>
+        </div>
         <SnippetFile isSelected />
         <SnippetFile />
       </div>
@@ -90,6 +101,7 @@ import { defineComponent, nextTick, ref } from 'vue';
 import VueMarkdownIt from 'vue3-markdown-it';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
+import XIcon from '../assets/icons/x.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import CodeIcon from '../assets/icons/code.svg';
@@ -103,6 +115,7 @@ export default defineComponent({
     PlusIcon,
     FolderOpenIcon,
     FolderIcon,
+    XIcon,
     CodeIcon,
     SnippetFile,
     MonacoEditor,
@@ -111,8 +124,9 @@ export default defineComponent({
     const isMarkdownInputOpen = ref(false);
     const markdownInput = '# Hello Markdown';
     const markdownTextarea = ref<HTMLElement | null>(null);
+    const isAddingFile = ref(false);
 
-    const toggleMarkdownInput = () => {
+    const toggleMarkdownInput = (): void => {
       isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
 
       nextTick(() => {
@@ -123,7 +137,7 @@ export default defineComponent({
       });
     };
 
-    const autoAdjustTextArea = (element: HTMLElement) => {
+    const autoAdjustTextArea = (element: HTMLElement): void => {
       element.style.height = 'inherit';
 
       const computed = window.getComputedStyle(element);
@@ -137,12 +151,23 @@ export default defineComponent({
       element.style.height = `${height}px`;
     };
 
+    const openAddFileInputField = (): void => {
+      isAddingFile.value = true;
+    };
+
+    const closeAddFileInputField = (): void => {
+      isAddingFile.value = false;
+    };
+
     return {
       isMarkdownInputOpen,
       markdownInput,
       toggleMarkdownInput,
       autoAdjustTextArea,
       markdownTextarea,
+      openAddFileInputField,
+      closeAddFileInputField,
+      isAddingFile,
     };
   },
 });
