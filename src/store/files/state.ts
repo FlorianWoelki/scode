@@ -1,6 +1,7 @@
 import { File } from '../../db/File';
 
 export default {
+  selectedFile: undefined,
   files: [
     {
       id: '123abcdef',

@@ -53,19 +53,7 @@
         <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="openAddFileInputField" />
       </div>
 
-      <div class="mt-10">
-        <div v-show="isAddingFile" class="flex items-center mb-2 text-gray-400 bg-gray-900 border border-transparent focus-within:border-gray-700">
-          <input
-            ref="addFileInputField"
-            placeholder="Filename"
-            type="text"
-            class="w-full px-8 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none"
-          >
-          <div class="flex items-center pr-3 space-x-1">
-            <PlusIcon class="w-5 h-5 cursor-pointer hover:text-gray-300" />
-            <XIcon class="w-4 h-4 cursor-pointer hover:text-gray-300" @click="closeAddFileInputField" />
-          </div>
-        </div>
+      <div class="mt-4">
         <p v-if="files.length === 0" class="flex items-center justify-center text-sm italic text-gray-600">No files created</p>
         <SnippetFile
           v-else
@@ -73,7 +61,7 @@
           :key="file.id"
           :name="file.name"
           :content="file.content"
-          :isSelected="file.id === $store.state.selectedFile?.id"
+          :isSelected="file.id === selectedFile?.id"
           @click="setSelectedFile(file)"
         />
       </div>
@@ -82,9 +70,9 @@
     <div class="col-span-6 bg-gray-800">
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
-          v-if="$store.state.selectedFile"
-          :title="$store.state.selectedFile.name"
-          :markdownContent="$store.state.selectedFile.content"
+          v-if="selectedFile"
+          :title="selectedFile.name"
+          :markdownContent="selectedFile.content"
         />
         <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
       </div>
@@ -93,15 +81,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
-import XIcon from '../assets/icons/x.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import SnippetFile from '../components/SnippetFile.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
+import { File } from '../db/File';
 
 export default defineComponent({
   components: {
@@ -109,7 +97,6 @@ export default defineComponent({
     PlusIcon,
     FolderOpenIcon,
     FolderIcon,
-    XIcon,
     SnippetFile,
     ContentDisplay,
   },
@@ -117,15 +104,18 @@ export default defineComponent({
     const store = useStore();
 
     const isAddingFile = ref(false);
-    const addFileInputField = ref<HTMLElement | null>(null);
 
     const openAddFileInputField = (): void => {
       isAddingFile.value = true;
-      nextTick(() => {
-        if (addFileInputField.value) {
-          addFileInputField.value.focus();
-        }
-      });
+      const file = {
+        id: 'somethingweird',
+        name: 'undefined',
+        content: '',
+        createdAt: new Date(),
+      } as File;
+
+      store.commit('fileStore/addFile', file);
+      setSelectedFile(file);
     };
 
     const closeAddFileInputField = (): void => {
@@ -133,16 +123,16 @@ export default defineComponent({
     };
 
     const setSelectedFile = (file: File): void => {
-      store.commit('setSelectedFile', file);
+      store.commit('fileStore/setSelectedFile', file);
     };
 
     return {
       openAddFileInputField,
       closeAddFileInputField,
       isAddingFile,
-      addFileInputField,
       setSelectedFile,
       files: computed(() => store.state.fileStore.files),
+      selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
   },
 });
