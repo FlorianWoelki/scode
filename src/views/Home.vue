@@ -73,95 +73,49 @@
           :key="file.id"
           :name="file.name"
           :content="file.content"
+          :isSelected="file.id === $store.state.selectedFile?.id"
+          @click="setSelectedFile(file)"
         />
       </div>
     </div>
 
     <div class="col-span-3 bg-gray-800 p-7">
-      <div class="flex items-start space-x-2">
-        <CodeIcon class="w-5 h-5 mt-2 text-gray-600" />
-        <h1 class="flex flex-col text-2xl text-gray-400">
-          <span>Code a For Loop</span>
-          <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
-        </h1>
-      </div>
-
-      <div class="mt-8">
-        <textarea
-          v-show=isMarkdownInputOpen
-          ref="markdownTextarea"
-          v-model="markdownInput"
-          class="w-full px-2 py-1 text-gray-300 bg-gray-900 max-h-96 focus:outline-none"
-          style="min-height: 5rem"
-          @input="autoAdjustTextArea($event.target)"
-          @blur="toggleMarkdownInput"
-        ></textarea>
-        <VueMarkdownIt v-show="!isMarkdownInputOpen" class="markdown" :source="markdownInput" @dblclick="toggleMarkdownInput" />
-        <MonacoEditor />
-      </div>
+      <ContentDisplay
+        v-if="$store.state.selectedFile"
+        :title="$store.state.selectedFile.name"
+        :markdownContent="$store.state.selectedFile.content"
+      />
+      <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, nextTick, ref } from 'vue';
-import VueMarkdownIt from 'vue3-markdown-it';
+import { useStore } from 'vuex';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import XIcon from '../assets/icons/x.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
-import CodeIcon from '../assets/icons/code.svg';
 import SnippetFile from '../components/SnippetFile.vue';
-import MonacoEditor from '../components/MonacoEditor.vue';
-import { useStore } from 'vuex';
+import ContentDisplay from '../components/ContentDisplay.vue';
 
 export default defineComponent({
   components: {
-    VueMarkdownIt,
     CollectionIcon,
     PlusIcon,
     FolderOpenIcon,
     FolderIcon,
     XIcon,
-    CodeIcon,
     SnippetFile,
-    MonacoEditor,
+    ContentDisplay,
   },
   setup() {
     const store = useStore();
 
-    const isMarkdownInputOpen = ref(false);
-    const markdownInput = '# Hello Markdown';
-    const markdownTextarea = ref<HTMLElement | null>(null);
-
     const isAddingFile = ref(false);
     const addFileInputField = ref<HTMLElement | null>(null);
-
-    const toggleMarkdownInput = (): void => {
-      isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
-
-      nextTick(() => {
-        if (isMarkdownInputOpen.value && markdownTextarea.value) {
-          autoAdjustTextArea(markdownTextarea.value);
-          markdownTextarea.value.focus();
-        }
-      });
-    };
-
-    const autoAdjustTextArea = (element: HTMLElement): void => {
-      element.style.height = 'inherit';
-
-      const computed = window.getComputedStyle(element);
-
-      const height = parseInt(computed.getPropertyValue('border-top-width'), 10) +
-              parseInt(computed.getPropertyValue('padding-top'), 10) +
-              element.scrollHeight +
-              parseInt(computed.getPropertyValue('padding-bottom'), 10) +
-              parseInt(computed.getPropertyValue('border-bottom-width'), 10);
-
-      element.style.height = `${height}px`;
-    };
 
     const openAddFileInputField = (): void => {
       isAddingFile.value = true;
@@ -176,22 +130,18 @@ export default defineComponent({
       isAddingFile.value = false;
     };
 
+    const setSelectedFile = (file: File): void => {
+      store.commit('setSelectedFile', file);
+    };
+
     return {
-      isMarkdownInputOpen,
-      markdownInput,
-      toggleMarkdownInput,
-      autoAdjustTextArea,
-      markdownTextarea,
       openAddFileInputField,
       closeAddFileInputField,
       isAddingFile,
       addFileInputField,
+      setSelectedFile,
       files: computed(() => store.state.fileStore.files),
     };
   },
 });
 </script>
-
-<style lang="scss">
-@import '../styles/markdown.scss';
-</style>

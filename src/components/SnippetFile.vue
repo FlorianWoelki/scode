@@ -2,6 +2,7 @@
   <div
     class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-900"
     :class="{ 'bg-gray-900 border border-gray-700': isSelected }"
+    @click="$emit('click')"
   >
     <div
       class="flex items-center space-x-2"
@@ -19,6 +20,7 @@ import { computed, defineComponent } from 'vue';
 import CodeIcon from '../assets/icons/code.svg';
 
 export default defineComponent({
+  emits: ['click'],
   components: {
     CodeIcon,
   },
