@@ -1,29 +1,25 @@
 <template>
   <div
-    class="px-4 py-3 border border-transparent rounded-lg cursor-pointer hover:bg-gray-900"
-    :class="{ 'bg-gray-900 border-gray-700': isSelected }"
+    class="px-8 py-5 cursor-pointer hover:bg-gray-900"
+    :class="{ 'bg-gray-900': isSelected }"
     @click="$emit('click')"
   >
     <div
       class="flex items-center space-x-2"
       :class="{ 'text-gray-100': isSelected, 'text-gray-500': !isSelected }"
     >
-      <CodeIcon class="w-5 h-5" />
       <p class="text-xl">{{ name }}</p>
     </div>
-    <p class="text-sm text-gray-600">{{ trimmedContent }}</p>
+    <p class="mt-1 text-sm text-gray-600">{{ trimmedContent }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import CodeIcon from '../assets/icons/code.svg';
 
 export default defineComponent({
   emits: ['click'],
-  components: {
-    CodeIcon,
-  },
+
   props: {
     isSelected: {
       type: Boolean,
@@ -38,8 +34,9 @@ export default defineComponent({
       required: true,
     },
   },
+
   setup(props) {
-    const trimmedContent = computed(() => `${props.content.slice(0, 70)}...`);
+    const trimmedContent = computed(() => `${props.content.slice(0, 50)}...`);
 
     return {
       trimmedContent,

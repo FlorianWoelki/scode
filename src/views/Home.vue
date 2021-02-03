@@ -1,8 +1,8 @@
 <template>
-  <div class="grid h-screen grid-cols-5">
-    <div class="col-span-1 bg-gray-700 p-7">
+  <div class="grid h-screen grid-cols-8">
+    <div class="col-span-1 bg-gray-700">
       <!-- SPACES HEADER -->
-      <div class="flex items-center justify-between text-gray-400 uppercase">
+      <div class="flex items-center justify-between text-gray-400 uppercase pt-7 px-7">
         <div class="flex items-center space-x-2">
           <CollectionIcon class="w-5 h-5 text-gray-600" />
           <p class="text-xs font-bold tracking-wider">Spaces</p>
@@ -15,27 +15,27 @@
       <!-- DIRECTORIES AND SPACES -->
       <div class="mt-10 space-y-6">
         <div class="space-y-1">
-          <div class="flex items-center mb-3 space-x-2 text-gray-100">
+          <div class="flex items-center mb-3 space-x-2 text-gray-100 mx-7">
             <FolderOpenIcon class="w-5 h-5" />
             <p class="text-base">JavaScript</p>
           </div>
-          <div class="flex items-center py-1 pl-8 space-x-2 bg-gray-800 border border-gray-600 rounded-lg">
-            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+          <div class="flex items-center py-2 pl-8 space-x-2 bg-gray-800">
+            <div class="w-2 h-2 bg-green-400 rounded-full ml-7"></div>
             <p class="text-base text-gray-100">Basics</p>
           </div>
-          <div class="flex items-center py-1 pl-8 space-x-2">
+          <div class="flex items-center py-1 pl-8 space-x-2 mx-7">
             <div class="w-2 h-2 bg-red-400 rounded-full"></div>
             <p class="text-base text-gray-500">Advanced</p>
           </div>
         </div>
         <div class="space-y-2">
-          <div class="flex items-center space-x-2 text-gray-500">
+          <div class="flex items-center space-x-2 text-gray-500 mx-7">
             <FolderIcon class="w-5 h-5" />
             <p class="text-base">C++</p>
           </div>
         </div>
         <div class="ml-1 space-y-2">
-          <div class="flex items-center py-1 space-x-2">
+          <div class="flex items-center py-1 space-x-2 mx-7">
             <div class="w-2 h-2 bg-red-400 rounded-full"></div>
             <p class="text-base text-gray-500">AWS</p>
           </div>
@@ -43,9 +43,9 @@
       </div>
     </div>
 
-    <div class="z-10 col-span-1 bg-gray-800 shadow-2xl p-7">
+    <div class="z-10 col-span-1 bg-gray-800 shadow-2xl">
       <!-- SNIPPETS HEADER -->
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between pt-7 px-7">
         <div class="flex items-center space-x-2">
           <FolderOpenIcon class="w-5 h-5 text-gray-600" />
           <p class="text-base text-gray-400">JavaScript/Basics</p>
@@ -53,13 +53,13 @@
         <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="openAddFileInputField" />
       </div>
 
-      <div class="mt-10 space-y-4">
-        <div v-show="isAddingFile" class="flex items-center text-gray-400 bg-gray-900 border border-gray-700 rounded-lg focus-within:border-gray-500">
+      <div class="mt-10">
+        <div v-show="isAddingFile" class="flex items-center mb-2 text-gray-400 bg-gray-900 border border-transparent focus-within:border-gray-700">
           <input
             ref="addFileInputField"
             placeholder="Filename"
             type="text"
-            class="w-full px-3 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none"
+            class="w-full px-8 py-2 text-base placeholder-gray-600 bg-transparent focus:outline-none"
           >
           <div class="flex items-center pr-3 space-x-1">
             <PlusIcon class="w-5 h-5 cursor-pointer hover:text-gray-300" />
@@ -79,13 +79,15 @@
       </div>
     </div>
 
-    <div class="col-span-3 bg-gray-800 p-7">
-      <ContentDisplay
-        v-if="$store.state.selectedFile"
-        :title="$store.state.selectedFile.name"
-        :markdownContent="$store.state.selectedFile.content"
-      />
-      <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
+    <div class="col-span-6 bg-gray-800">
+      <div class="w-7/12 m-auto py-7">
+        <ContentDisplay
+          v-if="$store.state.selectedFile"
+          :title="$store.state.selectedFile.name"
+          :markdownContent="$store.state.selectedFile.content"
+        />
+        <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
+      </div>
     </div>
   </div>
 </template>
