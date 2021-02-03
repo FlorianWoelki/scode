@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from 'vue';
+import { defineComponent, nextTick, ref, watch } from 'vue';
 import VueMarkdownIt from 'vue3-markdown-it';
 import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
@@ -51,6 +51,10 @@ export default defineComponent({
     const isMarkdownInputOpen = ref(false);
     const markdownTextarea = ref<HTMLElement | null>(null);
     const markdownInput = ref(props.markdownContent);
+
+    watch(() => props.markdownContent, (newValue) => {
+      markdownInput.value = newValue;
+    });
 
     const toggleMarkdownInput = (): void => {
       isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
