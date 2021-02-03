@@ -90,4 +90,8 @@ export default defineComponent({
 
 <style lang="scss">
 @import '../styles/markdown.scss';
+
+.monaco-aria-container {
+  display: none;
+}
 </style>

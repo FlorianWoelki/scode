@@ -1,7 +1,7 @@
 <template>
   <div
-    class="px-4 py-3 rounded-lg cursor-pointer hover:bg-gray-900"
-    :class="{ 'bg-gray-900 border border-gray-700': isSelected }"
+    class="px-4 py-3 border border-transparent rounded-lg cursor-pointer hover:bg-gray-900"
+    :class="{ 'bg-gray-900 border-gray-700': isSelected }"
     @click="$emit('click')"
   >
     <div
