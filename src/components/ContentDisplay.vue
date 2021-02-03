@@ -1,8 +1,8 @@
 <template>
   <div class="flex items-start space-x-2">
     <CodeIcon class="w-5 h-5 mt-2 text-gray-600" />
-    <h1 class="flex flex-col text-2xl text-gray-400">
-      <span>{{ title }}</span>
+    <h1 class="flex flex-col w-full text-2xl text-gray-400">
+      <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
       <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
     </h1>
   </div>
@@ -30,6 +30,8 @@ import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
 
 export default defineComponent({
+  emits: ['saveFileName'],
+
   components: {
     VueMarkdownIt,
     CodeIcon,
@@ -41,17 +43,22 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    title: {
+    name: {
       type: String,
       required: true,
     },
   },
 
-  setup(props) {
+  setup(props, { emit }) {
+    const nameInput = ref(props.name);
+
     const isMarkdownInputOpen = ref(false);
     const markdownTextarea = ref<HTMLElement | null>(null);
     const markdownInput = ref(props.markdownContent);
 
+    watch(() => props.name, (newValue) => {
+      nameInput.value = newValue;
+    });
     watch(() => props.markdownContent, (newValue) => {
       markdownInput.value = newValue;
     });
@@ -65,6 +72,12 @@ export default defineComponent({
           markdownTextarea.value.focus();
         }
       });
+    };
+
+    const saveFileName = (event: KeyboardEvent): void => {
+      const target = event.target as HTMLElement;
+      target.blur();
+      emit('saveFileName', nameInput.value);
     };
 
     const autoAdjustTextArea = (element: HTMLElement): void => {
@@ -82,11 +95,13 @@ export default defineComponent({
     };
 
     return {
+      nameInput,
       toggleMarkdownInput,
       autoAdjustTextArea,
       isMarkdownInputOpen,
       markdownTextarea,
       markdownInput,
+      saveFileName,
     };
   },
 });

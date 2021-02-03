@@ -50,7 +50,7 @@
           <FolderOpenIcon class="w-5 h-5 text-gray-600" />
           <p class="text-base text-gray-400">JavaScript/Basics</p>
         </div>
-        <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="openAddFileInputField" />
+        <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="addFile" />
       </div>
 
       <div class="mt-4">
@@ -71,8 +71,9 @@
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
           v-if="selectedFile"
-          :title="selectedFile.name"
+          :name="selectedFile.name"
           :markdownContent="selectedFile.content"
+          @saveFileName="saveFileName(selectedFile.id, $event)"
         />
         <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
       </div>
@@ -103,10 +104,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const isAddingFile = ref(false);
-
-    const openAddFileInputField = (): void => {
-      isAddingFile.value = true;
+    const addFile = (): void => {
       const file = {
         id: 'somethingweird',
         name: 'undefined',
@@ -118,19 +116,19 @@ export default defineComponent({
       setSelectedFile(file);
     };
 
-    const closeAddFileInputField = (): void => {
-      isAddingFile.value = false;
-    };
-
     const setSelectedFile = (file: File): void => {
+      console.log(file);
       store.commit('fileStore/setSelectedFile', file);
     };
 
+    const saveFileName = (id: string, name: string): void => {
+      store.commit('fileStore/updateFile', { id, file: { name } });
+    };
+
     return {
-      openAddFileInputField,
-      closeAddFileInputField,
-      isAddingFile,
+      addFile,
       setSelectedFile,
+      saveFileName,
       files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
