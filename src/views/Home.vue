@@ -1,6 +1,6 @@
 <template>
-  <div class="grid h-screen grid-cols-8">
-    <div class="col-span-1 bg-gray-700">
+  <div class="grid h-screen grid-cols-12">
+    <div class="col-span-2 bg-gray-700">
       <!-- SPACES HEADER -->
       <div class="flex items-center justify-between text-gray-400 uppercase pt-7 px-7">
         <div class="flex items-center space-x-2">
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="z-10 col-span-1 bg-gray-800 shadow-2xl">
+    <div class="z-10 col-span-2 bg-gray-800 shadow-2xl">
       <!-- SNIPPETS HEADER -->
       <div class="flex items-center justify-between pt-7 px-7">
         <div class="flex items-center space-x-2">
@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="col-span-6 bg-gray-800">
+    <div class="col-span-8 bg-gray-800">
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
           v-if="selectedFile"
