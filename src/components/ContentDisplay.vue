@@ -8,34 +8,25 @@
   </div>
 
   <div class="mt-8">
-    <textarea
-      v-show=isMarkdownInputOpen
-      ref="markdownTextarea"
-      v-model="markdownInput"
-      class="w-full px-2 py-1 text-gray-300 bg-gray-900 max-h-96 focus:outline-none"
-      style="min-height: 5rem"
-      @input="autoAdjustTextArea($event.target)"
-      @blur="toggleMarkdownInput"
-    ></textarea>
+    <MarkdownEditor class="mb-8" />
 
-    <VueMarkdownIt v-show="!isMarkdownInputOpen" class="markdown" :source="markdownInput" @dblclick="toggleMarkdownInput" />
     <MonacoEditor />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, nextTick, ref, watch } from 'vue';
-import VueMarkdownIt from 'vue3-markdown-it';
 import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
+import MarkdownEditor from './MarkdownEditor.vue';
 
 export default defineComponent({
   emits: ['saveFileName'],
 
   components: {
-    VueMarkdownIt,
     CodeIcon,
     MonacoEditor,
+    MarkdownEditor,
   },
 
   props: {
@@ -52,8 +43,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const nameInput = ref(props.name);
 
-    const isMarkdownInputOpen = ref(false);
-    const markdownTextarea = ref<HTMLElement | null>(null);
     const markdownInput = ref(props.markdownContent);
 
     watch(() => props.name, (newValue) => {
@@ -62,17 +51,6 @@ export default defineComponent({
     watch(() => props.markdownContent, (newValue) => {
       markdownInput.value = newValue;
     });
-
-    const toggleMarkdownInput = (): void => {
-      isMarkdownInputOpen.value = !isMarkdownInputOpen.value;
-
-      nextTick(() => {
-        if (isMarkdownInputOpen.value && markdownTextarea.value) {
-          autoAdjustTextArea(markdownTextarea.value);
-          markdownTextarea.value.focus();
-        }
-      });
-    };
 
     const saveFileName = (event: KeyboardEvent): void => {
       const target = event.target as HTMLElement;
@@ -96,10 +74,7 @@ export default defineComponent({
 
     return {
       nameInput,
-      toggleMarkdownInput,
       autoAdjustTextArea,
-      isMarkdownInputOpen,
-      markdownTextarea,
       markdownInput,
       saveFileName,
     };

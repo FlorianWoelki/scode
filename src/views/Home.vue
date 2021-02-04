@@ -117,7 +117,6 @@ export default defineComponent({
     };
 
     const setSelectedFile = (file: File): void => {
-      console.log(file);
       store.commit('fileStore/setSelectedFile', file);
     };
 

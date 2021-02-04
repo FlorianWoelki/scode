@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-gray-500 leading-normal;
+  @apply text-gray-500 leading-normal font-mono;
 
   > *:first-child {
     @apply mt-0;
@@ -10,7 +10,7 @@
   }
 
   > ul > * + *, > ol > * + * {
-    @apply mt-4;
+    @apply mt-2;
   }
 
   > hr {
@@ -32,12 +32,20 @@
     @apply inline-block rounded-sm bg-gray-900 text-sm py-1 px-1 leading-none whitespace-nowrap text-gray-400 font-mono align-baseline font-normal;
   }
 
+  > ul li {
+    @apply list-disc;
+  }
+
+  > ol li {
+    @apply list-decimal;
+  }
+
   > blockquote {
     @apply italic text-gray-600 text-sm;
   }
 
   > h1 {
-    @apply mb-1 leading-none text-gray-400 font-medium text-3xl;
+    @apply mb-4 leading-none text-gray-400 font-medium text-3xl;
   }
   > h2 {
     @apply mt-16 mb-4 text-gray-400 leading-none font-normal text-2xl;
@@ -56,6 +64,6 @@
   }
 
   > p, > blockquote > p {
-    @apply text-base mt-6;
+    @apply text-base mt-4;
   }
 }
