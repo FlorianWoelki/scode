@@ -6,15 +6,10 @@ export default {
     {
       id: '123abcdef',
       name: 'Some other test file',
-      content: `# Morning 
+      content: `# Morning
 ## Some test
-
 * Hllo
-* test
-
-def loop():
-  for i in range(0, 10):
-    print(i)`,
+* test`,
       createdAt: new Date(),
     },
     {

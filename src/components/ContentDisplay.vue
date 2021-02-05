@@ -8,7 +8,9 @@
   </div>
 
   <div class="mt-8">
-    <MarkdownEditor class="mb-8" />
+    <Editor />
+
+    <!-- <MarkdownEditor class="mb-8" :content="markdownInput" /> -->
 
     <MonacoEditor />
   </div>
@@ -18,7 +20,8 @@
 import { defineComponent, nextTick, ref, watch } from 'vue';
 import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
-import MarkdownEditor from './MarkdownEditor.vue';
+// import MarkdownEditor from './MarkdownEditor.vue';
+import Editor from './Editor.vue';
 
 export default defineComponent({
   emits: ['saveFileName'],
@@ -26,7 +29,8 @@ export default defineComponent({
   components: {
     CodeIcon,
     MonacoEditor,
-    MarkdownEditor,
+    // MarkdownEditor,
+    Editor,
   },
 
   props: {
