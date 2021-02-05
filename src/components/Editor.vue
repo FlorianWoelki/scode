@@ -58,11 +58,6 @@ export default defineComponent({
         sel = window.getSelection();
         sel?.removeAllRanges();
         sel?.addRange(range);
-      } else if (typeof document.body.createTextRange !== 'undefined') {
-        range = document.body.createTextRange();
-        range.moveToElementText(dom);
-        range.collapse(false);
-        range.select();
       }
     };
 
