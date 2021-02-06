@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { resolvePackageEntry } from 'vite';
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 
 export default defineComponent({
@@ -103,6 +104,11 @@ export default defineComponent({
         } else if (currentInput.startsWith('#')) {
           nextTick(() => exec('formatBlock', '<h1>'));
         }
+      }
+
+      if (/[#]{1,6}\s/gm.test(currentInput)) {
+        target.innerHTML = target.innerHTML.replace(/[#]{1,6}\s/g, '');
+        placeCaretAtEnd(target);
       }
 
       if (currentInput === '') {

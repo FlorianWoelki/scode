@@ -42,18 +42,39 @@
 
   > h1 {
     @apply mt-8 mb-4 leading-none text-gray-400 font-medium text-2xl;
+
+    &:before {
+      content: '#';
+      @apply absolute -ml-7 text-gray-700;
+    }
   }
   > h2 {
     @apply mt-8 mb-4 text-gray-400 leading-none font-normal text-xl;
+
+    &:before {
+      content: '##';
+      @apply absolute -ml-10 text-gray-700;
+    }
   }
   > h2 + h3 {
     @apply mt-6;
   }
   > h3 {
     @apply mt-6 -mb-3 text-gray-400 leading-tight font-medium text-lg;
+
+    &:before {
+      content: '###';
+      @apply absolute -ml-12 text-gray-700;
+    }
   }
   > h4 {
     @apply mt-4 mb-0 text-gray-400 leading-snug font-medium text-lg;
+
+    &:before {
+      content: '####';
+      margin-left: -3.75rem;
+      @apply absolute text-gray-700;
+    }
   }
   > h1 + p {
     @apply mt-0 mb-4;
