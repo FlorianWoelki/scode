@@ -15,10 +15,10 @@
   }
 
   ul, ol {
-    @apply mt-4;
+    @apply my-4;
   }
 
-  > ul > * + *, > ol > * + * {
+  ul > * + *, ol > * + * {
     @apply mt-2;
   }
 
@@ -33,7 +33,7 @@
     }
   }
 
-  ul, {
+  ul {
     @apply list-disc;
   }
 
@@ -89,7 +89,7 @@
     @apply mt-0 mb-4;
   }
 
-  > p, > blockquote > p {
+  > p, > blockquote > p, div {
     @apply text-sm mt-4;
   }
 }

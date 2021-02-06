@@ -40,10 +40,15 @@ export default defineComponent({
     });
 
     const handleInput = (e: InputEvent | KeyboardEvent) => {
-      const { firstChild, innerText } = e.target as HTMLElement;
+      const { firstChild } = e.target as HTMLElement;
 
       if (firstChild && firstChild.nodeType === 3) exec('formatBlock', '<p>');
       else if (editor.value!.innerHTML === '<br>') editor.value!.innerHTML = '';
+
+      if (/<div><br><\/div>/gm.test(editor.value!.innerHTML)) {
+        editor.value!.innerHTML = editor.value!.innerHTML.replace(/<div><br><\/div>/gm, '<p><br></p>');
+        placeCaretAtEnd(editor.value!);
+      }
 
       emit('input', editor.value!.innerHTML);
     };
@@ -71,7 +76,6 @@ export default defineComponent({
           nextTick(() => exec('formatBlock', 'div'));
           nextTick(() => exec('insertUnorderedList'));
           const ulify = /\*/gm;
-          console.log(target.innerHTML);
           const html = target.innerHTML.replace(ulify, '<br>');
           target.innerHTML = html;
           placeCaretAtEnd(target);
