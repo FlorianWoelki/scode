@@ -67,6 +67,16 @@ export default defineComponent({
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
 
       if (e.key.toLowerCase() === ' ') {
+        if (currentInput.startsWith('*')) {
+          nextTick(() => exec('formatBlock', 'div'));
+          nextTick(() => exec('insertUnorderedList'));
+          const ulify = /\*/gm;
+          console.log(target.innerHTML);
+          const html = target.innerHTML.replace(ulify, '<br>');
+          target.innerHTML = html;
+          placeCaretAtEnd(target);
+        }
+
         if (/_[A-Za-z0-9]+_/gim.test(currentInput)) {
           const italic = /_(.*?)_/gm;
           const html = target.innerHTML.replace(italic, '<i>$1</i>');
@@ -111,7 +121,7 @@ export default defineComponent({
         placeCaretAtEnd(target);
       }
 
-      if (currentInput === '') {
+      if (currentInput === '' && queryCommandValue('insertUnorderedList') === 'false') {
         nextTick(() => exec('formatBlock', '<p>'));
       }
     };

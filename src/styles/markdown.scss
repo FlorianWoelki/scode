@@ -1,3 +1,8 @@
+[contenteditable]:empty::before {
+  content: 'Insert your markdown';
+  @apply cursor-text text-gray-600 italic;
+}
+
 .markdown {
   @apply text-gray-500 leading-normal font-mono text-sm;
 
@@ -26,6 +31,10 @@
     &:hover {
       @apply text-gray-600;
     }
+  }
+
+  ul, {
+    @apply list-disc;
   }
 
   > p strong, > ul strong {
