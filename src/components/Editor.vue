@@ -26,7 +26,7 @@ export default defineComponent({
       return document.execCommand(command, false, value);
     };
 
-    const queryCommandValue = (command: string) => {
+    const queryCommandValue = (command: string): string => {
       return document.queryCommandValue(command);
     };
 
@@ -65,14 +65,27 @@ export default defineComponent({
       const target = e.target as HTMLElement;
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
 
-      if (/(\*\*)$/gm.test(currentInput)) {
-        nextTick(() => exec('bold'));
-      }
-      if (/(_)$/gm.test(currentInput)) {
-        nextTick(() => exec('italic'));
-      }
-
       if (e.key.toLowerCase() === ' ') {
+        /** if (/_(.*?)_/gm.test(currentInput)) {
+          const italic = /_(.*?)_/gm;
+          const html = target.innerHTML.replace(italic, '<i>$1</i>');
+          nextTick(() => exec('italic'));
+          target.innerHTML = html;
+          placeCaretAtEnd(target);
+        } else if (queryCommandValue('italic') !== 'false') {
+          nextTick(() => exec('italic'));
+        } **/
+
+        if (/\*\*(.*?)\*\*/gm.test(currentInput)) {
+          const bold = /\*\*(.*?)\*\*/gm;
+          const html = target.innerHTML.replace(bold, '<strong>$1</strong>');
+          nextTick(() => exec('bold'));
+          target.innerHTML = html;
+          placeCaretAtEnd(target);
+        } else if (queryCommandValue('bold') !== 'false') {
+          nextTick(() => exec('bold'));
+        }
+
         if (currentInput.startsWith('>')) {
           nextTick(() => exec('formatBlock', 'blockquote'));
         }
