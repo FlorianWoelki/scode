@@ -66,7 +66,7 @@ export default defineComponent({
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
 
       if (e.key.toLowerCase() === ' ') {
-        /** if (/_(.*?)_/gm.test(currentInput)) {
+        if (/_[A-Za-z0-9]+_/gim.test(currentInput)) {
           const italic = /_(.*?)_/gm;
           const html = target.innerHTML.replace(italic, '<i>$1</i>');
           nextTick(() => exec('italic'));
@@ -74,7 +74,7 @@ export default defineComponent({
           placeCaretAtEnd(target);
         } else if (queryCommandValue('italic') !== 'false') {
           nextTick(() => exec('italic'));
-        } **/
+        }
 
         if (/\*\*(.*?)\*\*/gm.test(currentInput)) {
           const bold = /\*\*(.*?)\*\*/gm;
