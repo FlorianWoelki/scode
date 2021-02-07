@@ -81,15 +81,26 @@ export default defineComponent({
       });
     };
 
+    const replaceOrderedListCharacters = (target: HTMLElement): void => {
+      setTimeout(() => {
+        target.innerHTML = target.innerHTML.replace(/1\./gm, '').replace('&nbsp;', '<br>');
+        placeCaretAtEnd(target);
+      });
+    };
+
     const handleKeydown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
 
       if (e.key.toLowerCase() === ' ') {
         if (currentInput.startsWith('*')) {
-          nextTick(() => exec('formatBlock', 'div'));
           nextTick(() => exec('insertUnorderedList'));
           replaceUnorderedListCharacters(target);
+        }
+
+        if (currentInput.startsWith('1.')) {
+          nextTick(() => exec('insertOrderedList'));
+          replaceOrderedListCharacters(target);
         }
 
         if (/_[A-Za-z0-9]+_/gim.test(currentInput)) {

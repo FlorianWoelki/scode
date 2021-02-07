@@ -36,6 +36,9 @@
   ul {
     @apply list-disc;
   }
+  ol {
+    @apply list-decimal;
+  }
 
   > p strong, > ul strong {
     @apply font-semibold;
