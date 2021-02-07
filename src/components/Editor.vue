@@ -67,6 +67,13 @@ export default defineComponent({
       }
     };
 
+    const replaceHeaderCharacters = (target: HTMLElement): void => {
+      setTimeout(() => {
+        target.innerHTML = target.innerHTML.replace(/[#]{1,6}/g, '').replace('&nbsp;', '<br>');
+        placeCaretAtEnd(target);
+      });
+    };
+
     const handleKeydown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
@@ -107,27 +114,28 @@ export default defineComponent({
 
         if (currentInput.startsWith('######')) {
           nextTick(() => exec('formatBlock', '<h6>'));
+          replaceHeaderCharacters(target);
         } else if (currentInput.startsWith('#####')) {
           nextTick(() => exec('formatBlock', '<h5>'));
+          replaceHeaderCharacters(target);
         } else if (currentInput.startsWith('####')) {
           nextTick(() => exec('formatBlock', '<h4>'));
+          replaceHeaderCharacters(target);
         } else if (currentInput.startsWith('###')) {
           nextTick(() => exec('formatBlock', '<h3>'));
+          replaceHeaderCharacters(target);
         } else if (currentInput.startsWith('##')) {
           nextTick(() => exec('formatBlock', '<h2>'));
+          replaceHeaderCharacters(target);
         } else if (currentInput.startsWith('#')) {
           nextTick(() => exec('formatBlock', '<h1>'));
+          replaceHeaderCharacters(target);
         }
       }
 
-      if (/[#]{1,6}\s/gm.test(currentInput)) {
-        target.innerHTML = target.innerHTML.replace(/[#]{1,6}\s/g, '');
-        placeCaretAtEnd(target);
-      }
-
-      if (currentInput === '' && queryCommandValue('insertUnorderedList') === 'false') {
+      /* if (currentInput === '' && queryCommandValue('insertUnorderedList') === 'false') {
         nextTick(() => exec('formatBlock', '<p>'));
-      }
+      } */
     };
 
     return {
