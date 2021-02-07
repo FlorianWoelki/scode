@@ -74,6 +74,13 @@ export default defineComponent({
       });
     };
 
+    const replaceUnorderedListCharacters = (target: HTMLElement): void => {
+      setTimeout(() => {
+        target.innerHTML = target.innerHTML.replace(/\*/gm, '').replace('&nbsp;', '<br>');
+        placeCaretAtEnd(target);
+      });
+    };
+
     const handleKeydown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const currentInput = document.getSelection()!.anchorNode!.textContent!;
@@ -82,10 +89,7 @@ export default defineComponent({
         if (currentInput.startsWith('*')) {
           nextTick(() => exec('formatBlock', 'div'));
           nextTick(() => exec('insertUnorderedList'));
-          const ulify = /\*/gm;
-          const html = target.innerHTML.replace(ulify, '<br>');
-          target.innerHTML = html;
-          placeCaretAtEnd(target);
+          replaceUnorderedListCharacters(target);
         }
 
         if (/_[A-Za-z0-9]+_/gim.test(currentInput)) {
