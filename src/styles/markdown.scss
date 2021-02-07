@@ -45,7 +45,7 @@
   }
 
   > p code, > ul li *:not(pre) code, > ul li > code, > ol li *:not(pre) code, > ol li > code {
-    @apply inline-block rounded-sm bg-gray-900 text-sm py-1 px-1 leading-none whitespace-nowrap text-gray-400 font-mono align-baseline;
+    @apply inline-block rounded-sm bg-gray-900 text-sm py-1 px-2 leading-none whitespace-nowrap text-gray-500 font-mono align-baseline;
   }
 
   > blockquote {
