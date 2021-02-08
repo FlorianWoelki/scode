@@ -72,6 +72,7 @@ export default defineComponent({
     const orderedListPattern = /^\s{0,9}(\d)+\.\s/g;
     const headerPattern = /^(#){1,6}\s/g;
     const inlineCodePattern = /(`){1}(.+?)(`){1}/g;
+    const strikethroughPattern = /(?:~|_){2}(.+?)(?:~|_){2}/g;
 
     const replaceHeaderCharacters = (target: HTMLElement): void => {
       setTimeout(() => {
@@ -119,6 +120,18 @@ export default defineComponent({
         } else if (queryCommandValue('italic') !== 'false') {
           nextTick(() => exec('italic'));
         } */
+
+        // strikethrough
+        const strikethroughMatch = strikethroughPattern.exec(currentInput);
+        if (strikethroughMatch) {
+          const [annotatedText, matchedText] = strikethroughMatch;
+          if (!currentInput.match(/^([~_ \n]+)$/g)) {
+            setTimeout(() => {
+              target.innerHTML = target.innerHTML.replace(annotatedText, `<del>${matchedText}</del>`);
+              placeCaretAtEnd(target);
+            }, 0);
+          }
+        }
 
         // inline code
         const inlineCodeMatch = inlineCodePattern.exec(currentInput);
