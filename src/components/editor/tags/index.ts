@@ -5,6 +5,7 @@ import { OrderedList } from './OrderedList';
 import { UnorderedList } from './UnorderedList';
 import { Italic } from './Italic';
 import { Bold } from './Bold';
+import { Link } from './Link';
 
 export default [
   new Strikethrough(),
@@ -14,4 +15,5 @@ export default [
   new UnorderedList(),
   new Italic(),
   new Bold(),
+  new Link(),
 ];
