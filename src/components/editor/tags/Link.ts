@@ -9,11 +9,14 @@ export class Link extends TagAction {
       return;
     }
 
+    const matchedText = input.match(this.pattern)![0];
     const hrefText = input.match(/(?:\[(.*?)\])/g)![0].replace(/\[|\]/g, '');
     const hrefLink = input.match(/(?:\((.*?)\))/g)![0].replace(/(|)/g, '');
 
     setTimeout(() => {
-      target.innerHTML = target.innerHTML.replace(input, `<a href="${hrefLink}">${hrefText}</a>`);
+      console.log(target.innerHTML);
+      target.innerHTML = target.innerHTML.replace(input.substring(match.index, match.index + matchedText.length), `<a href="${hrefLink}">${hrefText}</a>`);
+      console.log(target.innerHTML);
       this.placeCaretAtEnd(target);
     }, 0);
   }
