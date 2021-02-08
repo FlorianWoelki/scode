@@ -69,6 +69,7 @@ export default defineComponent({
     const boldPattern = /(\*|_){2}(.+?)(?:\1){2}/g;
     const italicPattern = /(\*|_){1}(.+?)(?:\1){1}/g;
     const unorderedListPattern = /^\s{0,9}(-|\*){1}\s/;
+    const orderedListPattern = /^\s{0,9}(\d)+\.\s/g;
     const headerPattern = /^(#){1,6}\s/g;
     const inlineCodePattern = /(`){1}(.+?)(`){1}/g;
 
@@ -141,6 +142,21 @@ export default defineComponent({
           }, 0);
         }
 
+        // ordered list
+        const orderedListMatch = orderedListPattern.exec(currentInput);
+        if (orderedListMatch) {
+          setTimeout(() => {
+            const depth = currentInput.split('. ')[0].split('').filter(e => /\s/gi.test(e)).length;
+            const replaceText = currentInput.split('. ').splice(1, 1).join('');
+            target.innerHTML = target.innerHTML.replace(currentInput, replaceText);
+            placeCaretAtEnd(target);
+            nextTick(() => {
+              exec('insertOrderedList');
+              placeCaretAtEnd(target);
+            });
+          }, 0);
+        }
+
         // unordered list
         const unorderedListMatch = unorderedListPattern.exec(currentInput);
         if (unorderedListMatch) {
@@ -194,10 +210,6 @@ export default defineComponent({
         /* } else if (queryCommandValue('bold') !== 'false') {
           nextTick(() => exec('bold'));
         } */
-
-        if (currentInput.startsWith('>')) {
-          nextTick(() => exec('formatBlock', 'blockquote'));
-        }
 
         /* if (currentInput.startsWith('######')) {
           nextTick(() => exec('formatBlock', '<h6>'));
