@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
-import tagActions from './editor/tags';
+import tagActions from './tags';
 
 export default defineComponent({
   props: {
@@ -68,10 +68,8 @@ export default defineComponent({
       const selection = document.getSelection()!;
       const currentInput = selection.anchorNode!.textContent!;
 
-      if (e.key.toLowerCase() === ' ') {
-        for (const tagAction of tagActions) {
-          tagAction.run(currentInput, target);
-        }
+      for (const tagAction of tagActions) {
+        tagAction.run(currentInput, target);
       }
     };
 

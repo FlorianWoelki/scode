@@ -21,7 +21,7 @@ import { defineComponent, nextTick, ref, watch } from 'vue';
 import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
 // import MarkdownEditor from './MarkdownEditor.vue';
-import Editor from './Editor.vue';
+import Editor from './editor/Editor.vue';
 
 export default defineComponent({
   emits: ['saveFileName'],
