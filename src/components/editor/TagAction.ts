@@ -1,10 +1,12 @@
+import { getSelectionOffset } from './selection';
+
 export abstract class TagAction {
   public pattern!: RegExp;
 
   public abstract run(input: string, target: HTMLElement): void;
 
   protected placeCaretAtEnd(target: HTMLElement): void {
-    let range: Range;
+    /* let range: Range;
     let sel: Selection | null;
     target.focus();
     if (typeof window.getSelection !== 'undefined' && typeof document.createRange !== 'undefined') {
@@ -14,7 +16,7 @@ export abstract class TagAction {
       sel = window.getSelection();
       sel?.removeAllRanges();
       sel?.addRange(range);
-    }
+    } */
   }
 
   protected exec(command: string, value?: string) {

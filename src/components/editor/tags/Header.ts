@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class Header extends TagAction {
@@ -10,13 +11,13 @@ export class Header extends TagAction {
       return;
     }
 
+    const [start, end] = getSelectionOffset(target);
     const size = match[0].trim().length;
     setTimeout(() => {
       nextTick(() => {
         this.exec('formatBlock', `<h${size}>`);
         target.innerHTML = target.innerHTML.replace(/#{1,6}\s/g, '');
-        // target.innerHTML = target.innerHTML.replace(input, '');
-        this.placeCaretAtEnd(target);
+        setSelectionOffset(target, start - size, end - size);
       });
     }, 0);
   }

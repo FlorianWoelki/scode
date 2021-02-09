@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class Italic extends TagAction {
@@ -13,11 +14,13 @@ export class Italic extends TagAction {
       return;
     }
 
+    const [start, end] = getSelectionOffset(target);
     const [annotatedText, , matchedText] = match;
     if (input[match.index] !== input[match.index + 1]) {
       setTimeout(() => {
         target.innerHTML = target.innerHTML.replace(annotatedText, `<i>${matchedText}</i>`);
-        this.placeCaretAtEnd(target);
+        setSelectionOffset(target, start - 1, end - 1);
+        // this.placeCaretAtEnd(target);
       }, 0);
     }
   }

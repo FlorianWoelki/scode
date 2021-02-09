@@ -1,3 +1,4 @@
+import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class Strikethrough extends TagAction {
@@ -14,9 +15,11 @@ export class Strikethrough extends TagAction {
       return;
     }
 
+    const [start, end] = getSelectionOffset(target);
     setTimeout(() => {
       target.innerHTML = target.innerHTML.replace(annotatedText, `<del>${matchedText}</del>`);
-      this.placeCaretAtEnd(target);
+      setSelectionOffset(target, start - 3, end - 3);
+      // this.placeCaretAtEnd(target);
     }, 0);
   }
 }

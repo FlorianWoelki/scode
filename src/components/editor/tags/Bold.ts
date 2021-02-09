@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class Bold extends TagAction {
@@ -13,11 +14,13 @@ export class Bold extends TagAction {
       return;
     }
 
+    const [start, end] = getSelectionOffset(target);
     const [annotatedText, , matchedText] = match;
     if (!input.match(/^([*_ \n]+)$/g)) {
       setTimeout(() => {
         target.innerHTML = target.innerHTML.replace(annotatedText, `<strong>${matchedText}</strong>`);
-        this.placeCaretAtEnd(target);
+        setSelectionOffset(target, start - 3, end - 3); // 4 = extracharacters
+        // this.placeCaretAtEnd(target);
       }, 0);
     }
   }
