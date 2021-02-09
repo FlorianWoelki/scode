@@ -12,9 +12,12 @@ export class Header extends TagAction {
 
     const size = match[0].trim().length;
     setTimeout(() => {
-      target.innerHTML = target.innerHTML.replace(input, input.slice(size + 1));
-      this.placeCaretAtEnd(target);
-      nextTick(() => this.exec('formatBlock', `<h${size}>`));
+      nextTick(() => {
+        this.exec('formatBlock', `<h${size}>`);
+        target.innerHTML = target.innerHTML.replace(/#{1,6}\s/g, '');
+        // target.innerHTML = target.innerHTML.replace(input, '');
+        this.placeCaretAtEnd(target);
+      });
     }, 0);
   }
 }
