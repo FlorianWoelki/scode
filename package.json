@@ -9,12 +9,14 @@
   "dependencies": {
     "dexie": "^3.0.3",
     "monaco-editor": "0.22.0",
+    "remarkable": "^2.0.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
     "@types/quill": "^2.0.4",
+    "@types/remarkable": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "@vitejs/plugin-vue": "^1.1.2",

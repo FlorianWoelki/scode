@@ -7,6 +7,7 @@ export default {
       id: '123abcdef',
       name: 'Some other test file',
       content: `# Morning
+**test** test test **test**
 ## Some test
 * Hllo
 * test`,
@@ -19,8 +20,8 @@ export default {
 This content represents a small test content file.
 
 def loop():
-  for i in range(0, 10):
-    print(i)`,
+for i in range(0, 10):
+print(i)`,
       createdAt: new Date(),
     },
   ] as File[],

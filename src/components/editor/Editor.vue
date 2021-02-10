@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
+import { Remarkable } from 'remarkable';
 import tagActions from './tags';
 
 export default defineComponent({
@@ -22,17 +23,18 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const editor = ref<HTMLElement | null>(null);
+    const md = new Remarkable();
 
     const exec = (command: string, value?: string) => {
       return document.execCommand(command, false, value);
     };
 
     watch(() => props.value, (newValue) => {
-      editor.value!.innerHTML = newValue;
+      editor.value!.innerHTML = md.render(props.value);
     });
 
     onMounted(() => {
-      editor.value!.innerHTML = props.value;
+      editor.value!.innerHTML = md.render(props.value);
     });
 
     const handleInput = (e: InputEvent | KeyboardEvent) => {

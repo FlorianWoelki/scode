@@ -1,4 +1,3 @@
-import { nextTick } from 'vue';
 import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 

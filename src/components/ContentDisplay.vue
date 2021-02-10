@@ -8,7 +8,7 @@
   </div>
 
   <div class="mt-8">
-    <Editor />
+    <Editor :value="markdownContent" />
 
     <!-- <MarkdownEditor class="mb-8" :content="markdownInput" /> -->
 
