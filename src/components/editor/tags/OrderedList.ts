@@ -12,14 +12,11 @@ export class OrderedList extends TagAction {
     }
 
     setTimeout(() => {
+      const [start, end, node] = getSelectionOffset(target);
       const depth = input.split('. ')[0].split('').filter(e => /\s/gi.test(e)).length;
-      // const replaceText = input.split('. ').splice(0, 1).join('');
-      const [start, end] = getSelectionOffset(target);
-      target.innerHTML = target.innerHTML.replace(input.slice(0, 2), '');
-      nextTick(() => {
-        this.exec('insertOrderedList');
-        setSelectionOffset(target, start - 2, end - 2);
-      });
+      const replaceText = node.textContent!.split('. ').splice(1, 2).join('');
+      target.innerHTML = target.innerHTML.replace(`<p>${node.textContent}</p>`, `<ol><li>${replaceText}</li></ol>`);
+      setSelectionOffset(target, start - 3, end - 3);
     }, 0);
   }
 }
