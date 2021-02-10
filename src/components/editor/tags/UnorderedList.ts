@@ -11,23 +11,17 @@ export class UnorderedList extends TagAction {
       return;
     }
 
-    console.log(input.split('* '));
     if (!(input.split('- ')[1]) && !(input.split('* ')[1])) {
       return;
     }
 
     setTimeout(() => {
-      const offsetText = /^\s{0,9}(\*){1}\s/.test(input) ? input.replace('*', '-') : input;
+      const [start, end, node] = getSelectionOffset(target);
+      const offsetText = /^\s{0,9}(\*){1}\s/.test(node.textContent!) ? node.textContent!.replace('*', '-') : node.textContent!;
       // const depth = offsetText.split('- ')[0].split('').filter((e) => /\s/gi.test(e)).length;
-      const replaceText = offsetText.split('- ').length > 1 ? offsetText.split('- ').splice(1, 1).join('') : offsetText;
-      const [start, end] = getSelectionOffset(target);
-      target.innerHTML = target.innerHTML.replace(input, replaceText);
-      // this.placeCaretAtEnd(target);
-      nextTick(() => {
-        this.exec('insertUnorderedList');
-        setSelectionOffset(target, start - 2, end - 2);
-        // this.placeCaretAtEnd(target);
-      });
+      const replaceText = offsetText.split('- ').length > 1 ? offsetText.split('- ').splice(1, 2).join('') : offsetText;
+      target.innerHTML = target.innerHTML.replace(`<p>${node.textContent}</p>`, `<ul><li>${replaceText}</li></ul>`);
+      setSelectionOffset(target, start - 2, end - 2);
     }, 0);
   }
 }

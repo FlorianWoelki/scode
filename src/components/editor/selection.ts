@@ -119,9 +119,10 @@ function getAbsoluteOffset(container: Node, offset: number) {
   return absoluteOffset;
 }
 
-export function getSelectionOffset(container: Node): [number, number] {
+export function getSelectionOffset(container: Node): [number, number, Node] {
   let start = 0;
   let end = 0;
+  let nodeText!: Node;
 
   const selection = window.getSelection();
   for (let i = 0, len = selection!.rangeCount; i < len; i++) {
@@ -160,11 +161,12 @@ export function getSelectionOffset(container: Node): [number, number] {
         return false;
       });
 
+      nodeText = startNode;
       break;
     }
   }
 
-  return [start, end];
+  return [start, end, nodeText];
 }
 
 export function getInnerText(container: Node) {
