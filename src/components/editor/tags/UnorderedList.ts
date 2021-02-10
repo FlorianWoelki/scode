@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class UnorderedList extends TagAction {
@@ -19,11 +20,13 @@ export class UnorderedList extends TagAction {
       const offsetText = /^\s{0,9}(\*){1}\s/.test(input) ? input.replace('*', '-') : input;
       // const depth = offsetText.split('- ')[0].split('').filter((e) => /\s/gi.test(e)).length;
       const replaceText = offsetText.split('- ').length > 1 ? offsetText.split('- ').splice(1, 1).join('') : offsetText;
+      const [start, end] = getSelectionOffset(target);
       target.innerHTML = target.innerHTML.replace(input, replaceText);
-      this.placeCaretAtEnd(target);
+      // this.placeCaretAtEnd(target);
       nextTick(() => {
         this.exec('insertUnorderedList');
-        this.placeCaretAtEnd(target);
+        setSelectionOffset(target, start - 2, end - 2);
+        // this.placeCaretAtEnd(target);
       });
     }, 0);
   }
