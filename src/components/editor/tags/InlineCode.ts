@@ -2,7 +2,7 @@ import { getSelectionOffset, setSelectionOffset } from '../selection';
 import { TagAction } from '../TagAction';
 
 export class InlineCode extends TagAction {
-  public pattern = /(`){1}(.+?)(`){1}/g;
+  public pattern = /(`){1}(\w.+?)(`){1}/g;
 
   public run(input: string, target: HTMLElement): void {
     const match = this.pattern.exec(input);

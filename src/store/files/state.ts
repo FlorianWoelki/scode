@@ -10,7 +10,9 @@ export default {
 **test** test test **test**
 ## Some test
 * Hllo
-* test`,
+* test
+
+\`test\` hello world`,
       createdAt: new Date(),
     },
     {
@@ -19,9 +21,12 @@ export default {
       content: `# Hello World
 This content represents a small test content file.
 
+\`\`\`
 def loop():
 for i in range(0, 10):
-print(i)`,
+print(i)
+\`\`\`
+`,
       createdAt: new Date(),
     },
   ] as File[],

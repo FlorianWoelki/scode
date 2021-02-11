@@ -24,6 +24,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const editor = ref<HTMLElement | null>(null);
     const md = new Remarkable();
+    md.block.ruler.disable(['footnote', 'table', 'code']);
 
     const exec = (command: string, value?: string) => {
       return document.execCommand(command, false, value);
