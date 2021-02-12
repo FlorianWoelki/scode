@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="col-span-8 bg-gray-800">
+    <div class="col-span-8 pb-32 bg-gray-800">
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
           v-if="selectedFile"
