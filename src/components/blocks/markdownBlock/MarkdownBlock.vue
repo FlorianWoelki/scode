@@ -4,7 +4,7 @@
     contenteditable="true"
     @input="handleInput"
     @keydown="handleKeydown"
-    class="markdown focus:outline-none"
+    class="mt-4 markdown focus:outline-none"
   ></div>
 </template>
 

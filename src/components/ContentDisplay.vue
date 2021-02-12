@@ -7,13 +7,11 @@
     </h1>
   </div>
 
-  <div class="mt-8">
-    <Editor :value="markdownContent" @add-code="addMonacoEditor" />
-
-    <MonacoEditor v-for="(index, monacoEditor) in monacoEditors" :key="index" :value="monacoEditor.value" />
+  <div class="relative mt-8">
+    <Blocks :blocks="blocks" />
 
     <button v-if="isBlockMenuOpen" class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1" @click="toggleAddBlockMenu"></button>
-    <div class="relative z-50 inline-block">
+    <div class="absolute bottom-0 left-0 z-50 inline-block -mb-12 -ml-10">
       <button
         type="button"
         class="mt-4 hover:text-gray-600 focus:outline-none"
@@ -22,9 +20,9 @@
       >
         <PlusIcon class="w-6 h-6" />
       </button>
-      <div v-show="isBlockMenuOpen" class="absolute bottom-0 -mb-24 text-sm text-gray-400 bg-gray-700 rounded-sm shadow-lg w-52">
-        <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600">Add markdown block</div>
-        <div class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600">Add code block</div>
+      <div v-show="isBlockMenuOpen" class="absolute -mb-24 text-sm text-gray-400 bg-gray-700 rounded-sm shadow-lg w-52">
+        <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addMarkdownBlock">Add markdown block</div>
+        <div class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock">Add code block</div>
       </div>
     </div>
   </div>
@@ -33,11 +31,11 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import CodeIcon from '../assets/icons/code.svg';
-import MonacoEditor from './MonacoEditor.vue';
-import Editor from './editor/Editor.vue';
+import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 
-type MonacoEditorType = {
+type BlockType = {
+  type: 'code' | 'markdown';
   value: string;
 };
 
@@ -47,8 +45,7 @@ export default defineComponent({
   components: {
     CodeIcon,
     PlusIcon,
-    MonacoEditor,
-    Editor,
+    Blocks,
   },
 
   props: {
@@ -65,8 +62,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const nameInput = ref(props.name);
     const markdownInput = ref(props.markdownContent);
-    const monacoEditors = ref<MonacoEditorType[]>([]);
+    const blocks = ref<BlockType[]>([]);
     const isBlockMenuOpen = ref(false);
+
+    blocks.value.push({
+      value: props.markdownContent,
+      type: 'markdown',
+    });
 
     watch(() => props.name, (newValue) => {
       nameInput.value = newValue;
@@ -95,9 +97,17 @@ export default defineComponent({
       element.style.height = `${height}px`;
     };
 
-    const addMonacoEditor = () => {
-      monacoEditors.value.push({
+    const addMarkdownBlock = () => {
+      blocks.value.push({
         value: '',
+        type: 'markdown',
+      });
+    };
+
+    const addCodeBlock = () => {
+      blocks.value.push({
+        value: '',
+        type: 'code',
       });
     };
 
@@ -110,8 +120,9 @@ export default defineComponent({
       autoAdjustTextArea,
       markdownInput,
       saveFileName,
-      addMonacoEditor,
-      monacoEditors,
+      addCodeBlock,
+      addMarkdownBlock,
+      blocks,
       toggleAddBlockMenu,
       isBlockMenuOpen,
     };

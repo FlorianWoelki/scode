@@ -1,5 +1,3 @@
-import { getSelectionOffset } from './selection';
-
 export abstract class TagAction {
   public pattern!: RegExp;
 
