@@ -5,7 +5,7 @@
       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg>
   </div>
-  <div class="w-full h-auto mt-4 rounded-lg" ref="monacoElement"></div>
+  <div class="w-full mt-4" ref="monacoElement" style="max-height: 500px"></div>
 </template>
 
 <script lang="ts">
@@ -31,7 +31,6 @@ export default defineComponent({
         const editor = monaco.editor.create(monacoElement.value, {
           value: props.value,
           language: 'typescript',
-          automaticLayout: true,
           selectOnLineNumbers: true,
           theme: 'vs-dark',
           fontSize: 14,
@@ -39,9 +38,13 @@ export default defineComponent({
             enabled: false,
           },
           scrollBeyondLastLine: false,
-          wordWrap: 'on',
-          wrappingStrategy: 'advanced',
-          overviewRulerLanes: 0,
+          scrollbar: {
+            vertical: 'visible',
+            horizontal: 'visible',
+            verticalSliderSize: 17,
+            horizontalScrollbarSize: 17,
+            useShadows: false,
+          },
         });
 
         monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
@@ -51,7 +54,7 @@ export default defineComponent({
           const contentHeight = Math.min(1000, editor.getContentHeight());
           monacoElement.value!.style.width = '100%';
           monacoElement.value!.style.height = `${contentHeight}px`;
-          editor.layout({ width: 1000, height: contentHeight });
+          editor.layout();
         };
 
         editor.onDidContentSizeChange(updateHeight);

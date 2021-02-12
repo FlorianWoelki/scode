@@ -102,6 +102,7 @@ export default defineComponent({
         value: '',
         type: 'markdown',
       });
+      isBlockMenuOpen.value = false;
     };
 
     const addCodeBlock = () => {
@@ -109,6 +110,7 @@ export default defineComponent({
         value: '',
         type: 'code',
       });
+      isBlockMenuOpen.value = false;
     };
 
     const toggleAddBlockMenu = () => {
