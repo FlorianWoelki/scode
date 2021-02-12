@@ -14,7 +14,14 @@ import * as monaco from 'monaco-editor';
 import DraculaTheme from '../monaco/DraculaTheme';
 
 export default defineComponent({
-  setup() {
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+  },
+
+  setup(props) {
     const monacoElement = ref<HTMLElement | null>(null);
     const isLoading = ref(true);
 
@@ -22,7 +29,7 @@ export default defineComponent({
       isLoading.value = false;
       if (monacoElement.value) {
         const editor = monaco.editor.create(monacoElement.value, {
-          value: 'console.log("Hello World");',
+          value: props.value,
           language: 'typescript',
           automaticLayout: true,
           selectOnLineNumbers: true,

@@ -8,20 +8,21 @@
   </div>
 
   <div class="mt-8">
-    <Editor :value="markdownContent" />
+    <Editor :value="markdownContent" @add-code="addMonacoEditor" />
 
-    <!-- <MarkdownEditor class="mb-8" :content="markdownInput" /> -->
-
-    <MonacoEditor />
+    <MonacoEditor v-for="(index, monacoEditor) in monacoEditors" :key="index" :value="monacoEditor.value" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import CodeIcon from '../assets/icons/code.svg';
 import MonacoEditor from './MonacoEditor.vue';
-// import MarkdownEditor from './MarkdownEditor.vue';
 import Editor from './editor/Editor.vue';
+
+type MonacoEditorType = {
+  value: string;
+};
 
 export default defineComponent({
   emits: ['saveFileName'],
@@ -29,7 +30,6 @@ export default defineComponent({
   components: {
     CodeIcon,
     MonacoEditor,
-    // MarkdownEditor,
     Editor,
   },
 
@@ -46,8 +46,8 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const nameInput = ref(props.name);
-
     const markdownInput = ref(props.markdownContent);
+    const monacoEditors = ref<MonacoEditorType[]>([]);
 
     watch(() => props.name, (newValue) => {
       nameInput.value = newValue;
@@ -76,11 +76,19 @@ export default defineComponent({
       element.style.height = `${height}px`;
     };
 
+    const addMonacoEditor = () => {
+      monacoEditors.value.push({
+        value: '',
+      });
+    };
+
     return {
       nameInput,
       autoAdjustTextArea,
       markdownInput,
       saveFileName,
+      addMonacoEditor,
+      monacoEditors,
     };
   },
 });
