@@ -38,6 +38,7 @@ export default defineComponent({
           selectOnLineNumbers: true,
           theme: 'vs-dark',
           fontSize: 14,
+          tabSize: 2,
           minimap: {
             enabled: false,
           },
