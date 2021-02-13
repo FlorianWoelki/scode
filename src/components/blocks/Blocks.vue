@@ -15,12 +15,22 @@
       />
       <div
         v-if="block.isOptionsShowing"
-        class="absolute top-0 right-0 -mr-6 text-gray-700 cursor-pointer hover:text-gray-500"
+        class="absolute top-0 right-0 -mr-6 space-y-3"
         @mouseenter="block.isDeleteHovering = true"
         @mouseleave="block.isDeleteHovering = false"
-        @mousedown.prevent.stop="deleteBlock(block)"
       >
-        <TrashIcon class="w-4 h-4" />
+        <ChevronUp
+          class="w-4 h-4 text-gray-700 cursor-pointer hover:text-gray-500"
+          @mousedown.prevent.stop="moveBlockUp(block)"
+        />
+        <ChevronDown
+          class="w-4 h-4 text-gray-700 cursor-pointer hover:text-gray-500"
+          @mousedown.prevent.stop="moveBlockDown(block)"
+        />
+        <TrashIcon
+          class="w-4 h-4 text-gray-700 cursor-pointer hover:text-gray-500"
+          @mousedown.prevent.stop="deleteBlock(block)"
+        />
       </div>
     </div>
   </div>
@@ -31,15 +41,19 @@ import { defineComponent } from 'vue';
 import CodeBlock from './CodeBlock.vue';
 import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
 import TrashIcon from '../../assets/icons/trash.svg';
+import ChevronUp from '../../assets/icons/chevron-up.svg';
+import ChevronDown from '../../assets/icons/chevron-down.svg';
 import { BlockType } from '../ContentDisplay.vue';
 
 export default defineComponent({
-  emits: ['deleteBlock'],
+  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown'],
 
   components: {
     CodeBlock,
     MarkdownBlock,
     TrashIcon,
+    ChevronDown,
+    ChevronUp,
   },
 
   props: {
@@ -58,9 +72,25 @@ export default defineComponent({
       emit('deleteBlock', block);
     };
 
+    const moveBlockUp = (block: BlockType) => {
+      (document.activeElement as HTMLElement).blur();
+      block.isOptionsShowing = false;
+      block.isDeleteHovering = false;
+      emit('moveBlockUp', block);
+    };
+
+    const moveBlockDown = (block: BlockType) => {
+      (document.activeElement as HTMLElement).blur();
+      block.isOptionsShowing = false;
+      block.isDeleteHovering = false;
+      emit('moveBlockDown', block);
+    };
+
     return {
       toggleOptions,
       deleteBlock,
+      moveBlockUp,
+      moveBlockDown,
     };
   },
 });

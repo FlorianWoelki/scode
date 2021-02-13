@@ -8,7 +8,7 @@
   </div>
 
   <div class="relative mt-8">
-    <Blocks :blocks="blocks" @deleteBlock="deleteBlock($event)" />
+    <Blocks :blocks="blocks" @deleteBlock="deleteBlock($event)" @moveBlockUp="moveBlockUp($event)" @moveBlockDown="moveBlockDown($event)" />
 
     <button v-if="isBlockMenuOpen" class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1" @click="toggleAddBlockMenu"></button>
     <div class="absolute bottom-0 left-0 z-50 inline-block -mb-16 -ml-10">
@@ -149,6 +149,28 @@ export default defineComponent({
       }
     };
 
+    const moveBlockUp = (block: BlockType) => {
+      const blockIndex = blocks.value.indexOf(block);
+      if (blockIndex === 0) {
+        return;
+      }
+
+      const copiedBlock = block;
+      deleteBlock(block);
+      blocks.value.splice(blockIndex - 1, 0, copiedBlock);
+    };
+
+    const moveBlockDown = (block: BlockType) => {
+      const blockIndex = blocks.value.indexOf(block);
+      if (blockIndex === blocks.value.length - 1) {
+        return;
+      }
+
+      const copiedBlock = block;
+      deleteBlock(block);
+      blocks.value.splice(blockIndex + 1, 0, copiedBlock);
+    };
+
     return {
       nameInput,
       autoAdjustTextArea,
@@ -162,6 +184,8 @@ export default defineComponent({
       toggleCodeBlockDropdown,
       isCodeBlockDropdownOpen,
       deleteBlock,
+      moveBlockUp,
+      moveBlockDown,
     };
   },
 });

@@ -66,8 +66,6 @@ export default defineComponent({
       }
     };
 
-    const acceptedCharacters = '';
-
     const handleKeydown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const selection = document.getSelection()!;
@@ -77,14 +75,6 @@ export default defineComponent({
         for (const tagAction of tagActions) {
           tagAction.run(currentInput, target);
         }
-      }
-
-      const pattern = /^(<code>)/g;
-      const match = pattern.exec(currentInput);
-      if (match) {
-        target.innerHTML = target.innerHTML.replace(/(&lt;code&gt;)/g, '');
-        placeCaretAtEnd(target);
-        emit('add-code');
       }
     };
 
