@@ -14,6 +14,8 @@ import { Remarkable } from 'remarkable';
 import tagActions from './tags';
 
 export default defineComponent({
+  emits: ['input'],
+
   props: {
     value: {
       type: String,
@@ -49,7 +51,7 @@ export default defineComponent({
         placeCaretAtEnd(editor.value!);
       }
 
-      emit('input', editor.value!.innerHTML);
+      emit('input', editor.value!);
     };
 
     const placeCaretAtEnd = (dom: HTMLElement) => {

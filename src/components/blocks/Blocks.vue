@@ -12,6 +12,7 @@
         :value="block.value"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
+        @input="changeMarkdownContent($event, block)"
       />
       <div
         v-if="block.isOptionsShowing"
@@ -38,6 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import TurndownService from 'turndown';
 import CodeBlock from './CodeBlock.vue';
 import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
 import TrashIcon from '../../assets/icons/trash.svg';
@@ -64,6 +66,10 @@ export default defineComponent({
   },
 
   setup(_, { emit }) {
+    const turndownService = new TurndownService({
+      headingStyle: 'atx',
+    });
+
     const toggleOptions = (block: BlockType) => {
       block.isOptionsShowing = !block.isOptionsShowing;
     };
@@ -86,11 +92,17 @@ export default defineComponent({
       emit('moveBlockDown', block);
     };
 
+    const changeMarkdownContent = (target: HTMLElement, block: BlockType) => {
+      const markdown = turndownService.turndown(target);
+      block.markdownValue = markdown;
+    };
+
     return {
       toggleOptions,
       deleteBlock,
       moveBlockUp,
       moveBlockDown,
+      changeMarkdownContent,
     };
   },
 });

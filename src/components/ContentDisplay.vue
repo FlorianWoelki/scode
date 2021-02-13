@@ -48,6 +48,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 export type BlockType = {
   type: 'code' | 'markdown';
   value: string;
+  markdownValue?: string;
   isOptionsShowing?: boolean;
   isDeleteHovering?: boolean;
   language?: string;
@@ -155,7 +156,13 @@ export default defineComponent({
         return;
       }
 
-      const copiedBlock = block;
+      let copiedBlock;
+      if (block.markdownValue) {
+        copiedBlock = { ...block, value: block.markdownValue };
+      } else {
+        copiedBlock = block;
+      }
+
       deleteBlock(block);
       blocks.value.splice(blockIndex - 1, 0, copiedBlock);
     };
@@ -166,7 +173,13 @@ export default defineComponent({
         return;
       }
 
-      const copiedBlock = block;
+      let copiedBlock;
+      if (block.markdownValue) {
+        copiedBlock = { ...block, value: block.markdownValue };
+      } else {
+        copiedBlock = block;
+      }
+
       deleteBlock(block);
       blocks.value.splice(blockIndex + 1, 0, copiedBlock);
     };
