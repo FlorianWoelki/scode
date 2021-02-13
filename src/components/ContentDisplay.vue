@@ -11,10 +11,10 @@
     <Blocks :blocks="blocks" />
 
     <button v-if="isBlockMenuOpen" class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1" @click="toggleAddBlockMenu"></button>
-    <div class="absolute bottom-0 left-0 z-50 inline-block -mb-12 -ml-10">
+    <div class="absolute bottom-0 left-0 z-50 inline-block -mb-16 -ml-10">
       <button
         type="button"
-        class="mt-4 hover:text-gray-600 focus:outline-none"
+        class="hover:text-gray-600 focus:outline-none"
         :class="{ 'text-gray-600': isBlockMenuOpen, 'text-gray-700': !isBlockMenuOpen }"
         @click="toggleAddBlockMenu"
       >
