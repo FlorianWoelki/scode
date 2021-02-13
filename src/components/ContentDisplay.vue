@@ -45,9 +45,11 @@ import CodeIcon from '../assets/icons/code.svg';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 
-type BlockType = {
+export type BlockType = {
   type: 'code' | 'markdown';
   value: string;
+  isOptionsShowing?: boolean;
+  isDeleteHovering?: boolean;
   language?: string;
 };
 

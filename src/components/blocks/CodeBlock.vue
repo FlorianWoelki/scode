@@ -14,6 +14,8 @@ import * as monaco from 'monaco-editor';
 import DraculaTheme from '../../monaco/DraculaTheme';
 
 export default defineComponent({
+  emits: ['focus', 'blur'],
+
   props: {
     value: {
       type: String,
@@ -25,7 +27,7 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     const monacoElement = ref<HTMLElement | null>(null);
     const isLoading = ref(true);
 
@@ -50,6 +52,13 @@ export default defineComponent({
             horizontalScrollbarSize: 17,
             useShadows: false,
           },
+        });
+
+        editor.onDidBlurEditorText(() => {
+          emit('blur');
+        });
+        editor.onDidFocusEditorText(() => {
+          emit('focus');
         });
 
         monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
