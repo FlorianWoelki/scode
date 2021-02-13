@@ -15,10 +15,10 @@
       />
       <div
         v-if="block.isOptionsShowing"
-        class="absolute top-0 right-0 text-gray-700 cursor-pointer hover:text-gray-500"
-        @mouseover="block.isDeleteHovering = true"
+        class="absolute top-0 right-0 -mr-6 text-gray-700 cursor-pointer hover:text-gray-500"
+        @mouseenter="block.isDeleteHovering = true"
         @mouseleave="block.isDeleteHovering = false"
-        @click="deleteBlock(block)"
+        @mousedown.prevent.stop="deleteBlock(block)"
       >
         <TrashIcon class="w-4 h-4" />
       </div>
@@ -34,6 +34,8 @@ import TrashIcon from '../../assets/icons/trash.svg';
 import { BlockType } from '../ContentDisplay.vue';
 
 export default defineComponent({
+  emits: ['deleteBlock'],
+
   components: {
     CodeBlock,
     MarkdownBlock,
@@ -47,13 +49,18 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(_, { emit }) {
     const toggleOptions = (block: BlockType) => {
       block.isOptionsShowing = !block.isOptionsShowing;
     };
 
+    const deleteBlock = (block: BlockType) => {
+      emit('deleteBlock', block);
+    };
+
     return {
       toggleOptions,
+      deleteBlock,
     };
   },
 });
