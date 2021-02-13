@@ -1,6 +1,6 @@
 <template>
   <div v-for="(block, index) in blocks" :key="index">
-    <CodeBlock v-if="block.type === 'code'" :value="block.value" />
+    <CodeBlock v-if="block.type === 'code'" :value="block.value" :language="block.language" />
     <MarkdownBlock v-else :value="block.value" />
   </div>
 </template>

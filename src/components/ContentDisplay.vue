@@ -22,7 +22,18 @@
       </button>
       <div v-show="isBlockMenuOpen" class="absolute -mb-24 text-sm text-gray-400 bg-gray-700 rounded-sm shadow-lg w-52">
         <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addMarkdownBlock">Add markdown block</div>
-        <div class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock">Add code block</div>
+        <div
+          class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600"
+          :class="{ 'bg-gray-600': isCodeBlockDropdownOpen }"
+          @click="toggleCodeBlockDropdown"
+        >Add code block</div>
+
+        <div v-if="isCodeBlockDropdownOpen" class="absolute bottom-0 right-0 text-sm text-gray-400 bg-gray-700 rounded-sm -mb-36 -mr-52 w-52">
+          <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock('python')">Python</div>
+          <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock('typescript')">JS/TS</div>
+          <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock('html')">HTML</div>
+          <div class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600" @click="addCodeBlock('css')">CSS</div>
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +48,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 type BlockType = {
   type: 'code' | 'markdown';
   value: string;
+  language?: string;
 };
 
 export default defineComponent({
@@ -64,6 +76,7 @@ export default defineComponent({
     const markdownInput = ref(props.markdownContent);
     const blocks = ref<BlockType[]>([]);
     const isBlockMenuOpen = ref(false);
+    const isCodeBlockDropdownOpen = ref(false);
 
     blocks.value.push({
       value: props.markdownContent,
@@ -105,16 +118,26 @@ export default defineComponent({
       isBlockMenuOpen.value = false;
     };
 
-    const addCodeBlock = () => {
+    const addCodeBlock = (language: string) => {
       blocks.value.push({
         value: '',
         type: 'code',
+        language,
       });
       isBlockMenuOpen.value = false;
+      isCodeBlockDropdownOpen.value = false;
     };
 
     const toggleAddBlockMenu = () => {
       isBlockMenuOpen.value = !isBlockMenuOpen.value;
+
+      if (isCodeBlockDropdownOpen.value) {
+        isCodeBlockDropdownOpen.value = false;
+      }
+    };
+
+    const toggleCodeBlockDropdown = () => {
+      isCodeBlockDropdownOpen.value = !isCodeBlockDropdownOpen.value;
     };
 
     return {
@@ -127,6 +150,8 @@ export default defineComponent({
       blocks,
       toggleAddBlockMenu,
       isBlockMenuOpen,
+      toggleCodeBlockDropdown,
+      isCodeBlockDropdownOpen,
     };
   },
 });

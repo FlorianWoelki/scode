@@ -19,6 +19,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    language: {
+      type: String,
+      default: 'typescript',
+    },
   },
 
   setup(props) {
@@ -30,7 +34,7 @@ export default defineComponent({
       if (monacoElement.value) {
         const editor = monaco.editor.create(monacoElement.value, {
           value: props.value,
-          language: 'typescript',
+          language: props.language,
           selectOnLineNumbers: true,
           theme: 'vs-dark',
           fontSize: 14,
