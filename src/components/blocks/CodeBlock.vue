@@ -14,7 +14,7 @@ import * as monaco from 'monaco-editor';
 import DraculaTheme from '../../monaco/DraculaTheme';
 
 export default defineComponent({
-  emits: ['focus', 'blur'],
+  emits: ['focus', 'blur', 'input'],
 
   props: {
     value: {
@@ -59,6 +59,9 @@ export default defineComponent({
         });
         editor.onDidFocusEditorText(() => {
           emit('focus');
+        });
+        editor.onDidChangeModelContent(() => {
+          emit('input', editor.getValue());
         });
 
         monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);

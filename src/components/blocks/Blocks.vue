@@ -6,13 +6,14 @@
         :value="block.value" :language="block.language"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
+        @input="changeContent($event, block)"
       />
       <MarkdownBlock
         v-else
         :value="block.value"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
-        @input="changeMarkdownContent($event, block)"
+        @input="changeContent($event, block)"
       />
       <div
         v-if="block.isOptionsShowing"
@@ -92,9 +93,13 @@ export default defineComponent({
       emit('moveBlockDown', block);
     };
 
-    const changeMarkdownContent = (target: HTMLElement, block: BlockType) => {
-      const markdown = turndownService.turndown(target);
-      block.markdownValue = markdown;
+    const changeContent = (target: HTMLElement | string, block: BlockType) => {
+      if (block.type === 'code') {
+        block.rawValue = target as string;
+      } else {
+        const markdown = turndownService.turndown(target);
+        block.rawValue = markdown;
+      }
     };
 
     return {
@@ -102,7 +107,7 @@ export default defineComponent({
       deleteBlock,
       moveBlockUp,
       moveBlockDown,
-      changeMarkdownContent,
+      changeContent,
     };
   },
 });
