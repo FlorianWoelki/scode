@@ -66,13 +66,17 @@ export default defineComponent({
       }
     };
 
+    const acceptedCharacters = '';
+
     const handleKeydown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const selection = document.getSelection()!;
       const currentInput = selection.anchorNode!.textContent!;
 
-      for (const tagAction of tagActions) {
-        tagAction.run(currentInput, target);
+      if (currentInput.match(/[\d\w]/gi)) {
+        for (const tagAction of tagActions) {
+          tagAction.run(currentInput, target);
+        }
       }
 
       const pattern = /^(<code>)/g;
