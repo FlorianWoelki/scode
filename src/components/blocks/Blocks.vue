@@ -23,10 +23,12 @@
       >
         <ChevronUp
           class="w-4 h-4 text-gray-700 cursor-pointer hover:text-gray-500"
+          :class="{ 'cursor-not-allowed hover:text-gray-700': isFirstBlock(block) }"
           @mousedown.prevent.stop="moveBlockUp(block)"
         />
         <ChevronDown
           class="w-4 h-4 text-gray-700 cursor-pointer hover:text-gray-500"
+          :class="{ 'cursor-not-allowed hover:text-gray-700': isLastBlock(block) }"
           @mousedown.prevent.stop="moveBlockDown(block)"
         />
         <TrashIcon
@@ -66,7 +68,7 @@ export default defineComponent({
     },
   },
 
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const turndownService = new TurndownService({
       headingStyle: 'atx',
     });
@@ -80,6 +82,10 @@ export default defineComponent({
     };
 
     const moveBlockUp = (block: BlockType) => {
+      if (isFirstBlock(block)) {
+        return;
+      }
+
       (document.activeElement as HTMLElement).blur();
       block.isOptionsShowing = false;
       block.isDeleteHovering = false;
@@ -87,6 +93,10 @@ export default defineComponent({
     };
 
     const moveBlockDown = (block: BlockType) => {
+      if (isLastBlock(block)) {
+        return;
+      }
+
       (document.activeElement as HTMLElement).blur();
       block.isOptionsShowing = false;
       block.isDeleteHovering = false;
@@ -102,12 +112,22 @@ export default defineComponent({
       }
     };
 
+    const isLastBlock = (block: BlockType) => {
+      return props.blocks.lastIndexOf(block) === props.blocks.length - 1;
+    };
+
+    const isFirstBlock = (block: BlockType) => {
+      return props.blocks.length > 0 && props.blocks[0] === block;
+    };
+
     return {
       toggleOptions,
       deleteBlock,
       moveBlockUp,
       moveBlockDown,
       changeContent,
+      isLastBlock,
+      isFirstBlock,
     };
   },
 });
