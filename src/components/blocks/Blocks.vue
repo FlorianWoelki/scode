@@ -71,6 +71,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const turndownService = new TurndownService({
       headingStyle: 'atx',
+      emDelimiter: '*',
     });
 
     const toggleOptions = (block: BlockType) => {
@@ -107,8 +108,10 @@ export default defineComponent({
       if (block.type === 'code') {
         block.rawValue = target as string;
       } else {
-        const markdown = turndownService.turndown(target);
-        block.rawValue = markdown;
+        setTimeout(() => {
+          const markdown = turndownService.turndown(target);
+          block.rawValue = markdown;
+        }, 0);
       }
     };
 
