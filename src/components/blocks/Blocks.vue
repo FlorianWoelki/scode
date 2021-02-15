@@ -3,14 +3,15 @@
     <div v-for="(block, index) in blocks" :key="index" class="relative" :class="{ 'bg-gray-700': block.isDeleteHovering }">
       <CodeBlock
         v-if="block.type === 'code'"
-        :value="block.value" :language="block.language"
+        :value="block.value"
+        :language="block.language"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
       />
       <MarkdownBlock
         v-else
-        :value="block.value"
+        :startValue="block.value"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"

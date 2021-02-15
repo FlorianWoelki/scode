@@ -17,7 +17,7 @@ export default defineComponent({
   emits: ['input'],
 
   props: {
-    value: {
+    startValue: {
       type: String,
       default: '',
     },
@@ -32,12 +32,12 @@ export default defineComponent({
       return document.execCommand(command, false, value);
     };
 
-    watch(() => props.value, (newValue) => {
-      editor.value!.innerHTML = md.render(props.value);
+    watch(() => props.startValue, (newValue) => {
+      editor.value!.innerHTML = md.render(props.startValue);
     });
 
     onMounted(() => {
-      editor.value!.innerHTML = md.render(props.value);
+      editor.value!.innerHTML = md.render(props.startValue);
     });
 
     const handleInput = (e: InputEvent | KeyboardEvent) => {

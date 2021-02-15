@@ -156,13 +156,9 @@ export default defineComponent({
         return;
       }
 
-      let copiedBlock;
-      if (block.rawValue) {
-        copiedBlock = { ...block, value: block.rawValue };
-      } else {
-        copiedBlock = block;
-      }
+      updateValueOfBlocks();
 
+      const copiedBlock = block;
       deleteBlock(block);
       blocks.value.splice(blockIndex - 1, 0, copiedBlock);
     };
@@ -173,15 +169,18 @@ export default defineComponent({
         return;
       }
 
-      let copiedBlock;
-      if (block.rawValue) {
-        copiedBlock = { ...block, value: block.rawValue };
-      } else {
-        copiedBlock = block;
-      }
+      updateValueOfBlocks();
 
+      const copiedBlock = block;
       deleteBlock(block);
       blocks.value.splice(blockIndex + 1, 0, copiedBlock);
+    };
+
+    const updateValueOfBlocks = () => {
+      blocks.value.map((block) => {
+        block.value = block.rawValue || block.value;
+        return block;
+      });
     };
 
     return {
