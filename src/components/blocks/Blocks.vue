@@ -80,6 +80,9 @@ export default defineComponent({
     };
 
     const deleteBlock = (block: BlockType) => {
+      (document.activeElement as HTMLElement).blur();
+      block.isOptionsShowing = false;
+      block.isDeleteHovering = false;
       emit('deleteBlock', block);
     };
 
