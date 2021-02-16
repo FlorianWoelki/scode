@@ -21,7 +21,7 @@
         <PlusIcon class="w-6 h-6" />
       </button>
       <div v-show="isBlockMenuOpen" class="absolute -mb-24 text-sm text-gray-400 bg-gray-700 rounded-sm shadow-lg w-52">
-        <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addMarkdownBlock">Add markdown block</div>
+        <div class="px-4 py-3 mt-1 cursor-pointer hover:bg-gray-600" @click="addMarkdownBlock()">Add markdown block</div>
         <div
           class="px-4 py-3 mb-1 cursor-pointer hover:bg-gray-600"
           :class="{ 'bg-gray-600': isCodeBlockDropdownOpen }"
@@ -91,6 +91,8 @@ export default defineComponent({
     });
     watch(() => props.markdownContent, (newValue) => {
       markdownInput.value = newValue;
+      blocks.value = [];
+      addMarkdownBlock(markdownInput.value);
     });
 
     const saveFileName = (event: KeyboardEvent): void => {
@@ -113,9 +115,9 @@ export default defineComponent({
       element.style.height = `${height}px`;
     };
 
-    const addMarkdownBlock = () => {
+    const addMarkdownBlock = (value?: string) => {
       blocks.value.push({
-        value: '',
+        value: value || '',
         type: 'markdown',
       });
       isBlockMenuOpen.value = false;
