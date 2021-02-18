@@ -1,3 +1,4 @@
+import { BlockType } from '../../components/blocks/BlockType';
 import { File } from '../../db/File';
 
 export default {
@@ -6,28 +7,42 @@ export default {
     {
       id: '123abcdef',
       name: 'Some other test file',
-      content: `# Morning
+      createdAt: new Date(),
+      blocks: [
+        {
+          type: 'markdown',
+          value: `# Morning
 **test** test test **test**
 ## Some test
 * Hllo
 * test
 
 \`test\` hello world`,
-      createdAt: new Date(),
+        },
+        {
+          type: 'code',
+          language: 'python',
+          value: 'print("Hello World")',
+        },
+      ] as BlockType[],
     },
     {
       id: '123abc',
       name: 'Code something',
-      content: `# Hello World
+      createdAt: new Date(),
+      blocks: [
+        {
+          type: 'markdown',
+          value: `# Hello World
 This content represents a small test content file.
 
 \`\`\`
 def loop():
 for i in range(0, 10):
 print(i)
-\`\`\`
-`,
-      createdAt: new Date(),
+\`\`\``,
+        },
+      ] as BlockType[],
     },
-  ] as File[],
+  ],
 };

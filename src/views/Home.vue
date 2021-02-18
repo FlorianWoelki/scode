@@ -60,7 +60,7 @@
           v-for="file in files"
           :key="file.id"
           :name="file.name"
-          :content="file.content"
+          :content="file.blocks.length > 0 ? file.blocks[0].value : ''"
           :isSelected="file.id === selectedFile?.id"
           @click="setSelectedFile(file)"
         />
@@ -72,7 +72,7 @@
         <ContentDisplay
           v-if="selectedFile"
           :name="selectedFile.name"
-          :markdownContent="selectedFile.content"
+          :fileBlocks="selectedFile.blocks"
           @saveFileName="saveFileName(selectedFile.id, $event)"
         />
         <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>

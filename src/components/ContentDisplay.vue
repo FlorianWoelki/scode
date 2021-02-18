@@ -37,18 +37,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
-
-export type BlockType = {
-  type: 'code' | 'markdown';
-  value: string;
-  rawValue?: string;
-  isOptionsShowing?: boolean;
-  isDeleteHovering?: boolean;
-  language?: string;
-};
+import { BlockType } from './blocks/BlockType';
 
 export default defineComponent({
   emits: ['saveFileName'],
@@ -59,8 +51,8 @@ export default defineComponent({
   },
 
   props: {
-    markdownContent: {
-      type: String,
+    fileBlocks: {
+      type: Array as PropType<BlockType[]>,
       required: true,
     },
     name: {
@@ -71,23 +63,16 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const nameInput = ref(props.name);
-    const markdownInput = ref(props.markdownContent);
-    const blocks = ref<BlockType[]>([]);
+    const blocksInput = ref(props.fileBlocks);
+    const blocks = ref<BlockType[]>([...blocksInput.value]);
     const isBlockMenuOpen = ref(false);
     const isCodeBlockDropdownOpen = ref(false);
-
-    blocks.value.push({
-      value: props.markdownContent,
-      type: 'markdown',
-    });
 
     watch(() => props.name, (newValue) => {
       nameInput.value = newValue;
     });
-    watch(() => props.markdownContent, (newValue) => {
-      markdownInput.value = newValue;
-      blocks.value = [];
-      addMarkdownBlock(markdownInput.value);
+    watch(() => props.fileBlocks, (newValue) => {
+      blocks.value = newValue;
     });
 
     const saveFileName = (event: KeyboardEvent): void => {
@@ -183,7 +168,6 @@ export default defineComponent({
     return {
       nameInput,
       autoAdjustTextArea,
-      markdownInput,
       saveFileName,
       addCodeBlock,
       addMarkdownBlock,

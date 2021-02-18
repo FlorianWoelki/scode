@@ -49,7 +49,7 @@ import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
 import TrashIcon from '../../assets/icons/trash.svg';
 import ChevronUp from '../../assets/icons/chevron-up.svg';
 import ChevronDown from '../../assets/icons/chevron-down.svg';
-import { BlockType } from '../ContentDisplay.vue';
+import { BlockType } from './BlockType';
 
 export default defineComponent({
   emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown'],
