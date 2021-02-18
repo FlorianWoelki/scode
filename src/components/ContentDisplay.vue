@@ -1,11 +1,8 @@
 <template>
-  <div class="flex items-start space-x-2">
-    <CodeIcon class="w-5 h-5 mt-2 text-gray-600" />
-    <h1 class="flex flex-col w-full text-2xl text-gray-400">
-      <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
-      <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
-    </h1>
-  </div>
+  <h1 class="flex flex-col w-full text-2xl text-gray-400">
+    <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
+    <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
+  </h1>
 
   <div class="relative mt-8">
     <Blocks :blocks="blocks" @deleteBlock="deleteBlock($event)" @moveBlockUp="moveBlockUp($event)" @moveBlockDown="moveBlockDown($event)" />
@@ -41,7 +38,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
-import CodeIcon from '../assets/icons/code.svg';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 
@@ -58,7 +54,6 @@ export default defineComponent({
   emits: ['saveFileName'],
 
   components: {
-    CodeIcon,
     PlusIcon,
     Blocks,
   },
