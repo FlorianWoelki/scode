@@ -1,5 +1,8 @@
 <template>
-  <h1 class="flex flex-col w-full text-2xl text-gray-400">
+  <h1 class="relative flex flex-col w-full text-2xl text-gray-400">
+    <div class="absolute top-0 left-0 mt-2 -ml-10 text-gray-600 cursor-pointer">
+      <DotsVerticalIcon class="w-5 h-5" />
+    </div>
     <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
     <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
   </h1>
@@ -40,6 +43,7 @@
 import { defineComponent, PropType, ref, watch } from 'vue';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
+import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
 import { BlockType } from './blocks/BlockType';
 
 export default defineComponent({
@@ -48,6 +52,7 @@ export default defineComponent({
   components: {
     PlusIcon,
     Blocks,
+    DotsVerticalIcon,
   },
 
   props: {
