@@ -82,8 +82,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from 'vuex';
+import { uuid } from 'vue-uuid';
 import CollectionIcon from '../assets/icons/collection.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
@@ -106,9 +107,12 @@ export default defineComponent({
 
     const addFile = (): void => {
       const file = {
-        id: 'somethingweird',
+        id: uuid.v4(),
         name: 'undefined',
-        content: '',
+        blocks: [{
+          type: 'markdown',
+          value: '',
+        }],
         createdAt: new Date(),
       } as File;
 

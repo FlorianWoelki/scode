@@ -1,10 +1,11 @@
 import Dexie from 'dexie';
+import { BlockType } from '../components/blocks/BlockType';
 
 export interface IFile {
   id: string;
   name: string;
   // parent;
-  content: string;
+  blocks: BlockType[]
   createdAt: Date;
 }
 

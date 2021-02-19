@@ -44,5 +44,5 @@ print(i)
         },
       ] as BlockType[],
     },
-  ],
+  ] as File[],
 };
