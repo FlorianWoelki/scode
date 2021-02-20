@@ -8,7 +8,13 @@
   </h1>
 
   <div class="relative mt-8">
-    <Blocks :blocks="blocks" @deleteBlock="deleteBlock($event)" @moveBlockUp="moveBlockUp($event)" @moveBlockDown="moveBlockDown($event)" />
+    <Blocks
+      :blocks="blocks"
+      @deleteBlock="deleteBlock($event)"
+      @moveBlockUp="moveBlockUp($event)"
+      @moveBlockDown="moveBlockDown($event)"
+      @blur="updateValueOfBlocks"
+    />
 
     <button v-if="isBlockMenuOpen" class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1" @click="toggleAddBlockMenu"></button>
     <div class="absolute bottom-0 left-0 z-50 inline-block -mb-16 -ml-10">
@@ -184,6 +190,7 @@ export default defineComponent({
       deleteBlock,
       moveBlockUp,
       moveBlockDown,
+      updateValueOfBlocks,
     };
   },
 });

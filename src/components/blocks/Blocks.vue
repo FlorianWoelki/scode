@@ -52,7 +52,7 @@ import ChevronDown from '../../assets/icons/chevron-down.svg';
 import { BlockType } from './BlockType';
 
 export default defineComponent({
-  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown'],
+  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown', 'blur'],
 
   components: {
     CodeBlock,
@@ -77,6 +77,10 @@ export default defineComponent({
 
     const toggleOptions = (block: BlockType) => {
       block.isOptionsShowing = !block.isOptionsShowing;
+
+      if (!block.isOptionsShowing) {
+        emit('blur');
+      }
     };
 
     const deleteBlock = (block: BlockType) => {
