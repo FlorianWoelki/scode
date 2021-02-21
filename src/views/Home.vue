@@ -74,6 +74,7 @@
           :name="selectedFile.name"
           :fileBlocks="selectedFile.blocks"
           @saveFileName="saveFileName(selectedFile.id, $event)"
+          @deleteFile="deleteFile(selectedFile.id)"
         />
         <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
       </div>
@@ -120,7 +121,7 @@ export default defineComponent({
       setSelectedFile(file);
     };
 
-    const setSelectedFile = (file: File): void => {
+    const setSelectedFile = (file: File | undefined): void => {
       store.commit('fileStore/setSelectedFile', file);
     };
 
@@ -128,10 +129,16 @@ export default defineComponent({
       store.commit('fileStore/updateFile', { id, file: { name } });
     };
 
+    const deleteFile = (id: string): void => {
+      setSelectedFile(undefined);
+      store.commit('fileStore/deleteFile', id);
+    };
+
     return {
       addFile,
       setSelectedFile,
       saveFileName,
+      deleteFile,
       files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };

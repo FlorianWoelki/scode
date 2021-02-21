@@ -1,7 +1,14 @@
 <template>
   <h1 class="relative flex flex-col w-full text-2xl text-gray-400">
-    <div class="absolute top-0 left-0 mt-2 -ml-10 text-gray-600 cursor-pointer">
-      <DotsVerticalIcon class="w-5 h-5" />
+    <div class="absolute top-0 left-0 z-50 mt-2 -ml-7">
+      <DotsVerticalIcon
+        class="w-5 h-5 cursor-pointer hover:text-gray-600"
+        :class="{ 'text-gray-700': !isFileMenuOpen, 'text-gray-600': isFileMenuOpen }"
+        @click="toggleFileMenu"
+      />
+      <div v-show="isFileMenuOpen" class="absolute left-0 mt-2 text-sm text-gray-400 bg-gray-700 rounded-sm shadow-lg w-52">
+        <div class="px-4 py-3 cursor-pointer hover:bg-gray-600" @click="deleteActiveFile">Delete file</div>
+      </div>
     </div>
     <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
     <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
@@ -16,7 +23,11 @@
       @blur="updateValueOfBlocks"
     />
 
-    <button v-if="isBlockMenuOpen" class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1" @click="toggleAddBlockMenu"></button>
+    <button
+      v-if="isBlockMenuOpen || isFileMenuOpen"
+      class="fixed inset-0 z-40 w-full h-full cursor-default focus:outline-none" tabindex="-1"
+      @click="isBlockMenuOpen ? toggleAddBlockMenu() : toggleFileMenu()"
+    ></button>
     <div class="absolute bottom-0 left-0 z-50 inline-block -mb-16 -ml-10">
       <button
         type="button"
@@ -53,7 +64,7 @@ import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
 import { BlockType } from './blocks/BlockType';
 
 export default defineComponent({
-  emits: ['saveFileName'],
+  emits: ['saveFileName', 'deleteFile'],
 
   components: {
     PlusIcon,
@@ -78,6 +89,7 @@ export default defineComponent({
     const blocks = ref<BlockType[]>([...blocksInput.value]);
     const isBlockMenuOpen = ref(false);
     const isCodeBlockDropdownOpen = ref(false);
+    const isFileMenuOpen = ref(false);
 
     watch(() => props.name, (newValue) => {
       nameInput.value = newValue;
@@ -176,6 +188,15 @@ export default defineComponent({
       });
     };
 
+    const toggleFileMenu = () => {
+      isFileMenuOpen.value = !isFileMenuOpen.value;
+    };
+
+    const deleteActiveFile = () => {
+      emit('deleteFile');
+      isFileMenuOpen.value = false;
+    };
+
     return {
       nameInput,
       autoAdjustTextArea,
@@ -191,6 +212,9 @@ export default defineComponent({
       moveBlockUp,
       moveBlockDown,
       updateValueOfBlocks,
+      toggleFileMenu,
+      isFileMenuOpen,
+      deleteActiveFile,
     };
   },
 });
