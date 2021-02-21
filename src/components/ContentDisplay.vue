@@ -59,7 +59,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
-import hotkeys from 'hotkeys-js';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
@@ -134,6 +133,7 @@ export default defineComponent({
       blocks.value.push({
         value: value || '',
         type: 'markdown',
+        isFocused: true,
       });
       isBlockMenuOpen.value = false;
     };

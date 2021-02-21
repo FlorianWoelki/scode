@@ -21,12 +21,24 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    isFocused: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props, { emit }) {
     const editor = ref<HTMLElement | null>(null);
     const md = new Remarkable();
     md.block.ruler.disable(['footnote', 'table', 'code']);
+
+    onMounted(() => {
+      if (props.isFocused) {
+        setTimeout(() => {
+          editor.value!.focus();
+        }, 0);
+      }
+    });
 
     const exec = (command: string, value?: string) => {
       return document.execCommand(command, false, value);

@@ -12,6 +12,7 @@
       <MarkdownBlock
         v-else
         :startValue="block.value"
+        :isFocused="block.isFocused"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
@@ -43,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import TurndownService from 'turndown';
 import CodeBlock from './CodeBlock.vue';
 import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
@@ -65,7 +66,7 @@ export default defineComponent({
 
   props: {
     blocks: {
-      type: Array,
+      type: Array as PropType<BlockType[]>,
       required: true,
     },
   },
