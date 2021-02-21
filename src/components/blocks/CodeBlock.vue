@@ -14,7 +14,7 @@ import * as monaco from 'monaco-editor';
 import DraculaTheme from '../../monaco/DraculaTheme';
 
 export default defineComponent({
-  emits: ['focus', 'blur', 'input'],
+  emits: ['focus', 'blur', 'input', 'keypress'],
 
   props: {
     value: {
@@ -24,6 +24,10 @@ export default defineComponent({
     language: {
       type: String,
       default: 'typescript',
+    },
+    isFocused: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -60,12 +64,19 @@ export default defineComponent({
         editor.onDidFocusEditorText(() => {
           emit('focus');
         });
-        editor.onDidChangeModelContent(() => {
+        editor.onDidChangeModelContent((event) => {
           emit('input', editor.getValue());
+        });
+        editor.onKeyDown((event) => {
+          emit('keypress', event);
         });
 
         monaco.editor.defineTheme('Dracula', DraculaTheme as monaco.editor.IStandaloneThemeData);
         monaco.editor.setTheme('Dracula');
+
+        if (props.isFocused) {
+          editor.focus();
+        }
 
         const updateHeight = () => {
           const contentHeight = Math.min(1000, editor.getContentHeight());

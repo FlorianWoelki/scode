@@ -101,10 +101,9 @@ export default defineComponent({
 
     const handleShortcuts = (event: KeyboardEvent) => {
       // Add codeblock
-      if (event.ctrlKey && event.shiftKey && event.key === 'C') {
-        // TODO: handle language that was used before
-        // addCodeBlock('python');
-      } else if (event.ctrlKey && event.shiftKey && event.key === 'M') {
+      if (event.ctrlKey && event.shiftKey && (event.keyCode === 33 || event.key === 'C')) {
+        addCodeBlock('python'); // TODO: add language that was previously used
+      } else if (event.ctrlKey && event.shiftKey && (event.keyCode === 43 || event.key === 'M')) {
         addMarkdownBlock();
       }
     };
@@ -142,6 +141,7 @@ export default defineComponent({
       blocks.value.push({
         value: '',
         type: 'code',
+        isFocused: true,
         language,
       });
       isBlockMenuOpen.value = false;

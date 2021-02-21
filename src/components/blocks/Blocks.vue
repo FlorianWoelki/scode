@@ -5,9 +5,11 @@
         v-if="block.type === 'code'"
         :value="block.value"
         :language="block.language"
+        :isFocused="block.isFocused"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
+        @keypress="handleKeypress"
       />
       <MarkdownBlock
         v-else
