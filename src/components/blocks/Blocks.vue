@@ -4,6 +4,7 @@
       <CodeBlock
         v-if="block.type === 'code'"
         :value="block.value"
+        :key="forceUpdate"
         :language="block.language"
         :isFocused="block.isFocused"
         @focus="toggleOptions(block)"
@@ -46,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import TurndownService from 'turndown';
 import CodeBlock from './CodeBlock.vue';
 import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
@@ -74,6 +75,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const forceUpdate = ref(false);
     const turndownService = new TurndownService({
       headingStyle: 'atx',
       emDelimiter: '*',
@@ -103,6 +105,9 @@ export default defineComponent({
         return;
       }
 
+      // small hack to rerender CodeBlock
+      forceUpdate.value = !forceUpdate.value;
+
       (document.activeElement as HTMLElement).blur();
       block.isOptionsShowing = false;
       block.isDeleteHovering = false;
@@ -113,6 +118,9 @@ export default defineComponent({
       if (isLastBlock(block)) {
         return;
       }
+
+      // small hack to rerender CodeBlock
+      forceUpdate.value = !forceUpdate.value;
 
       (document.activeElement as HTMLElement).blur();
       block.isOptionsShowing = false;
@@ -148,6 +156,7 @@ export default defineComponent({
       isLastBlock,
       isFirstBlock,
       handleKeypress,
+      forceUpdate,
     };
   },
 });
