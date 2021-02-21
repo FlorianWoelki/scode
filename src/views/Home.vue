@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="col-span-8 pb-32 bg-gray-800">
+    <div class="relative col-span-8 pb-32 bg-gray-800">
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
           v-if="selectedFile"
@@ -76,7 +76,7 @@
           @saveFileName="saveFileName(selectedFile.id, $event)"
           @deleteFile="deleteFile(selectedFile.id)"
         />
-        <p v-else class="flex items-center justify-center text-sm italic text-gray-600">No selected file</p>
+        <p v-else class="absolute inset-0 flex items-center justify-center italic text-gray-600">No selected file</p>
       </div>
     </div>
   </div>
