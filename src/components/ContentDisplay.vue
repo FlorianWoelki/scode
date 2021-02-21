@@ -17,10 +17,11 @@
   <div class="relative mt-8">
     <Blocks
       :blocks="blocks"
-      @deleteBlock="deleteBlock($event)"
-      @moveBlockUp="moveBlockUp($event)"
-      @moveBlockDown="moveBlockDown($event)"
+      @deleteBlock="deleteBlock"
+      @moveBlockUp="moveBlockUp"
+      @moveBlockDown="moveBlockDown"
       @blur="updateValueOfBlocks"
+      @keypress="handleShortcuts"
     />
 
     <button
@@ -57,7 +58,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
+import hotkeys from 'hotkeys-js';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
@@ -97,6 +99,16 @@ export default defineComponent({
     watch(() => props.fileBlocks, (newValue) => {
       blocks.value = newValue;
     });
+
+    const handleShortcuts = (event: KeyboardEvent) => {
+      // Add codeblock
+      if (event.ctrlKey && event.shiftKey && event.key === 'C') {
+        // TODO: handle language that was used before
+        // addCodeBlock('python');
+      } else if (event.ctrlKey && event.shiftKey && event.key === 'M') {
+        addMarkdownBlock();
+      }
+    };
 
     const saveFileName = (event: KeyboardEvent): void => {
       const target = event.target as HTMLElement;
@@ -215,6 +227,7 @@ export default defineComponent({
       toggleFileMenu,
       isFileMenuOpen,
       deleteActiveFile,
+      handleShortcuts,
     };
   },
 });

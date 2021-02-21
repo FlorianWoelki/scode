@@ -14,7 +14,7 @@ import { Remarkable } from 'remarkable';
 import tagActions from './tags';
 
 export default defineComponent({
-  emits: ['input'],
+  emits: ['input', 'keypress'],
 
   props: {
     startValue: {
@@ -40,7 +40,7 @@ export default defineComponent({
       editor.value!.innerHTML = md.render(props.startValue);
     });
 
-    const handleInput = (e: InputEvent | KeyboardEvent) => {
+    const handleInput = (e: InputEvent) => {
       const { firstChild } = e.target as HTMLElement;
 
       if (firstChild && firstChild.nodeType === 3) exec('formatBlock', '<p>');
@@ -78,6 +78,8 @@ export default defineComponent({
           tagAction.run(currentInput, target);
         }
       }
+
+      emit('keypress', e);
     };
 
     return {

@@ -15,6 +15,7 @@
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
+        @keypress="handleKeypress"
       />
       <div
         v-if="block.isOptionsShowing"
@@ -52,7 +53,7 @@ import ChevronDown from '../../assets/icons/chevron-down.svg';
 import { BlockType } from './BlockType';
 
 export default defineComponent({
-  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown', 'blur'],
+  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown', 'blur', 'keypress'],
 
   components: {
     CodeBlock,
@@ -74,6 +75,10 @@ export default defineComponent({
       headingStyle: 'atx',
       emDelimiter: '*',
     });
+
+    const handleKeypress = (event: KeyboardEvent): void => {
+      emit('keypress', event);
+    };
 
     const toggleOptions = (block: BlockType) => {
       block.isOptionsShowing = !block.isOptionsShowing;
@@ -139,6 +144,7 @@ export default defineComponent({
       changeContent,
       isLastBlock,
       isFirstBlock,
+      handleKeypress,
     };
   },
 });
