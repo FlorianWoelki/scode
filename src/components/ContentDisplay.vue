@@ -58,7 +58,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
+import { useStore } from 'vuex';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
@@ -85,6 +86,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const store = useStore();
     const nameInput = ref(props.name);
     const blocksInput = ref(props.fileBlocks);
     const blocks = ref<BlockType[]>([...blocksInput.value]);
@@ -102,7 +104,8 @@ export default defineComponent({
     const handleShortcuts = (event: KeyboardEvent) => {
       // Add codeblock
       if (event.ctrlKey && event.shiftKey && (event.keyCode === 33 || event.key === 'C')) {
-        addCodeBlock('python'); // TODO: add language that was previously used
+        const lastUsedCodeLanguage = store.getters['fileStore/lastUsedCodeLanguage'];
+        addCodeBlock(lastUsedCodeLanguage);
       } else if (event.ctrlKey && event.shiftKey && (event.keyCode === 43 || event.key === 'M')) {
         addMarkdownBlock();
       }
