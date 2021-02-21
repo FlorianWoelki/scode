@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import fileStore from './files';
+import fileStore from './fileStore';
 
 export default createStore({
   modules: {
