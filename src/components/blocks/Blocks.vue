@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
 import TurndownService from 'turndown';
 import CodeBlock from './CodeBlock.vue';
 import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
@@ -72,6 +72,10 @@ export default defineComponent({
       type: Array as PropType<BlockType[]>,
       required: true,
     },
+    shouldForceUpdate: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props, { emit }) {
@@ -79,6 +83,10 @@ export default defineComponent({
     const turndownService = new TurndownService({
       headingStyle: 'atx',
       emDelimiter: '*',
+    });
+
+    watch(() => props.shouldForceUpdate, () => {
+      forceUpdate.value = !forceUpdate.value;
     });
 
     const handleKeypress = (event: KeyboardEvent, block: BlockType): void => {

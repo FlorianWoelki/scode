@@ -17,6 +17,7 @@
   <div class="relative mt-8">
     <Blocks
       :blocks="blocks"
+      :shouldForceUpdate="shouldForceUpdate"
       @deleteBlock="deleteBlock"
       @moveBlockUp="moveBlockUp"
       @moveBlockDown="moveBlockDown"
@@ -93,6 +94,7 @@ export default defineComponent({
     const isBlockMenuOpen = ref(false);
     const isCodeBlockDropdownOpen = ref(false);
     const isFileMenuOpen = ref(false);
+    const shouldForceUpdate = ref(false);
 
     watch(() => props.name, (newValue) => {
       nameInput.value = newValue;
@@ -110,8 +112,10 @@ export default defineComponent({
           addMarkdownBlock();
         } else if ((block.type === 'code' && event.keyCode === 16) || (block.type === 'markdown' && event.keyCode === 38)) { // Up Key
           moveBlockUp(block);
+          shouldForceUpdate.value = !shouldForceUpdate.value;
         } else if ((block.type === 'code' && event.keyCode === 18) || (block.type === 'markdown' && event.keyCode === 40)) { // Down Key
           moveBlockDown(block);
+          shouldForceUpdate.value = !shouldForceUpdate.value;
         }
       }
     };
@@ -236,6 +240,7 @@ export default defineComponent({
       isFileMenuOpen,
       deleteActiveFile,
       handleShortcuts,
+      shouldForceUpdate,
     };
   },
 });

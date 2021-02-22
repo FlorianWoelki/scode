@@ -5,5 +5,6 @@ export type BlockType = {
   rawValue?: string;
   isOptionsShowing?: boolean;
   isDeleteHovering?: boolean;
+  shouldForceUpdate?: boolean;
   language?: string;
 };
