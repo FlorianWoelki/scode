@@ -10,7 +10,7 @@
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
-        @keypress="handleKeypress"
+        @keypress="handleKeypress($event, block)"
       />
       <MarkdownBlock
         v-else
@@ -19,7 +19,7 @@
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"
         @input="changeContent($event, block)"
-        @keypress="handleKeypress"
+        @keypress="handleKeypress($event, block)"
       />
       <div
         v-if="block.isOptionsShowing"
@@ -81,8 +81,8 @@ export default defineComponent({
       emDelimiter: '*',
     });
 
-    const handleKeypress = (event: KeyboardEvent): void => {
-      emit('keypress', event);
+    const handleKeypress = (event: KeyboardEvent, block: BlockType): void => {
+      emit('keypress', { event, block });
     };
 
     const toggleOptions = (block: BlockType) => {

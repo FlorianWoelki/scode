@@ -101,13 +101,18 @@ export default defineComponent({
       blocks.value = newValue;
     });
 
-    const handleShortcuts = (event: KeyboardEvent) => {
-      // Add codeblock
-      if (event.ctrlKey && event.shiftKey && (event.keyCode === 33 || event.key === 'C')) {
-        const lastUsedCodeLanguage = store.getters['fileStore/lastUsedCodeLanguage'];
-        addCodeBlock(lastUsedCodeLanguage);
-      } else if (event.ctrlKey && event.shiftKey && (event.keyCode === 43 || event.key === 'M')) {
-        addMarkdownBlock();
+    const handleShortcuts = ({ event, block }: { event: KeyboardEvent, block: BlockType }) => {
+      if (event.ctrlKey && event.shiftKey) {
+        if (event.keyCode === 33 || event.key === 'C') {
+          const lastUsedCodeLanguage = store.getters['fileStore/lastUsedCodeLanguage'];
+          addCodeBlock(lastUsedCodeLanguage);
+        } else if (event.keyCode === 43 || event.key === 'M') {
+          addMarkdownBlock();
+        } else if ((block.type === 'code' && event.keyCode === 16) || (block.type === 'markdown' && event.keyCode === 38)) { // Up Key
+          moveBlockUp(block);
+        } else if ((block.type === 'code' && event.keyCode === 18) || (block.type === 'markdown' && event.keyCode === 40)) { // Down Key
+          moveBlockDown(block);
+        }
       }
     };
 
