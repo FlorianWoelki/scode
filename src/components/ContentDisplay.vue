@@ -116,6 +116,9 @@ export default defineComponent({
         } else if ((block.type === 'code' && event.keyCode === 18) || (block.type === 'markdown' && event.keyCode === 40)) { // Down Key
           moveBlockDown(block, true);
           shouldForceUpdate.value = !shouldForceUpdate.value;
+        } else if (event.key === 'Delete' || event.keyCode === 20) { // remove key
+          event.preventDefault();
+          deleteBlock(block);
         }
       }
     };
