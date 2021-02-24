@@ -15,6 +15,7 @@
       <MarkdownBlock
         v-else
         :startValue="block.value"
+        :key="forceUpdate"
         :isFocused="block.isFocused"
         @focus="toggleOptions(block)"
         @blur="toggleOptions(block)"

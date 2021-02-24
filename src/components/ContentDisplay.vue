@@ -111,10 +111,10 @@ export default defineComponent({
         } else if (event.keyCode === 43 || event.key === 'M') {
           addMarkdownBlock();
         } else if ((block.type === 'code' && event.keyCode === 16) || (block.type === 'markdown' && event.keyCode === 38)) { // Up Key
-          moveBlockUp(block);
+          moveBlockUp(block, true);
           shouldForceUpdate.value = !shouldForceUpdate.value;
         } else if ((block.type === 'code' && event.keyCode === 18) || (block.type === 'markdown' && event.keyCode === 40)) { // Down Key
-          moveBlockDown(block);
+          moveBlockDown(block, true);
           shouldForceUpdate.value = !shouldForceUpdate.value;
         }
       }
@@ -179,7 +179,7 @@ export default defineComponent({
       }
     };
 
-    const moveBlockUp = (block: BlockType) => {
+    const moveBlockUp = (block: BlockType, shouldFocus = false) => {
       const blockIndex = blocks.value.indexOf(block);
       if (blockIndex === 0) {
         return;
@@ -190,9 +190,12 @@ export default defineComponent({
       const copiedBlock = block;
       deleteBlock(block);
       blocks.value.splice(blockIndex - 1, 0, copiedBlock);
+      if (shouldFocus) {
+        focusBlock(copiedBlock);
+      }
     };
 
-    const moveBlockDown = (block: BlockType) => {
+    const moveBlockDown = (block: BlockType, shouldFocus = false) => {
       const blockIndex = blocks.value.indexOf(block);
       if (blockIndex === blocks.value.length - 1) {
         return;
@@ -203,6 +206,16 @@ export default defineComponent({
       const copiedBlock = block;
       deleteBlock(block);
       blocks.value.splice(blockIndex + 1, 0, copiedBlock);
+      if (shouldFocus) {
+        focusBlock(copiedBlock);
+      }
+    };
+
+    const focusBlock = (block: BlockType) => {
+      blocks.value.forEach((block) => {
+        block.isFocused = false;
+      });
+      block.isFocused = true;
     };
 
     const updateValueOfBlocks = () => {
