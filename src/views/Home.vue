@@ -92,7 +92,7 @@ import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import FolderIcon from '../assets/icons/folder.svg';
 import SnippetFile from '../components/SnippetFile.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
-import { File } from '../db/File';
+import { IFile } from '../db';
 
 export default defineComponent({
   components: {
@@ -115,13 +115,13 @@ export default defineComponent({
           value: '',
         }],
         createdAt: new Date(),
-      } as File;
+      } as IFile;
 
-      store.commit('fileStore/addFile', file);
+      store.dispatch('fileStore/createFile', file);
       setSelectedFile(file);
     };
 
-    const setSelectedFile = (file: File | undefined): void => {
+    const setSelectedFile = (file: IFile | undefined): void => {
       store.commit('fileStore/setSelectedFile', file);
     };
 
