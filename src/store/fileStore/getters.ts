@@ -1,3 +1,6 @@
+import { GetterTree } from 'vuex';
+import { FileStoreGettersTypes, FileStoreStateTypes } from '.';
+import { IRootState } from '..';
 import { File } from '../../db/File';
 
 export default {
@@ -10,4 +13,4 @@ export default {
 
     return 'python';
   },
-};
+} as GetterTree<FileStoreStateTypes, IRootState> & FileStoreGettersTypes;

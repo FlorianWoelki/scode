@@ -1,3 +1,4 @@
+import { FileStoreStateTypes } from '.';
 import { BlockType } from '../../components/blocks/BlockType';
 import { File } from '../../db/File';
 
@@ -45,4 +46,4 @@ print(i)
       ] as BlockType[],
     },
   ] as File[],
-};
+} as FileStoreStateTypes;

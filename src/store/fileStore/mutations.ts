@@ -1,13 +1,15 @@
+import { MutationTree } from 'vuex';
+import { FileStoreMutationsTypes, FileStoreStateTypes, MutationTypes } from '.';
 import { File } from '../../db/File';
 
 export default {
-  createFile(state: any, file: File): void {
+  [MutationTypes.CREATE_FILE](state: any, file: File): void {
     state.files.push(file);
   },
-  setSelectedFile(state: any, file: File | undefined): void {
+  [MutationTypes.SET_SELECTED_FILE](state: any, file: File | undefined): void {
     state.selectedFile = file;
   },
-  updateFile(state: any, { id, file }: { id: string, file: File }): void {
+  [MutationTypes.UPDATE_FILE](state: any, { id, file }: { id: string, file: File }): void {
     const foundFileIndex = state.files.findIndex((file: File) => file.id === id);
     if (foundFileIndex !== -1) {
       state.files[foundFileIndex] = {
@@ -16,10 +18,10 @@ export default {
       };
     }
   },
-  deleteFile(state: any, id: string) {
+  [MutationTypes.DELETE_FILE](state: any, id: string) {
     const foundFileIndex = state.files.findIndex((file: File) => file.id === id);
     if (foundFileIndex !== -1) {
       state.files.splice(foundFileIndex, 1);
     }
   },
-};
+} as MutationTree<FileStoreStateTypes> & FileStoreMutationsTypes;
