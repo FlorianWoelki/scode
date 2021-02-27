@@ -93,6 +93,8 @@ import FolderIcon from '../assets/icons/folder.svg';
 import SnippetFile from '../components/SnippetFile.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
 import { IFile } from '../db';
+import { AllActionTypes } from '../store/action-types';
+import { AllMutationTypes } from '../store/mutation-types';
 
 export default defineComponent({
   components: {
@@ -117,21 +119,21 @@ export default defineComponent({
         createdAt: new Date(),
       } as IFile;
 
-      store.dispatch('fileStore/createFile', file);
+      store.dispatch(AllActionTypes.CREATE_FILE, file);
       setSelectedFile(file);
     };
 
     const setSelectedFile = (file: IFile | undefined): void => {
-      store.commit('fileStore/setSelectedFile', file);
+      store.commit(AllMutationTypes.SET_SELECTED_FILE, file);
     };
 
     const saveFileName = (id: string, name: string): void => {
-      store.commit('fileStore/updateFile', { id, file: { name } });
+      store.commit(AllMutationTypes.UPDATE_FILE, { id, file: { name } });
     };
 
     const deleteFile = (id: string): void => {
       setSelectedFile(undefined);
-      store.commit('fileStore/deleteFile', id);
+      store.commit(AllMutationTypes.DELETE_FILE, id);
     };
 
     return {
