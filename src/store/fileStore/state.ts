@@ -1,6 +1,6 @@
-import { FileStoreStateTypes } from '.';
 import { BlockType } from '../../components/blocks/BlockType';
 import { File } from '../../db/File';
+import { FileStoreStateTypes } from '../interfaces';
 
 export default {
   selectedFile: undefined,

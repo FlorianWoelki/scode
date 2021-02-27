@@ -1,12 +1,8 @@
 import { createStore } from 'vuex';
 import fileStore from './fileStore';
+import { IRootState } from './interfaces';
 
-export interface IRootState {
-  root: boolean;
-  version: string;
-}
-
-export default createStore({
+export default createStore<IRootState>({
   modules: {
     fileStore,
   },

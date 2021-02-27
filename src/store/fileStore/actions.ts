@@ -1,7 +1,8 @@
 import { ActionTree } from 'vuex';
-import { ActionTypes, FileStoreActionTypes, FileStoreStateTypes, MutationTypes } from '.';
-import { IRootState } from '..';
 import db, { IFile } from '../../db';
+import { FileStoreActionTypes, FileStoreStateTypes, IRootState } from '../interfaces';
+import { ActionTypes } from './action-types';
+import { MutationTypes } from './mutation-types';
 
 export default {
   [ActionTypes.CREATE_FILE]({ commit }, fileDetails): IFile {

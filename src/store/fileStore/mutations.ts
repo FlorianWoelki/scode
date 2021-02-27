@@ -1,6 +1,7 @@
 import { MutationTree } from 'vuex';
-import { FileStoreMutationsTypes, FileStoreStateTypes, MutationTypes } from '.';
 import { File } from '../../db/File';
+import { FileStoreMutationsTypes, FileStoreStateTypes } from '../interfaces';
+import { MutationTypes } from './mutation-types';
 
 export default {
   [MutationTypes.CREATE_FILE](state: any, file: File): void {
