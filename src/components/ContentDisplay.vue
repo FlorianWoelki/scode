@@ -23,7 +23,7 @@
       @moveBlockDown="moveBlockDown"
       @blur="updateValueOfBlocks"
       @keypress="handleShortcuts"
-      @changeContent="saveBlockInDatabase"
+      @changeContent="updateBlockInDatabase"
     />
 
     <button
@@ -67,6 +67,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
 import { BlockType } from './blocks/BlockType';
 import { AllActionTypes } from '../store/action-types';
+import { IFile } from '../db';
 
 export default defineComponent({
   emits: ['saveFileName', 'deleteFile'],
@@ -243,8 +244,12 @@ export default defineComponent({
       isFileMenuOpen.value = false;
     };
 
-    const saveBlockInDatabase = (blocks: BlockType[]) => {
-      store.dispatch(AllActionTypes.UPDATE_FILE, { fileId: props.fileId, blocks });
+    const updateBlockInDatabase = (blocks: BlockType[]) => {
+      store.dispatch(AllActionTypes.UPDATE_FILE, {
+        name: props.name,
+        id: props.fileId,
+        blocks: props.fileBlocks,
+      } as IFile);
     };
 
     return {
@@ -267,7 +272,7 @@ export default defineComponent({
       deleteActiveFile,
       handleShortcuts,
       shouldForceUpdate,
-      saveBlockInDatabase,
+      updateBlockInDatabase,
     };
   },
 });

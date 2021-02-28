@@ -146,6 +146,7 @@ export default defineComponent({
           block.rawValue = markdown;
         }, 0);
       }
+
       emit('changeContent', props.blocks);
     };
 

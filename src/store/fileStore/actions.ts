@@ -21,14 +21,20 @@ export default {
         if (typeof file.blocks === 'string') {
           file.blocks = JSON.parse(file.blocks as unknown as string);
         }
+        file.blocks.map((block) => {
+          block.value = block.rawValue || '';
+          return block;
+        });
         return file;
       });
       commit(MutationTypes.LOAD_FILES, files);
     });
   },
-  [ActionTypes.UPDATE_FILE]({ commit }, { fileId, blocks }: { fileId: string, blocks: BlockType[] }) {
-    db.transaction('rw', db.files, async() => {
-      db.files.update(fileId, { blocks: JSON.stringify(blocks) });
+  [ActionTypes.UPDATE_FILE]({ commit }, file: IFile) {
+    db.transaction('rw', db.files, () => {
+      setTimeout(() => {
+        db.files.update(file.id, { ...file, blocks: JSON.stringify(file.blocks) });
+      }, 0);
     });
   },
 } as ActionTree<FileStoreStateTypes, IRootState> & FileStoreActionTypes;
