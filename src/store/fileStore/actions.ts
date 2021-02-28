@@ -2,6 +2,7 @@ import { ActionTree } from 'vuex';
 import { BlockType } from '../../components/blocks/BlockType';
 import db, { IFile } from '../../db';
 import { FileStoreActionTypes, FileStoreStateTypes, IRootState } from '../interfaces';
+import { AllMutationTypes } from '../mutation-types';
 import { ActionTypes } from './action-types';
 import { MutationTypes } from './mutation-types';
 
@@ -14,13 +15,14 @@ export default {
     commit(MutationTypes.CREATE_FILE, fileDetails);
     return fileDetails;
   },
-  [ActionTypes.LOAD_FILES]({ commit }) {
+  [ActionTypes.LOAD_FILES]({ commit, dispatch }) {
     db.transaction('rw', db.files, async() => {
       const files = await db.files.toArray();
       files.map((file) => {
         if (typeof file.blocks === 'string') {
           file.blocks = JSON.parse(file.blocks as unknown as string);
         }
+
         file.blocks.map((block) => {
           block.value = block.rawValue || '';
           return block;
@@ -30,10 +32,19 @@ export default {
       commit(MutationTypes.LOAD_FILES, files);
     });
   },
+  [ActionTypes.UPDATE_FILENAME]({ commit }, { id, name }: { id: string, name: string }) {
+    db.transaction('rw', db.files, () => {
+      setTimeout(() => {
+        db.files.update(id, { name });
+        commit(MutationTypes.UPDATE_FILE, { id, file: { name } });
+      }, 0);
+    });
+  },
   [ActionTypes.UPDATE_FILE]({ commit }, file: IFile) {
     db.transaction('rw', db.files, () => {
       setTimeout(() => {
         db.files.update(file.id, { ...file, blocks: JSON.stringify(file.blocks) });
+        commit(MutationTypes.UPDATE_FILE, { id: file.id, file });
       }, 0);
     });
   },

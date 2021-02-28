@@ -131,7 +131,7 @@ export default defineComponent({
     };
 
     const saveFileName = (id: string, name: string): void => {
-      store.commit(AllMutationTypes.UPDATE_FILE, { id, file: { name } });
+      store.dispatch(AllActionTypes.UPDATE_FILENAME, { id, name });
     };
 
     const deleteFile = (id: string): void => {
