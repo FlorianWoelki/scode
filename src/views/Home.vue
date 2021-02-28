@@ -108,6 +108,8 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
+    store.dispatch(AllActionTypes.LOAD_FILES);
+
     const addFile = (): void => {
       const file = {
         id: uuid.v4(),

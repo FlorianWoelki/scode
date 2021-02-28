@@ -1,4 +1,5 @@
 import { MutationTree } from 'vuex';
+import { IFile } from '../../db';
 import { File } from '../../db/File';
 import { FileStoreMutationsTypes, FileStoreStateTypes } from '../interfaces';
 import { MutationTypes } from './mutation-types';
@@ -24,5 +25,8 @@ export default {
     if (foundFileIndex !== -1) {
       state.files.splice(foundFileIndex, 1);
     }
+  },
+  [MutationTypes.LOAD_FILES](state: any, files: IFile[]) {
+    state.files = files;
   },
 } as MutationTree<FileStoreStateTypes> & FileStoreMutationsTypes;

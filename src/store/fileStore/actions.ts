@@ -13,4 +13,10 @@ export default {
     commit(MutationTypes.CREATE_FILE, fileDetails);
     return fileDetails;
   },
+  [ActionTypes.LOAD_FILES]({ commit }) {
+    db.transaction('rw', db.files, async() => {
+      const files = await db.files.toArray();
+      commit(MutationTypes.LOAD_FILES, files);
+    });
+  },
 } as ActionTree<FileStoreStateTypes, IRootState> & FileStoreActionTypes;
