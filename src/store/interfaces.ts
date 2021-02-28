@@ -9,7 +9,7 @@ export interface IRootState {
 }
 
 export interface FileStoreStateTypes {
-  files?: IFile[];
+  files: IFile[];
   selectedFile?: IFile;
   rootDispatch?: boolean;
 }
