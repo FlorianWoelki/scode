@@ -23,6 +23,7 @@
       @moveBlockDown="moveBlockDown"
       @blur="updateValueOfBlocks"
       @keypress="handleShortcuts"
+      @changeContent="saveBlockInDatabase"
     />
 
     <button
@@ -65,6 +66,7 @@ import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
 import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
 import { BlockType } from './blocks/BlockType';
+import { AllActionTypes } from '../store/action-types';
 
 export default defineComponent({
   emits: ['saveFileName', 'deleteFile'],
@@ -78,6 +80,10 @@ export default defineComponent({
   props: {
     fileBlocks: {
       type: Array as PropType<BlockType[]>,
+      required: true,
+    },
+    fileId: {
+      type: String,
       required: true,
     },
     name: {
@@ -237,6 +243,10 @@ export default defineComponent({
       isFileMenuOpen.value = false;
     };
 
+    const saveBlockInDatabase = (blocks: BlockType[]) => {
+      store.dispatch(AllActionTypes.UPDATE_FILE, { fileId: props.fileId, blocks });
+    };
+
     return {
       nameInput,
       autoAdjustTextArea,
@@ -257,6 +267,7 @@ export default defineComponent({
       deleteActiveFile,
       handleShortcuts,
       shouldForceUpdate,
+      saveBlockInDatabase,
     };
   },
 });

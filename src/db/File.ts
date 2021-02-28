@@ -16,9 +16,7 @@ export class File implements IFile {
 
   public save() {
     return db.transaction('rw', db.files, () => {
-      db.files.put(new File(this.name, this.blocks, this.id)).then((id) => {
-        this.id = id;
-      });
+      db.files.update(this.id, { name: this.name, blocks: this.blocks });
     });
   }
 }

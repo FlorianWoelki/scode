@@ -58,7 +58,7 @@ import ChevronDown from '../../assets/icons/chevron-down.svg';
 import { BlockType } from './BlockType';
 
 export default defineComponent({
-  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown', 'blur', 'keypress'],
+  emits: ['deleteBlock', 'moveBlockUp', 'moveBlockDown', 'blur', 'keypress', 'changeContent'],
 
   components: {
     CodeBlock,
@@ -146,6 +146,7 @@ export default defineComponent({
           block.rawValue = markdown;
         }, 0);
       }
+      emit('changeContent', props.blocks);
     };
 
     const isLastBlock = (block: BlockType) => {

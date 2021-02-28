@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import { BlockType } from '../components/blocks/BlockType';
+import { File } from './File';
 
 export interface IFile {
   id: string;
@@ -7,6 +8,8 @@ export interface IFile {
   // parent;
   blocks: BlockType[]
   createdAt: Date;
+
+  save(): Dexie.Promise;
 }
 
 class ScodeDatabase extends Dexie {
@@ -18,6 +21,7 @@ class ScodeDatabase extends Dexie {
       files: 'id, name, content, createdAt',
     });
     this.files = this.table('files');
+    this.files.mapToClass(File);
   }
 }
 
