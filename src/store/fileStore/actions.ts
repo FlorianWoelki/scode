@@ -25,8 +25,11 @@ export default {
 
         file.blocks.map((block) => {
           block.value = block.rawValue || '';
+          block.isOptionsShowing = false;
+          block.isDeleteHovering = false;
           return block;
         });
+
         return file;
       });
       commit(MutationTypes.LOAD_FILES, files);
