@@ -23,7 +23,7 @@
       @moveBlockDown="moveBlockDown"
       @blur="updateValueOfBlocks"
       @keypress="handleShortcuts"
-      @changeContent="updateBlockInDatabase"
+      @changeContent="updateBlocksInDatabase"
     />
 
     <button
@@ -187,6 +187,7 @@ export default defineComponent({
       if (filteredBlockIndex !== -1) {
         blocks.value.splice(filteredBlockIndex, 1);
       }
+      updateBlocksInDatabase(blocks.value);
     };
 
     const moveBlockUp = (block: BlockType, shouldFocus = false) => {
@@ -203,6 +204,7 @@ export default defineComponent({
       if (shouldFocus) {
         focusBlock(copiedBlock);
       }
+      updateBlocksInDatabase(blocks.value);
     };
 
     const moveBlockDown = (block: BlockType, shouldFocus = false) => {
@@ -219,6 +221,7 @@ export default defineComponent({
       if (shouldFocus) {
         focusBlock(copiedBlock);
       }
+      updateBlocksInDatabase(blocks.value);
     };
 
     const focusBlock = (block: BlockType) => {
@@ -244,11 +247,11 @@ export default defineComponent({
       isFileMenuOpen.value = false;
     };
 
-    const updateBlockInDatabase = (blocks: BlockType[]) => {
+    const updateBlocksInDatabase = (blocks: BlockType[]) => {
       store.dispatch(AllActionTypes.UPDATE_FILE, {
         name: props.name,
         id: props.fileId,
-        blocks: props.fileBlocks,
+        blocks: blocks,
       } as IFile);
     };
 
@@ -272,7 +275,7 @@ export default defineComponent({
       deleteActiveFile,
       handleShortcuts,
       shouldForceUpdate,
-      updateBlockInDatabase,
+      updateBlocksInDatabase,
     };
   },
 });
