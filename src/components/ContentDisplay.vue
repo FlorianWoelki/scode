@@ -10,7 +10,7 @@
         <div class="px-4 py-3 cursor-pointer hover:bg-gray-600" @click="deleteActiveFile">Delete file</div>
       </div>
     </div>
-    <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName">
+    <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName">
     <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
   </h1>
 
