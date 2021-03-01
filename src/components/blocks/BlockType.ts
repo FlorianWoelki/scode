@@ -1,8 +1,8 @@
 export type BlockType = {
   type: 'code' | 'markdown';
-  value: string;
+  savedValue: string;
+  cachedValue?: string;
   isFocused?: boolean;
-  rawValue?: string;
   isOptionsShowing?: boolean;
   isDeleteHovering?: boolean;
   shouldForceUpdate?: boolean;

@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import * as monaco from 'monaco-editor';
-import DraculaTheme from '../../monaco/DraculaTheme';
+import DraculaTheme from '../../../monaco/DraculaTheme';
 
 export default defineComponent({
   emits: ['focus', 'blur', 'input', 'keypress'],

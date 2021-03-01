@@ -24,7 +24,7 @@ export default {
         }
 
         file.blocks.map((block) => {
-          block.value = block.rawValue || '';
+          block.savedValue = block.cachedValue || '';
           block.isOptionsShowing = false;
           block.isDeleteHovering = false;
           return block;

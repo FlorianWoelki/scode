@@ -60,7 +60,7 @@
           v-for="file in files"
           :key="file.id"
           :name="file.name"
-          :content="file.blocks.length > 0 ? file.blocks[0].value : ''"
+          :content="file.blocks.length > 0 ? file.blocks[0].savedValue || '' : ''"
           :isSelected="file.id === selectedFile?.id"
           @click="setSelectedFile(file)"
         />
@@ -117,7 +117,7 @@ export default defineComponent({
         name: 'undefined',
         blocks: [{
           type: 'markdown',
-          value: '',
+          savedValue: '',
         }],
         createdAt: new Date(),
       } as IFile;

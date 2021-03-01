@@ -152,7 +152,7 @@ export default defineComponent({
 
     const addMarkdownBlock = (value?: string) => {
       blocks.value.push({
-        value: value || '',
+        savedValue: value || '',
         type: 'markdown',
         isFocused: true,
       });
@@ -161,7 +161,7 @@ export default defineComponent({
 
     const addCodeBlock = (language: string) => {
       blocks.value.push({
-        value: '',
+        savedValue: '',
         type: 'code',
         isFocused: true,
         language,
@@ -230,7 +230,7 @@ export default defineComponent({
 
     const updateValueOfBlocks = () => {
       blocks.value.map((block) => {
-        block.value = block.rawValue || block.value;
+        block.savedValue = block.cachedValue || block.savedValue;
         return block;
       });
     };

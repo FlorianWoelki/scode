@@ -23,7 +23,7 @@ export default {
         {
           type: 'code',
           language: 'python',
-          value: 'print("Hello World")',
+          savedValue: 'print("Hello World")',
         },
       ] as BlockType[],
     },
@@ -34,7 +34,7 @@ export default {
       blocks: [
         {
           type: 'markdown',
-          value: `# Hello World
+          savedValue: `# Hello World
 This content represents a small test content file.
 
 \`\`\`

@@ -3,7 +3,7 @@
     <div v-for="(block, index) in blocks" :key="index" class="relative" :class="{ 'bg-gray-700': block.isDeleteHovering }">
       <CodeBlock
         v-if="block.type === 'code'"
-        :value="block.value"
+        :value="block.savedValue"
         :key="forceUpdate"
         :language="block.language"
         :isFocused="block.isFocused"
@@ -14,7 +14,7 @@
       />
       <MarkdownBlock
         v-else
-        :startValue="block.value"
+        :startValue="block.savedValue"
         :key="forceUpdate"
         :isFocused="block.isFocused"
         @focus="toggleOptions(block)"
@@ -50,8 +50,8 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue';
 import TurndownService from 'turndown';
-import CodeBlock from './CodeBlock.vue';
-import MarkdownBlock from './markdownBlock/MarkdownBlock.vue';
+import CodeBlock from './code/CodeBlock.vue';
+import MarkdownBlock from './markdown/MarkdownBlock.vue';
 import TrashIcon from '../../assets/icons/trash.svg';
 import ChevronUp from '../../assets/icons/chevron-up.svg';
 import ChevronDown from '../../assets/icons/chevron-down.svg';
@@ -139,11 +139,11 @@ export default defineComponent({
 
     const changeContent = (target: HTMLElement | string, block: BlockType) => {
       if (block.type === 'code') {
-        block.rawValue = target as string;
+        block.cachedValue = target as string;
       } else {
         setTimeout(() => {
           const markdown = turndownService.turndown(target);
-          block.rawValue = markdown;
+          block.cachedValue = markdown;
         }, 0);
       }
 
