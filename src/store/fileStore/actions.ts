@@ -46,7 +46,6 @@ export default {
   [ActionTypes.UPDATE_FILE]({ commit }, file: IFile) {
     db.transaction('rw', db.files, () => {
       setTimeout(() => {
-        console.log('ACTION_BLOCKS', file.blocks);
         db.files.update(file.id, { ...file, blocks: JSON.stringify(file.blocks) });
         commit(MutationTypes.UPDATE_FILE, { id: file.id, file });
       }, 0);

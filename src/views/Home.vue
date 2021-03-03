@@ -48,9 +48,7 @@
       <div class="w-7/12 m-auto py-7">
         <ContentDisplay
           v-if="selectedFile"
-          :fileId="selectedFile.id"
-          :name="selectedFile.name"
-          :fileBlocks="selectedFile.blocks"
+          :file="selectedFile"
           @saveFileName="saveFileName(selectedFile.id, $event)"
           @deleteFile="deleteFile(selectedFile.id)"
         />

@@ -10,8 +10,8 @@
         <div class="px-4 py-3 cursor-pointer hover:bg-gray-600" @click="deleteActiveFile">Delete file</div>
       </div>
     </div>
-    <input class="w-full bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName">
-    <span class="text-xs text-gray-600">last edited 3 minutes ago</span>
+    <input class="w-full text-3xl bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName">
+    <span class="text-xs text-gray-600">created on {{ createdDateOfFile }}</span>
   </h1>
 
   <div class="relative mt-8">
@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Blocks from './blocks/Blocks.vue';
 import PlusIcon from '../assets/icons/plus.svg';
@@ -79,34 +79,26 @@ export default defineComponent({
   },
 
   props: {
-    fileBlocks: {
-      type: Array as PropType<BlockType[]>,
-      required: true,
-    },
-    fileId: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
+    file: {
+      type: Object as PropType<IFile>,
       required: true,
     },
   },
 
   setup(props, { emit }) {
     const store = useStore();
-    const nameInput = ref(props.name);
-    const blocksInput = ref(props.fileBlocks);
+    const nameInput = ref(props.file.name);
+    const blocksInput = ref(props.file.blocks);
     const blocks = ref<BlockType[]>([...blocksInput.value]);
     const isBlockMenuOpen = ref(false);
     const isCodeBlockDropdownOpen = ref(false);
     const isFileMenuOpen = ref(false);
     const shouldForceUpdate = ref(false);
 
-    watch(() => props.name, (newValue) => {
+    watch(() => props.file.name, (newValue) => {
       nameInput.value = newValue;
     });
-    watch(() => props.fileBlocks, (newValue) => {
+    watch(() => props.file.blocks, (newValue) => {
       blocks.value = newValue;
     });
 
@@ -249,11 +241,16 @@ export default defineComponent({
 
     const updateBlocksInDatabase = (blocks: BlockType[]) => {
       store.dispatch(AllActionTypes.UPDATE_FILE, {
-        name: props.name,
-        id: props.fileId,
+        id: props.file.id,
+        name: props.file.name,
         blocks: blocks,
       } as IFile);
     };
+
+    const createdDateOfFile = computed((): string => {
+      const date = props.file.createdAt;
+      return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    });
 
     return {
       nameInput,
@@ -276,6 +273,7 @@ export default defineComponent({
       handleShortcuts,
       shouldForceUpdate,
       updateBlocksInDatabase,
+      createdDateOfFile,
     };
   },
 });
