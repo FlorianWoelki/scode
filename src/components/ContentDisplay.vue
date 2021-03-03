@@ -10,7 +10,7 @@
         <div class="px-4 py-3 cursor-pointer hover:bg-gray-600" @click="deleteActiveFile">Delete file</div>
       </div>
     </div>
-    <input class="w-full text-3xl bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName">
+    <input class="w-full text-3xl bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName" :maxlength="FILE_CONFIG.MAX_FILE_LENGTH">
     <span class="text-xs text-gray-600">created on {{ createdDateOfFile }}</span>
   </h1>
 
@@ -86,6 +86,10 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const FILE_CONFIG = {
+      MAX_FILE_LENGTH: 40,
+    };
+
     const store = useStore();
     const nameInput = ref(props.file.name);
     const blocksInput = ref(props.file.blocks);
@@ -253,6 +257,7 @@ export default defineComponent({
     });
 
     return {
+      FILE_CONFIG,
       nameInput,
       autoAdjustTextArea,
       saveFileName,
