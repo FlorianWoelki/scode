@@ -109,7 +109,7 @@ export default defineComponent({
 
     const deleteFile = (id: string): void => {
       setSelectedFile(undefined);
-      store.commit(AllMutationTypes.DELETE_FILE, id);
+      store.dispatch(AllActionTypes.DELETE_FILE, id);
     };
 
     return {

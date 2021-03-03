@@ -52,4 +52,10 @@ export default {
       }, 0);
     });
   },
+  [ActionTypes.DELETE_FILE]({ commit }, id: string) {
+    db.transaction('rw', db.files, () => {
+      db.files.delete(id);
+      commit(MutationTypes.DELETE_FILE, id);
+    });
+  },
 } as ActionTree<FileStoreStateTypes, IRootState> & FileStoreActionTypes;
