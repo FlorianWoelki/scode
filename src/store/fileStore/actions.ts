@@ -25,6 +25,7 @@ export default {
 
         file.blocks.map((block) => {
           block.savedValue = block.cachedValue || '';
+          block.isFocused = false;
           block.isOptionsShowing = false;
           block.isDeleteHovering = false;
           return block;
