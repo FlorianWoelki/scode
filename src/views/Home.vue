@@ -54,18 +54,26 @@
         />
         <p v-else class="absolute inset-0 flex items-center justify-center italic text-gray-600">No selected file</p>
       </div>
+
+      <ModalButton
+        class="absolute bottom-0 right-0 p-4 mb-6 mr-6 text-white bg-indigo-700 rounded-full cursor-pointer hover:bg-indigo-800 focus:outline-none"
+      >
+        <ClipboardList class="w-6 h-6" />
+      </ModalButton>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { uuid } from 'vue-uuid';
 import PlusIcon from '../assets/icons/plus.svg';
+import ClipboardList from '../assets/icons/clipboard-list.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import SnippetFile from '../components/SnippetFile.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
+import ModalButton from '../components/ui/ModalButton.vue';
 import { IFile } from '../db';
 import { AllActionTypes } from '../store/action-types';
 import { AllMutationTypes } from '../store/mutation-types';
@@ -76,9 +84,13 @@ export default defineComponent({
     FolderOpenIcon,
     SnippetFile,
     ContentDisplay,
+    ClipboardList,
+    ModalButton,
   },
+
   setup() {
     const store = useStore();
+    const isShortcutModalOpen = ref(false);
 
     store.dispatch(AllActionTypes.LOAD_FILES);
 
@@ -115,6 +127,7 @@ export default defineComponent({
       setSelectedFile,
       saveFileName,
       deleteFile,
+      isShortcutModalOpen,
       files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
