@@ -10,7 +10,13 @@
         <div class="px-4 py-3 cursor-pointer hover:bg-gray-600" @click="deleteActiveFile">Delete file</div>
       </div>
     </div>
-    <input class="w-full text-3xl bg-transparent focus:outline-none" v-model="nameInput" @keydown.enter="saveFileName" @blur="saveFileName" :maxlength="FILE_CONFIG.MAX_FILE_LENGTH">
+    <input
+      class="w-full text-3xl bg-transparent focus:outline-none"
+      v-model="nameInput"
+      @keydown.enter="saveFileName"
+      @blur="saveFileName"
+      :maxlength="FILE_CONFIG.MAX_FILE_LENGTH"
+    >
     <span class="text-xs text-gray-600">created on {{ createdDateOfFile }}</span>
   </h1>
 
@@ -246,7 +252,7 @@ export default defineComponent({
     const updateBlocksInDatabase = (blocks: BlockType[]) => {
       store.dispatch(AllActionTypes.UPDATE_FILE, {
         id: props.file.id,
-        name: props.file.name,
+        // name: props.file.name,
         blocks: blocks,
       } as IFile);
     };
