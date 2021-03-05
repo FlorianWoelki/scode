@@ -74,6 +74,7 @@ import DotsVerticalIcon from '../assets/icons/dots-vertical.svg';
 import { BlockType } from './blocks/BlockType';
 import { AllActionTypes } from '../store/action-types';
 import { IFile } from '../db';
+import shortcuts from '../util/shortcuts';
 
 export default defineComponent({
   emits: ['saveFileName', 'deleteFile'],
@@ -114,18 +115,18 @@ export default defineComponent({
 
     const handleShortcuts = ({ event, block }: { event: KeyboardEvent, block: BlockType }) => {
       if (event.ctrlKey && event.shiftKey) {
-        if (event.keyCode === 33 || event.key === 'C') {
+        if (event.keyCode === shortcuts.addCodeBlock.keyCode || event.key === shortcuts.addCodeBlock.key) {
           const lastUsedCodeLanguage = store.getters['fileStore/lastUsedCodeLanguage'];
           addCodeBlock(lastUsedCodeLanguage);
-        } else if (event.keyCode === 43 || event.key === 'M') {
+        } else if (shortcuts.addMarkdownBlock.keyCode === event.keyCode || event.key === shortcuts.addMarkdownBlock.key) {
           addMarkdownBlock();
-        } else if ((block.type === 'code' && event.keyCode === 16) || (block.type === 'markdown' && event.keyCode === 38)) { // Up Key
+        } else if ((block.type === 'code' && event.keyCode === shortcuts.moveBlockUp.monacoKeyCode) || (block.type === 'markdown' && event.keyCode === shortcuts.moveBlockUp.keyCode)) { // Up Key
           moveBlockUp(block, true);
           shouldForceUpdate.value = !shouldForceUpdate.value;
-        } else if ((block.type === 'code' && event.keyCode === 18) || (block.type === 'markdown' && event.keyCode === 40)) { // Down Key
+        } else if ((block.type === 'code' && event.keyCode === shortcuts.moveBlockDown.monacoKeyCode) || (block.type === 'markdown' && event.keyCode === shortcuts.moveBlockDown.keyCode)) { // Down Key
           moveBlockDown(block, true);
           shouldForceUpdate.value = !shouldForceUpdate.value;
-        } else if (event.key === 'Delete' || event.keyCode === 20) { // remove key
+        } else if (event.key === shortcuts.deleteBlock.key || event.keyCode === shortcuts.deleteBlock.keyCode) { // remove key
           event.preventDefault();
           deleteBlock(block);
         }
