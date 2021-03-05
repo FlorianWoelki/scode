@@ -65,8 +65,25 @@
         <div class="p-4 text-gray-300">
           <h1 class="text-2xl text-gray-200">Scode Shortcuts</h1>
 
-          <ul class="mt-4">
-            <li></li>
+          <ul class="mt-6 space-y-4">
+            <li v-for="(value, key) in shortcuts" :key="key">
+              <div class="grid grid-cols-2">
+                <div v-if="value.isCtrlAndShift">
+                  <span class="key">Ctrl</span>
+                  +
+                  <span class="key">Shift</span>
+                  +
+                  <span class="key">{{ value.key }}</span>
+                </div>
+                <div v-else>
+                  <span class="key">{{ value.key }}</span>
+                </div>
+
+                <div class="text-gray-400">
+                  {{ value.description }}
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </ModalButton>
@@ -87,6 +104,7 @@ import ModalButton from '../components/ui/ModalButton.vue';
 import { IFile } from '../db';
 import { AllActionTypes } from '../store/action-types';
 import { AllMutationTypes } from '../store/mutation-types';
+import shortcuts from '../util/shortcuts';
 
 export default defineComponent({
   components: {
@@ -138,9 +156,16 @@ export default defineComponent({
       saveFileName,
       deleteFile,
       isShortcutModalOpen,
+      shortcuts,
       files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
   },
 });
 </script>
+
+<style lang="postcss">
+.key {
+  @apply bg-indigo-900 px-2 py-1 rounded;
+}
+</style>
