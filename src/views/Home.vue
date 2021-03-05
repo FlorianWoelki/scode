@@ -58,7 +58,17 @@
       <ModalButton
         class="absolute bottom-0 right-0 p-4 mb-6 mr-6 text-white bg-indigo-700 rounded-full cursor-pointer hover:bg-indigo-800 focus:outline-none"
       >
-        <ClipboardList class="w-6 h-6" />
+        <template #button>
+          <ClipboardList class="w-6 h-6" />
+        </template>
+
+        <div class="p-4 text-gray-300">
+          <h1 class="text-2xl text-gray-200">Scode Shortcuts</h1>
+
+          <ul class="mt-4">
+            <li></li>
+          </ul>
+        </div>
       </ModalButton>
     </div>
   </div>
