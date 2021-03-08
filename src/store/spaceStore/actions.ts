@@ -6,8 +6,8 @@ import { ActionTypes } from './action-types';
 import { MutationTypes } from './mutation-types';
 
 export default {
-  [ActionTypes.LOAD_FILES]({ commit }) {
-    db.transaction('rw', db.files, async() => {
+  [ActionTypes.LOAD_SPACES]({ commit }) {
+    db.transaction('rw', db.spaces, async() => {
       const spaces = await db.spaces.toArray();
       commit(MutationTypes.LOAD_SPACES, spaces);
     });

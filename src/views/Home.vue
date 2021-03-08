@@ -4,8 +4,7 @@
       <div class="grid h-full grid-cols-12">
         <!-- CODE SPACES -->
         <div class="col-span-3 p-1 mt-6 space-y-4">
-          <Space :isSelected="true" name="JavaScript" />
-          <Space name="Python" />
+          <Space v-for="space in spaces" :key="space" :name="space.name" />
           <PlusIcon class="flex justify-center w-8 h-8 mx-auto text-gray-600" />
         </div>
 
@@ -114,6 +113,7 @@ export default defineComponent({
     const isShortcutModalOpen = ref(false);
 
     store.dispatch(AllActionTypes.LOAD_FILES);
+    store.dispatch(AllActionTypes.LOAD_SPACES);
 
     const addFile = (): void => {
       const file = {
@@ -150,6 +150,7 @@ export default defineComponent({
       deleteFile,
       isShortcutModalOpen,
       shortcuts,
+      spaces: computed(() => store.state.spaceStore.spaces),
       files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
