@@ -1,8 +1,6 @@
 import { ActionTree } from 'vuex';
-import { BlockType } from '../../components/blocks/BlockType';
 import db, { IFile } from '../../db';
 import { FileStoreActionTypes, FileStoreStateTypes, IRootState } from '../interfaces';
-import { AllMutationTypes } from '../mutation-types';
 import { ActionTypes } from './action-types';
 import { MutationTypes } from './mutation-types';
 

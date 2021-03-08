@@ -1,7 +1,6 @@
 import { GetterTree } from 'vuex';
-import { FileStoreGettersTypes, FileStoreStateTypes } from '.';
-import { IRootState } from '..';
 import { File } from '../../db/File';
+import { FileStoreGettersTypes, FileStoreStateTypes, IRootState } from '../interfaces';
 
 export default {
   lastUsedCodeLanguage(state: any): string {
