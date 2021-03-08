@@ -4,17 +4,8 @@
       <div class="grid h-full grid-cols-12">
         <!-- CODE SPACES -->
         <div class="col-span-3 p-1 mt-6 space-y-4">
-          <div class="flex flex-col items-center justify-center mx-auto">
-            <div class="flex items-center justify-center w-12 h-12 bg-gray-600 border-2 border-gray-400 rounded-lg">
-              <p class="font-light text-white">JS</p>
-            </div>
-            <p class="mt-1 text-sm font-light text-gray-400">JavaScript</p>
-          </div>
-          <div class="flex flex-col items-center justify-center mx-auto">
-            <div class="flex items-center justify-center w-12 h-12 bg-gray-600 rounded-lg">
-              <p class="font-light text-white">JS</p>
-            </div>
-          </div>
+          <Space :isSelected="true" name="JavaScript" />
+          <Space name="Python" />
           <PlusIcon class="flex justify-center w-8 h-8 mx-auto text-gray-600" />
         </div>
 
@@ -99,6 +90,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 import ClipboardList from '../assets/icons/clipboard-list.svg';
 import FolderOpenIcon from '../assets/icons/folder-open.svg';
 import SnippetFile from '../components/SnippetFile.vue';
+import Space from '../components/Space.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
 import ModalButton from '../components/ui/ModalButton.vue';
 import { IFile } from '../db';
@@ -114,6 +106,7 @@ export default defineComponent({
     ContentDisplay,
     ClipboardList,
     ModalButton,
+    Space,
   },
 
   setup() {
