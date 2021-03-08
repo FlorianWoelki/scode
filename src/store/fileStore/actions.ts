@@ -1,6 +1,7 @@
 import { ActionTree } from 'vuex';
 import db, { IFile } from '../../db';
-import { FileStoreActionTypes, FileStoreStateTypes, IRootState } from '../interfaces';
+import { IRootState } from '../interfaces';
+import { FileStoreActionTypes, FileStoreStateTypes } from '../interfaces/fileStore';
 import { ActionTypes } from './action-types';
 import { MutationTypes } from './mutation-types';
 

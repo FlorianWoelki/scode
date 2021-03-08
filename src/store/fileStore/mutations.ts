@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
 import { IFile } from '../../db';
-import { FileStoreMutationsTypes, FileStoreStateTypes } from '../interfaces';
+import { FileStoreMutationsTypes, FileStoreStateTypes } from '../interfaces/fileStore';
 import { MutationTypes } from './mutation-types';
 
 export default {

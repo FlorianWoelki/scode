@@ -3,7 +3,8 @@ import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
 import { Module } from 'vuex';
-import { FileStoreStateTypes, IRootState } from '../interfaces';
+import { IRootState } from '../interfaces';
+import { FileStoreStateTypes } from '../interfaces/fileStore';
 
 export default {
   namespaced: true,
