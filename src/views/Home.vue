@@ -166,6 +166,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .key {
-  @apply bg-indigo-900 px-2 py-1 rounded;
+  @apply bg-indigo-400 text-indigo-900 px-2 py-1 rounded;
 }
 </style>
