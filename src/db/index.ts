@@ -20,7 +20,7 @@ export interface ISpace {
 
 class ScodeDatabase extends Dexie {
   public files: Dexie.Table<IFile, string>;
-  public spaces: Dexie.Table<ISpace, string>;
+  public spaces: Dexie.Table<ISpace, number>;
 
   constructor() {
     super('scode');

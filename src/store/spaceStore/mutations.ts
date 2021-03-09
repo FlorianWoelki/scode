@@ -12,4 +12,10 @@ export default {
   [MutationTypes.CREATE_SPACE](state, space) {
     state.spaces.push(space);
   },
+  [MutationTypes.UPDATE_SPACENAME](state, { id, name }) {
+    const filteredSpace = state.spaces.filter((space) => space.id === id);
+    if (filteredSpace[0]) {
+      filteredSpace[0].name = name;
+    }
+  },
 } as MutationTree<SpaceStoreStateTypes> & SpaceStoreMutationsTypes;

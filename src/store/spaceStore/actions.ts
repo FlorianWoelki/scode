@@ -18,4 +18,12 @@ export default {
       commit(MutationTypes.CREATE_SPACE, space);
     });
   },
+  [ActionTypes.UPDATE_SPACENAME]({ commit }, { id, name }) {
+    db.transaction('rw', db.spaces, () => {
+      setTimeout(() => {
+        db.spaces.update(id, { name });
+        commit(MutationTypes.UPDATE_SPACENAME, { id, name });
+      }, 0);
+    });
+  },
 } as ActionTree<SpaceStoreStateTypes, IRootState> & SpaceStoreActionTypes;

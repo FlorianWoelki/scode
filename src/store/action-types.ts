@@ -9,4 +9,5 @@ export const AllActionTypes = {
   UPDATE_FILENAME: `fileStore/${fileStoreTypes.UPDATE_FILENAME}`,
   LOAD_SPACES: `spaceStore/${spaceStoreTypes.LOAD_SPACES}`,
   CREATE_SPACE: `spaceStore/${spaceStoreTypes.CREATE_SPACE}`,
+  UPDATE_SPACENAME: `spaceStore/${spaceStoreTypes.UPDATE_SPACENAME}`,
 };

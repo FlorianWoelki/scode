@@ -21,7 +21,13 @@
             <div class="flex items-center justify-between pt-7 px-7">
               <div class="flex items-center space-x-2">
                 <FolderOpenIcon class="w-5 h-5 text-gray-600" />
-                <p class="text-base text-gray-400">{{ selectedSpace.name }}</p>
+                <input
+                  class="w-full text-base text-gray-400 bg-transparent focus:outline-none"
+                  v-model="spaceInput"
+                  @keydown.enter="saveSpaceName"
+                  @blur="saveSpaceName"
+                  :maxlength="SPACE_CONFIG.MAX_SPACE_NAME_LENGTH"
+                >
               </div>
               <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="addFile" />
             </div>
@@ -91,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ComputedRef, defineComponent, ref } from 'vue';
+import { computed, ComputedRef, defineComponent, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { uuid } from 'vue-uuid';
 import PlusIcon from '../assets/icons/plus.svg';
@@ -120,11 +126,20 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const isShortcutModalOpen = ref(false);
+    const spaceInput = ref('');
+
+    const SPACE_CONFIG = {
+      MAX_SPACE_NAME_LENGTH: 10,
+    };
 
     store.dispatch(AllActionTypes.LOAD_FILES);
     store.dispatch(AllActionTypes.LOAD_SPACES);
 
     const selectedSpace = computed(() => store.state.spaceStore.selectedSpace) as ComputedRef<ISpace>;
+
+    watch(selectedSpace, () => {
+      spaceInput.value = selectedSpace.value.name;
+    });
 
     const addFile = (): void => {
       const file = {
@@ -177,7 +192,14 @@ export default defineComponent({
       setSelectedSpace(space);
     };
 
+    const saveSpaceName = (event: InputEvent): void => {
+      const target = event.target as HTMLElement;
+      target.blur();
+      store.dispatch(AllActionTypes.UPDATE_SPACENAME, { id: selectedSpace.value.id, name: spaceInput.value });
+    };
+
     return {
+      SPACE_CONFIG,
       addFile,
       setSelectedFile,
       saveFileName,
@@ -188,6 +210,8 @@ export default defineComponent({
       files,
       selectedSpace,
       addSpace,
+      spaceInput,
+      saveSpaceName,
       spaces: computed(() => store.state.spaceStore.spaces),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };

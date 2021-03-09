@@ -14,6 +14,7 @@ export type SpaceStoreMutationsTypes<S = SpaceStoreStateTypes> = {
   [MutationTypes.LOAD_SPACES](state: S, spaces: ISpace[]): void;
   [MutationTypes.SELECT_SPACE](state: S, space: ISpace): void;
   [MutationTypes.CREATE_SPACE](state: S, space: ISpace): void;
+  [MutationTypes.UPDATE_SPACENAME](state: S, { id, name }: { id: number, name: string }): void;
 };
 
 export type AugmentedActionContext = {
@@ -26,4 +27,5 @@ export type AugmentedActionContext = {
 export interface SpaceStoreActionTypes {
   [ActionTypes.LOAD_SPACES]({ commit }: AugmentedActionContext): ISpace[];
   [ActionTypes.CREATE_SPACE]({ commit }: AugmentedActionContext, space: ISpace): void;
+  [ActionTypes.UPDATE_SPACENAME]({ commit }: AugmentedActionContext, { id, name }: { id: number, name: string }): void;
 }
