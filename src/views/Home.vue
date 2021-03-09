@@ -15,8 +15,8 @@
         </div>
 
         <!-- CODE SNIPPETS -->
-        <div class="col-span-9 border-l border-gray-700">
-          <p v-if="!selectedSpace" class="flex items-center justify-center text-sm italic text-gray-600 mt-7">No space selected</p>
+        <div class="relative col-span-9 border-l border-gray-700">
+          <p v-if="!selectedSpace" class="absolute inset-0 flex items-center justify-center italic text-gray-600 mt-7">No space selected</p>
           <div v-else>
             <div class="flex items-center justify-between pt-7 px-7">
               <div class="flex items-center space-x-2">
