@@ -111,6 +111,7 @@ import { IFile, ISpace } from '../db';
 import { AllActionTypes } from '../store/action-types';
 import { AllMutationTypes } from '../store/mutation-types';
 import shortcuts from '../util/shortcuts';
+import { SPACE_CONFIG } from '../util/config';
 
 export default defineComponent({
   components: {
@@ -127,10 +128,6 @@ export default defineComponent({
     const store = useStore();
     const isShortcutModalOpen = ref(false);
     const spaceInput = ref('');
-
-    const SPACE_CONFIG = {
-      MAX_SPACE_NAME_LENGTH: 18,
-    };
 
     store.dispatch(AllActionTypes.LOAD_FILES);
     store.dispatch(AllActionTypes.LOAD_SPACES);

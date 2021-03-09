@@ -75,6 +75,7 @@ import { BlockType } from './blocks/BlockType';
 import { AllActionTypes } from '../store/action-types';
 import { IFile } from '../db';
 import shortcuts from '../util/shortcuts';
+import { FILE_CONFIG } from '../util/config';
 
 export default defineComponent({
   emits: ['saveFileName', 'deleteFile'],
@@ -93,10 +94,6 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const FILE_CONFIG = {
-      MAX_FILE_LENGTH: 40,
-    };
-
     const store = useStore();
     const nameInput = ref(props.file.name);
     const blocksInput = ref(props.file.blocks);
