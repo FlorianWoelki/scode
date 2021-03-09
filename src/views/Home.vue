@@ -16,25 +16,28 @@
 
         <!-- CODE SNIPPETS -->
         <div class="col-span-9 border-l border-gray-700">
-          <div class="flex items-center justify-between pt-7 px-7">
-            <div class="flex items-center space-x-2">
-              <FolderOpenIcon class="w-5 h-5 text-gray-600" />
-              <p class="text-base text-gray-400">JavaScript</p>
+          <p v-if="!selectedSpace" class="flex items-center justify-center text-sm italic text-gray-600 mt-7">No space selected</p>
+          <div v-else>
+            <div class="flex items-center justify-between pt-7 px-7">
+              <div class="flex items-center space-x-2">
+                <FolderOpenIcon class="w-5 h-5 text-gray-600" />
+                <p class="text-base text-gray-400">{{ selectedSpace.name }}</p>
+              </div>
+              <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="addFile" />
             </div>
-            <PlusIcon class="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-300" @click="addFile" />
-          </div>
 
-          <div class="mt-4">
-            <p v-if="files.length === 0" class="flex items-center justify-center text-sm italic text-gray-600">No files created</p>
-            <SnippetFile
-              v-else
-              v-for="file in files"
-              :key="file.id"
-              :name="file.name"
-              :content="file.blocks.length > 0 ? file.blocks[0].savedValue || '' : ''"
-              :isSelected="file.id === selectedFile?.id"
-              @click="setSelectedFile(file)"
-            />
+            <div class="mt-4">
+              <p v-if="files.length === 0" class="flex items-center justify-center text-sm italic text-gray-600">No file selected</p>
+              <SnippetFile
+                v-else
+                v-for="file in files"
+                :key="file.id"
+                :name="file.name"
+                :content="file.blocks.length > 0 ? file.blocks[0].savedValue || '' : ''"
+                :isSelected="file.id === selectedFile?.id"
+                @click="setSelectedFile(file)"
+              />
+            </div>
           </div>
         </div>
       </div>
