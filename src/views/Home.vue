@@ -4,7 +4,13 @@
       <div class="grid h-full grid-cols-12">
         <!-- CODE SPACES -->
         <div class="col-span-3 p-1 mt-6 space-y-4">
-          <Space v-for="space in spaces" :key="space" :name="space.name" />
+          <Space
+            v-for="space in spaces"
+            :key="space"
+            :name="space.name"
+            :isSelected="selectedSpace ? space.id === selectedSpace.id : false"
+            @click="selectSpace(space)"
+          />
           <PlusIcon class="flex justify-center w-8 h-8 mx-auto text-gray-600" />
         </div>
 
@@ -82,7 +88,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, ComputedRef, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { uuid } from 'vue-uuid';
 import PlusIcon from '../assets/icons/plus.svg';
@@ -92,7 +98,7 @@ import SnippetFile from '../components/SnippetFile.vue';
 import Space from '../components/Space.vue';
 import ContentDisplay from '../components/ContentDisplay.vue';
 import ModalButton from '../components/ui/ModalButton.vue';
-import { IFile } from '../db';
+import { IFile, ISpace } from '../db';
 import { AllActionTypes } from '../store/action-types';
 import { AllMutationTypes } from '../store/mutation-types';
 import shortcuts from '../util/shortcuts';
@@ -115,9 +121,12 @@ export default defineComponent({
     store.dispatch(AllActionTypes.LOAD_FILES);
     store.dispatch(AllActionTypes.LOAD_SPACES);
 
+    const selectedSpace = computed(() => store.state.spaceStore.selectedSpace) as ComputedRef<ISpace>;
+
     const addFile = (): void => {
       const file = {
         id: uuid.v4(),
+        spaceId: selectedSpace.value.id,
         name: 'undefined',
         blocks: [{
           type: 'markdown',
@@ -143,6 +152,20 @@ export default defineComponent({
       store.dispatch(AllActionTypes.DELETE_FILE, id);
     };
 
+    const selectSpace = (space: ISpace): void => {
+      store.commit(AllMutationTypes.SELECT_SPACE, space);
+    };
+
+    const files = computed(() => {
+      const selectedSpace = store.state.spaceStore.selectedSpace as ISpace | undefined;
+      if (selectedSpace) {
+        const storeFiles = store.state.fileStore.files as IFile[];
+        console.log(storeFiles);
+        return storeFiles.filter((file) => file.spaceId === selectedSpace.id);
+      }
+      return [];
+    });
+
     return {
       addFile,
       setSelectedFile,
@@ -150,8 +173,10 @@ export default defineComponent({
       deleteFile,
       isShortcutModalOpen,
       shortcuts,
+      selectSpace,
+      files,
+      selectedSpace,
       spaces: computed(() => store.state.spaceStore.spaces),
-      files: computed(() => store.state.fileStore.files),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };
   },

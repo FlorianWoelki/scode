@@ -5,8 +5,8 @@ import { Space } from './Space';
 
 export interface IFile {
   id: string;
+  spaceId: number;
   name: string;
-  // parent;
   blocks: BlockType[]
   createdAt: Date;
 
@@ -16,7 +16,6 @@ export interface IFile {
 export interface ISpace {
   id: number;
   name: string;
-  files: IFile[];
 }
 
 class ScodeDatabase extends Dexie {
@@ -26,9 +25,9 @@ class ScodeDatabase extends Dexie {
   constructor() {
     super('scode');
 
-    this.version(2).stores({
-      files: 'id, name, content, createdAt, blocks',
-      spaces: 'id, name, files',
+    this.version(3).stores({
+      files: 'id, spaceId, name, content, createdAt, blocks',
+      spaces: 'id, name',
     });
     this.files = this.table('files');
     this.files.mapToClass(File);

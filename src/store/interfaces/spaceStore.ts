@@ -12,6 +12,7 @@ export interface SpaceStoreStateTypes {
 
 export type SpaceStoreMutationsTypes<S = SpaceStoreStateTypes> = {
   [MutationTypes.LOAD_SPACES](state: S, spaces: ISpace[]): void;
+  [MutationTypes.SELECT_SPACE](state: S, spaces: ISpace): void;
 };
 
 export type AugmentedActionContext = {
@@ -22,5 +23,5 @@ export type AugmentedActionContext = {
 } & Omit<ActionContext<SpaceStoreStateTypes, IRootState>, 'commit'>;
 
 export interface SpaceStoreActionTypes {
-  [ActionTypes.LOAD_FILES]({ commit }: AugmentedActionContext): ISpace[];
+  [ActionTypes.LOAD_SPACES]({ commit }: AugmentedActionContext): ISpace[];
 }

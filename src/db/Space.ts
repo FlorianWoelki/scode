@@ -1,13 +1,11 @@
-import { IFile, ISpace } from '.';
+import { ISpace } from '.';
 
 export class Space implements ISpace {
   public id!: number;
   public name: string;
-  public files: IFile[];
 
-  constructor(name: string, files: IFile[], id?: number) {
+  constructor(name: string, id?: number) {
     this.name = name;
-    this.files = files;
     if (id) this.id = id;
   }
 }

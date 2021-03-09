@@ -17,7 +17,7 @@ export default {
   [ActionTypes.LOAD_FILES]({ commit, dispatch }) {
     db.transaction('rw', db.files, async() => {
       const files = await db.files.toArray();
-      files.map((file) => {
+      files.map(async(file) => {
         if (typeof file.blocks === 'string') {
           file.blocks = JSON.parse(file.blocks as unknown as string);
         }

@@ -6,4 +6,7 @@ export default {
   [MutationTypes.LOAD_SPACES](state, spaces) {
     state.spaces = spaces;
   },
+  [MutationTypes.SELECT_SPACE](state, space) {
+    state.selectedSpace = space;
+  },
 } as MutationTree<SpaceStoreStateTypes> & SpaceStoreMutationsTypes;

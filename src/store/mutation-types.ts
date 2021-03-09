@@ -1,4 +1,5 @@
 import { MutationTypes as fileStoreTypes } from './fileStore/mutation-types';
+import { MutationTypes as spaceStoreTypes } from './spaceStore/mutation-types';
 
 export const AllMutationTypes = {
   CREATE_FILE: `fileStore/${fileStoreTypes.CREATE_FILE}`,
@@ -6,4 +7,5 @@ export const AllMutationTypes = {
   SET_SELECTED_FILE: `fileStore/${fileStoreTypes.SET_SELECTED_FILE}`,
   UPDATE_FILE: `fileStore/${fileStoreTypes.UPDATE_FILE}`,
   LOAD_FILES: `fileStore/${fileStoreTypes.LOAD_FILES}`,
+  SELECT_SPACE: `spaceStore/${spaceStoreTypes.SELECT_SPACE}`,
 };
