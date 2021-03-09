@@ -3,7 +3,7 @@
     <div class="z-10 col-span-3 bg-gray-800 shadow-2xl">
       <div class="grid h-full grid-cols-12">
         <!-- CODE SPACES -->
-        <div class="col-span-3 p-1 mt-6 space-y-2">
+        <div class="col-span-3 p-1 mt-6 space-y-4">
           <Space
             v-for="space in spaces"
             :key="space"
