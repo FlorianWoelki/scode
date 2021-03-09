@@ -9,4 +9,7 @@ export default {
   [MutationTypes.SELECT_SPACE](state, space) {
     state.selectedSpace = space;
   },
+  [MutationTypes.CREATE_SPACE](state, space) {
+    state.spaces.push(space);
+  },
 } as MutationTree<SpaceStoreStateTypes> & SpaceStoreMutationsTypes;

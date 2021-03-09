@@ -9,9 +9,9 @@
             :key="space"
             :name="space.name"
             :isSelected="selectedSpace ? space.id === selectedSpace.id : false"
-            @click="selectSpace(space)"
+            @click="setSelectedSpace(space)"
           />
-          <PlusIcon class="flex justify-center w-8 h-8 mx-auto text-gray-600" />
+          <PlusIcon class="flex justify-center w-8 h-8 mx-auto text-gray-600 cursor-pointer hover:text-gray-500" @click="addSpace" />
         </div>
 
         <!-- CODE SNIPPETS -->
@@ -155,7 +155,7 @@ export default defineComponent({
       store.dispatch(AllActionTypes.DELETE_FILE, id);
     };
 
-    const selectSpace = (space: ISpace): void => {
+    const setSelectedSpace = (space: ISpace): void => {
       store.commit(AllMutationTypes.SELECT_SPACE, space);
     };
 
@@ -168,6 +168,15 @@ export default defineComponent({
       return [];
     });
 
+    const addSpace = (): void => {
+      const space = {
+        name: 'undefined',
+      } as ISpace;
+
+      store.dispatch(AllActionTypes.CREATE_SPACE, space);
+      setSelectedSpace(space);
+    };
+
     return {
       addFile,
       setSelectedFile,
@@ -175,9 +184,10 @@ export default defineComponent({
       deleteFile,
       isShortcutModalOpen,
       shortcuts,
-      selectSpace,
+      setSelectedSpace,
       files,
       selectedSpace,
+      addSpace,
       spaces: computed(() => store.state.spaceStore.spaces),
       selectedFile: computed(() => store.state.fileStore.selectedFile),
     };

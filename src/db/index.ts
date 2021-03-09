@@ -25,9 +25,9 @@ class ScodeDatabase extends Dexie {
   constructor() {
     super('scode');
 
-    this.version(3).stores({
+    this.version(4).stores({
       files: 'id, spaceId, name, content, createdAt, blocks',
-      spaces: 'id, name',
+      spaces: '++id, name',
     });
     this.files = this.table('files');
     this.files.mapToClass(File);
