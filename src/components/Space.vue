@@ -6,7 +6,7 @@
     >
       <p class="font-light text-white">{{ nameSlug }}</p>
     </div>
-    <p v-if="isSelected" class="mt-1 text-sm font-light text-gray-400">{{ name }}</p>
+    <p class="mt-1 text-sm font-light text-gray-400">{{ isSelected ? name : '&nbsp;' }}</p>
   </div>
 </template>
 
