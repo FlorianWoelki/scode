@@ -163,7 +163,6 @@ export default defineComponent({
       const selectedSpace = store.state.spaceStore.selectedSpace as ISpace | undefined;
       if (selectedSpace) {
         const storeFiles = store.state.fileStore.files as IFile[];
-        console.log(storeFiles);
         return storeFiles.filter((file) => file.spaceId === selectedSpace.id);
       }
       return [];

@@ -17,7 +17,6 @@ export class Link extends TagAction {
     const [start, end] = getSelectionOffset(target);
     setTimeout(() => {
       target.innerHTML = target.innerHTML.replace(input.substring(match.index, match.index + matchedText.length), `<a href="${hrefLink}">${hrefText}</a>`);
-      console.log(start, end);
       setSelectionOffset(target, start - 2 - hrefLink.length, end - 2 - hrefLink.length);
       // this.placeCaretAtEnd(target);
     }, 0);

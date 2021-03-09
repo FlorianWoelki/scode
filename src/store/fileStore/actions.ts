@@ -7,7 +7,6 @@ import { MutationTypes } from './mutation-types';
 
 export default {
   [ActionTypes.CREATE_FILE]({ commit }, fileDetails): IFile {
-    console.log(fileDetails);
     db.files.add(fileDetails, 'id').catch((error) => {
       console.error(error);
     });
