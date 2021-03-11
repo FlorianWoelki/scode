@@ -1,7 +1,7 @@
 import Space from '../components/Space.vue';
 
 export default {
-  title: 'Example/Space',
+  title: 'Home/Space',
   component: Space,
   argTypes: {
     isSelected: { type: 'boolean' },
