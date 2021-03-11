@@ -1,4 +1,4 @@
-import Space from '../components/Space.vue';
+import Space from './Space.vue';
 
 export default {
   title: 'Home/Space',
