@@ -1,0 +1,100 @@
+[contenteditable]:empty::before {
+  content: 'Insert your markdown';
+  @apply italic text-gray-600 cursor-text;
+}
+
+.markdown {
+  @apply font-mono text-sm leading-normal text-gray-500;
+}
+
+.markdown > *:first-child {
+  @apply mt-0;
+}
+
+.markdown > * + * {
+  @apply mt-5;
+}
+
+.markdown ul, .markdown ol {
+  @apply my-4;
+}
+
+.markdown ul > * + *, .markdown ol > * + * {
+  @apply mt-2;
+}
+
+.markdown > hr {
+  @apply my-8 border-t-0 border-b-2 border-l-0 border-r-0 border-gray-600;
+}
+
+.markdown > a:hover, .markdown > p a:hover, .markdown > ul li a:hover, .markdown > ol li a:hover {
+  @apply text-gray-600;
+}
+
+.markdown ul {
+  @apply list-disc;
+}
+.markdown ol {
+  @apply list-decimal;
+}
+
+.markdown > p strong, .markdown > ul strong {
+  @apply font-semibold;
+}
+
+.markdown > p code, .markdown > ul li *:not(pre) code, .markdown > ul li > code, .markdown > ol li *:not(pre) code, .markdown > ol li > code {
+  @apply inline-block px-2 py-1 font-mono text-sm leading-none text-gray-500 align-baseline bg-gray-900 rounded-sm whitespace-nowrap;
+}
+
+.markdown > blockquote {
+  @apply italic text-gray-600;
+}
+
+.markdown > h1 {
+  @apply mt-8 mb-4 text-2xl font-medium leading-none text-gray-400;
+}
+
+.markdown > h1:before {
+  content: '#';
+  @apply absolute text-gray-700 -ml-7;
+}
+
+.markdown > h2 {
+  @apply mt-8 mb-4 text-xl font-normal leading-none text-gray-400;
+}
+
+.markdown > h2:before {
+  content: '##';
+  @apply absolute -ml-10 text-gray-700;
+}
+
+.markdown > h2 + h3 {
+  @apply mt-6;
+}
+
+.markdown > h3 {
+  @apply mt-6 -mb-3 text-lg font-medium leading-tight text-gray-400;
+}
+
+.markdown > h3:before {
+  content: '###';
+  @apply absolute -ml-12 text-gray-700;
+}
+
+.markdown > h4 {
+  @apply mt-4 mb-0 text-lg font-medium leading-snug text-gray-400;
+}
+
+.markdown > h4:before {
+  content: '####';
+  margin-left: -3.75rem;
+  @apply absolute text-gray-700;
+}
+
+.markdown > h1 + p {
+  @apply mt-0 mb-4;
+}
+
+.markdown > p, .markdown > blockquote > p, .markdown div {
+  @apply mt-4 text-sm;
+}

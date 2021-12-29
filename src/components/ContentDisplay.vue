@@ -288,8 +288,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-@import '../styles/markdown.scss';
+<style>
+@import "../styles/markdown.css";
 
 .monaco-aria-container {
   display: none;
