@@ -5,7 +5,10 @@
       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg>
   </div>
-  <div class="w-full mt-4" ref="monacoElement" style="max-height: 500px"></div>
+  <div class="w-full mt-4">
+    <div class="w-full" ref="monacoElement" style="max-height: 500px"></div>
+    <div class="z-10 mt-2 ml-8 text-sm text-gray-600">{{ language }}</div>
+  </div>
 </template>
 
 <script lang="ts">
